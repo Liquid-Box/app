@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>امپراتوری هوشمند NFT تلگرام | اتاق فرمان رئیس هیئت‌مدیره + مینی‌اپ فروشگاهی</title>
+<style>
+  :root {
+    --bg: #070b14;
+    --panel: #111827;
+    --panel-2: #1e293b;
+    --border: #283548;
+    --ton: #0098ea;
+    --ton-glow: rgba(0, 152, 234, 0.3);
+    --gold: #f59e0b;
+    --green: #10b981;
+    --purple: #a855f7;
+    --red: #ef4444;
+    --text: #f8fafc;
+    --muted: #94a3b8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif; }
+  body { background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; }
+
+  /* Top Executive Header */
+  .top-header {
+    background: rgba(17, 24, 39, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 12px 20px;
+  }
+  .header-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .brand-logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #0098ea, #7c3aed);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    box-shadow: 0 0 20px var(--ton-glow);
+  }
+  .brand h1 { font-size: 17px; font-weight: 800; color: #fff; }
+  .brand span { font-size: 12px; color: #38bdf8; display: block; }
+
+  .kpi-strip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .kpi-pill {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 6px 14px;
+    display: flex;
+    flex-direction: column;
+  }
+  .kpi-pill.owner {
+    background: rgba(16, 185, 129, 0.12);
+    border-color: rgba(16, 185, 129, 0.45);
+  }
+  .kpi-pill .lbl { font-size: 11px; color: var(--muted); }
+  .kpi-pill .val { font-size: 15px; font-weight: 800; direction: ltr; text-align: right; }
+  .kpi-pill.owner .val { color: #34d399; }
+  .kpi-pill.treasury .val { color: #38bdf8; }
+  .kpi-pill.customer .val { color: #fbbf24; }
+
+  .btn-topup {
+    background: rgba(251, 191, 36, 0.15);
+    color: #fbbf24;
+    border: 1px solid rgba(251, 191, 36, 0.4);
+    padding: 8px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 12px;
+    transition: 0.2s;
+  }
+  .btn-topup:hover { background: rgba(251, 191, 36, 0.28); }
+
+  /* Promo Banner */
+  .promo-bar {
+    background: linear-gradient(90deg, #1e1b4b, #0c4a6e, #1e1b4b);
+    border-bottom: 1px solid rgba(56, 189, 248, 0.3);
+    text-align: center;
+    padding: 8px 16px;
+    font-size: 13.5px;
+    color: #e0f2fe;
+    font-weight: 600;
+  }
+
+  /* Navigation Tabs */
+  .nav-tabs {
+    max-width: 1280px;
+    margin: 20px auto 0;
+    padding: 0 20px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    flex: 1;
+    min-width: 210px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 13px 16px;
+    border-radius: 14px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s;
+  }
+  .tab-btn:hover { border-color: #38bdf8; color: #fff; }
+  .tab-btn.active {
+    background: linear-gradient(135deg, rgba(0, 152, 234, 0.22), rgba(139, 92, 246, 0.22));
+    border-color: #38bdf8;
+    color: #fff;
+    box-shadow: 0 8px 25px rgba(0, 152, 234, 0.2);
+  }
+  .badge-count {
+    background: #ef4444;
+    color: #fff;
+    font-size: 11px;
+    padding: 1px 7px;
+    border-radius: 999px;
+  }
+
+  .main-container {
+    max-width: 1280px;
+    margin: 20px auto 60px;
+    padding: 0 20px;
+  }
+  .tab-section { display: none; }
+  .tab-section.active { display: block; }
+
+  /* Cards & Grids */
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .section-header h2 { font-size: 21px; color: #fff; }
+  .section-header p { font-size: 13.5px; color: var(--muted); }
+
+  /* Chairman Directive Box */
+  .directive-box {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(0, 152, 234, 0.12));
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+  .directive-box h3 { font-size: 17px; color: #34d399; margin-bottom: 6px; }
+  .directive-box p { font-size: 13px; color: #cbd5e1; margin-bottom: 12px; }
+  .directive-form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .directive-input {
+    flex: 1;
+    min-width: 260px;
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid var(--border);
+    color: #fff;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 14px;
+  }
+  .directive-input:focus { outline: none; border-color: #34d399; }
+  .btn-primary {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #fff;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .quick-ideas {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+  .chip {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: #cbd5e1;
+    font-size: 12px;
+    padding: 5px 11px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .chip:hover { border-color: #38bdf8; color: #fff; }
+
+  /* AI Agents Strip */
+  .agents-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 14px;
+    margin-bottom: 26px;
+  }
+  .agent-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px;
+    position: relative;
+  }
+  .agent-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .agent-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+  .agent-role { font-size: 13.5px; font-weight: 800; color: #fff; }
+  .agent-name { font-size: 11.5px; color: #38bdf8; }
+  .agent-status {
+    font-size: 11.5px;
+    background: rgba(16, 185, 129, 0.12);
+    color: #34d399;
+    padding: 4px 8px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .agent-report { font-size: 12.5px; color: var(--muted); }
+
+  /* Resolutions Queue */
+  .resolutions-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .res-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .res-card.approved { border-color: rgba(16, 185, 129, 0.5); opacity: 0.85; }
+  .res-card.rejected { border-color: rgba(239, 68, 68, 0.4); opacity: 0.65; }
+  .res-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #38bdf8;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+  .res-title { font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+  .res-summary { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+  .res-impact {
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    color: #fbbf24;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .res-actions { display: flex; gap: 10px; }
+  .btn-approve {
+    flex: 2;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: 800;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  .btn-reject {
+    flex: 1;
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 13px;
+  }
+
+  /* Mystery Box Section */
+  .gacha-arena {
+    display: grid;
+    grid-template-columns: 1.1fr 1.4fr;
+    gap: 22px;
+    margin-bottom: 28px;
+  }
+  @media (max-width: 900px) { .gacha-arena { grid-template-columns: 1fr; } }
+
+  .chest-box {
+    background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+    border: 1px solid #38bdf8;
+    border-radius: 22px;
+    padding: 26px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 152, 234, 0.18);
+  }
+  .chest-img {
+    width: 220px;
+    height: 220px;
+    object-fit: contain;
+    border-radius: 18px;
+    margin: 10px auto 16px;
+    display: block;
+    transition: transform 0.4s;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+  }
+  .chest-img.shaking {
+    animation: shake 0.5s infinite;
+  }
+  @keyframes shake {
+    0% { transform: rotate(0deg) scale(1.05); }
+    25% { transform: rotate(-6deg) scale(1.08); }
+    50% { transform: rotate(6deg) scale(1.08); }
+    75% { transform: rotate(-4deg) scale(1.05); }
+    100% { transform: rotate(0deg) scale(1); }
+  }
+  .btn-open-box {
+    width: 100%;
+    background: linear-gradient(135deg, #0098ea, #6366f1);
+    color: #fff;
+    border: none;
+    padding: 15px 24px;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(0, 152, 234, 0.35);
+    transition: 0.2s;
+  }
+  .btn-open-box:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
+  .tiers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+  }
+  .tier-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 14px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .tier-card img {
+    width: 78px;
+    height: 78px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .tier-info h4 { font-size: 14px; color: #fff; margin-bottom: 3px; }
+  .tier-info .chance { font-size: 12px; font-weight: 700; display: inline-block; padding: 2px 8px; border-radius: 999px; margin-bottom: 4px; }
+  .tier-info .meta { font-size: 12px; color: var(--muted); }
+  .tier-info .meta b { color: #34d399; }
+
+  /* Inventory & Forge */
+  .inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+    margin-top: 14px;
+  }
+  .nft-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .nft-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  .nft-body { padding: 14px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+  .nft-title { font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 4px; }
+  .nft-traits { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+  .nft-btns { display: flex; flex-direction: column; gap: 6px; }
+  .btn-buyback {
+    background: rgba(16, 185, 129, 0.16);
+    border: 1px solid rgba(16, 185, 129, 0.45);
+    color: #34d399;
+    padding: 8px;
+    border-radius: 9px;
+    font-weight: 700;
+    font-size: 12.5px;
+    cursor: pointer;
+  }
+  .btn-buyback:hover { background: rgba(16, 185, 129, 0.28); }
+  .btn-getgems {
+    background: rgba(0, 152, 234, 0.15);
+    border: 1px solid rgba(0, 152, 234, 0.4);
+    color: #38bdf8;
+    padding: 8px;
+    border-radius: 9px;
+    font-weight: 700;
+    font-size: 12.5px;
+    cursor: pointer;
+  }
+  .btn-getgems:hover { background: rgba(0, 152, 234, 0.28); }
+
+  /* Store Grid */
+  .store-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 18px;
+  }
+  .store-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .store-icon {
+    font-size: 34px;
+    margin-bottom: 10px;
+  }
+  .store-cat {
+    font-size: 11.5px;
+    color: #38bdf8;
+    font-weight: 700;
+  }
+  .store-title { font-size: 16.5px; font-weight: 800; color: #fff; margin: 4px 0 8px; }
+  .store-desc { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+
+  /* Toast Notification */
+  #toast {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    background: #0f172a;
+    border: 2px solid #10b981;
+    color: #fff;
+    padding: 14px 20px;
+    border-radius: 14px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+    z-index: 999;
+    display: none;
+    max-width: 420px;
+    font-size: 13.5px;
+  }
+  pre.code-block {
+    background: #090d16;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    overflow-x: auto;
+    direction: ltr;
+    text-align: left;
+    color: #38bdf8;
+    font-family: monospace;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+
+<header class="top-header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-logo">💎</div>
+      <div>
+        <h1 id="brand-title">امپراتوری هوشمند NFT تلگرام (TON AI Empire)</h1>
+        <span id="brand-tagline">مدیریت خودکار توسط ۵ ایجنت هوش مصنوعی | شما: رئیس هیئت‌مدیره</span>
+      </div>
+    </div>
+
+    <div class="kpi-strip">
+      <div class="kpi-pill owner">
+        <span class="lbl">💰 کیف‌پول شخصی شما (سود خالص قطعی)</span>
+        <span class="val" id="kpi-owner">$540.00</span>
+      </div>
+      <div class="kpi-pill treasury">
+        <span class="lbl">🏦 خزانه پشتوانه بازخرید (Smart Contract)</span>
+        <span class="val" id="kpi-treasury">$1,260.00</span>
+      </div>
+      <div class="kpi-pill customer">
+        <span class="lbl">👛 کیف‌پول تستی مشتری (برای تست خرید)</span>
+        <span class="val" id="kpi-customer">$150.00</span>
+      </div>
+      <button class="btn-topup" onclick="topupWallet()">+ شارژ کیف‌پول تستی ($100)</button>
+    </div>
+  </div>
+</header>
+
+<div class="promo-bar" id="promo-banner">
+  🔥 در حال بارگذاری بنر هوشمند...
+</div>
+
+<nav class="nav-tabs">
+  <button class="tab-btn active" onclick="switchTab('boardroom', this)">
+    🏛️ اتاق فرمان رئیس هیئت‌مدیره <span class="badge-count" id="pending-count">4</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('miniapp', this)">
+    🎁 مینی‌اپ مشتری (جعبه شانسی و آهنگری)
+  </button>
+  <button class="tab-btn" onclick="switchTab('store', this)">
+    🛍️ فروشگاه آزاد محصولات دیگر (چندمنظوره)
+  </button>
+  <button class="tab-btn" onclick="switchTab('tech', this)">
+    📜 کد قرارداد هوشمند TON و معماری فنی
+  </button>
+</nav>
+
+<main class="main-container">
+
+  <!-- TAB 1: CHAIRMAN BOARDROOM -->
+  <section id="tab-boardroom" class="tab-section active">
+    <div class="directive-box">
+      <h3>👑 میز دستور رئیس هیئت‌مدیره (ابلاغ ایده یا دستور به ۵ مدیر هوش مصنوعی)</h3>
+      <p>هر ایده، محصول جدید (حتی کاملاً بی‌ربط به NFT)، تغییر قیمت یا کمپینی در ذهن دارید بنویسید؛ ۵ مدیر هوش مصنوعی (مالی، مارکتینگ، فروش، محصول و بلاکچین) بلافاصله جلسه تشکیل داده و مصوبه اجرایی آن را برای تایید شما آماده می‌کنند:</p>
+      <div class="directive-form">
+        <input type="text" id="chairman-idea" class="directive-input" placeholder="مثلاً: میخوام عطر اورجینال و اکانت اسپاتیفای ۴۰ دلاری به فروشگاه اضافه بشه..." />
+        <button class="btn-primary" onclick="submitDirective()">⚡ ابلاغ به هیئت‌مدیره هوش مصنوعی</button>
+      </div>
+      <div class="quick-ideas">
+        <span class="chip" onclick="fillIdea('میخوام کفش اورجینال نایکی ۹۵ دلاری به فروشگاه اضافه بشه')">+ افزودن کفش نایکی ۹۵ دلاری به فروشگاه</span>
+        <span class="chip" onclick="fillIdea('میخوام قیمت جعبه شانسی بشه ۱۵ دلار با جوایز بزرگتر')">+ تغییر قیمت جعبه شانسی به ۱۵ دلار</span>
+        <span class="chip" onclick="fillIdea('میخوام دوره آموزش ترید و ربات سیگنال ۳۹ دلاری بفروشیم')">+ فروش دوره و ربات سیگنال ۳۹ دلاری</span>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <div>
+        <h2>🤖 گزارش زنده ۵ مدیر هوش مصنوعی (AI C-Suite Agents)</h2>
+        <p>این ایجنت‌ها ۲۴ ساعته خزانه، فروش، تبلیغات و موجودی فروشگاه را رصد و مدیریت می‌کنند.</p>
+      </div>
+    </div>
+    <div class="agents-grid" id="agents-container"></div>
+
+    <div class="section-header">
+      <div>
+        <h2>📋 مصوبات آماده تایید یا رد شما (Board Resolutions)</h2>
+        <p>با کلیک روی «✅ تایید و اجرای خودکار»، تصمیم ایجنت بلافاصله روی مینی‌اپ و فروشگاه اعمال می‌شود.</p>
+      </div>
+    </div>
+    <div class="resolutions-list" id="resolutions-container"></div>
+
+    <div class="section-header">
+      <div>
+        <h2>🕒 لاگ زنده تراکنش‌ها و اقدامات خودکار سیستم (Audit Log)</h2>
+      </div>
+    </div>
+    <div id="audit-container" style="background:var(--panel); border:1px solid var(--border); border-radius:16px; padding:16px;"></div>
+  </section>
+
+  <!-- TAB 2: TELEGRAM MINI-APP (GACHA + FORGE + BUYBACK) -->
+  <section id="tab-miniapp" class="tab-section">
+    <div class="gacha-arena">
+      <div class="chest-box">
+        <span style="background:rgba(56,189,248,0.15); color:#38bdf8; padding:4px 12px; border-radius:999px; font-size:12px; font-weight:700;">Telegram Mini-App Live Preview</span>
+        <h2 style="margin-top:8px; font-size:22px;">صندوقچه گنج و نگهبانان الماس</h2>
+        <p style="font-size:13px; color:var(--muted);">هر کارت دارای قیمت بازخرید نقدی آنی از خزانه هوشمند است!</p>
+        <img src="/assets/mystery_chest.png" id="chest-image" class="chest-img" alt="TON Mystery Chest" />
+        <div id="unbox-result" style="margin-bottom:12px; min-height:26px; font-weight:800; color:#fbbf24;"></div>
+        <button class="btn-open-box" id="btn-open" onclick="openMysteryBox()">
+          🔓 باز کردن جعبه شانسی (<span id="box-price-lbl">$10</span> / 2 TON)
+        </button>
+        <p style="font-size:11.5px; color:var(--muted); margin-top:10px;">
+          💡 به محض کلیک: <b id="split-owner-lbl">30%</b> مستقیم به کیف‌پول شخصی شما می‌رود و <b id="split-treasury-lbl">70%</b> وارد خزانه بازخرید می‌شود.
+        </p>
+      </div>
+
+      <div>
+        <h3 style="margin-bottom:12px; font-size:18px;">🎯 جدول کمیابی و بازخرید تضمینی (طراحی ترکیب گزینه ۳ شما)</h3>
+        <div class="tiers-grid" id="tiers-container"></div>
+
+        <!-- Forge Box -->
+        <div style="background:linear-gradient(135deg, rgba(168,85,247,0.14), rgba(0,152,234,0.14)); border:1px solid rgba(168,85,247,0.4); border-radius:18px; padding:18px; margin-top:18px;">
+          <h3 style="font-size:16.5px; color:#e9d5ff; margin-bottom:6px;">🔥 کوره آهنگری و ارتقا (The Forge — درآمد ۱۰۰٪ خالص برای شما)</h3>
+          <p style="font-size:13px; color:#cbd5e1; margin-bottom:12px;">
+            مشتری با سوزاندن <b>۳ کارت هم‌سطح</b> + پرداخت <b>$1.50 کارمزد آهنگری</b> (که ۱۰۰٪ به کیف‌پول شخصی شما می‌رود)، ۱ کارت از سطح بالاتر می‌سازد!
+          </p>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn-primary" style="background:linear-gradient(135deg,#8b5cf6,#6366f1);" onclick="forgeNft('common')">
+              ⚒️ ترکیب ۳ خنجر معمولی ⬅️ ساخت ۱ انگشتر یاقوت (Rare)
+            </button>
+            <button class="btn-primary" style="background:linear-gradient(135deg,#ec4899,#8b5cf6);" onclick="forgeNft('rare')">
+              ⚒️ ترکیب ۳ انگشتر Rare ⬅️ ساخت ۱ جام و تیغه کهکشانی (Epic)
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <div>
+        <h2>🎒 کیف‌پول آیتم‌های مشتری (تست فروش آنی به خزانه یا فروش در Getgems)</h2>
+        <p>مشتری می‌تواند در ۱ ثانیه کارت خود را به خزانه بفروشد یا در مارکت‌پلیس Getgems (با ۸٪ رویالتی برای شما) نقد کند.</p>
+      </div>
+    </div>
+    <div class="inventory-grid" id="inventory-container"></div>
+  </section>
+
+  <!-- TAB 3: MULTI-PRODUCT DIRECT STORE -->
+  <section id="tab-store" class="tab-section">
+    <div class="directive-box" style="border-color:rgba(56,189,248,0.45);">
+      <h3 style="color:#38bdf8;">🛍️ فروشگاه چندمنظوره شما (فروش هر نوع محصول دیجیتال یا فیزیکی در کنار NFT)</h3>
+      <p>
+        کاربرانی که کارت‌های <b>Epic</b> یا <b>Mythic (نگهبان الماس)</b> را در کیف‌پول خود نگه می‌دارند، به صورت خودکار <b>۲۵٪ تخفیف VIP</b> روی تمام محصولات زیر می‌گیرند. شما می‌توانید از اتاق فرمان رئیس هیئت‌مدیره هر محصول دیگری را به این فروشگاه اضافه کنید!
+      </p>
+      <div id="vip-status-banner" style="font-weight:800; font-size:13.5px; color:#fbbf24;"></div>
+    </div>
+
+    <div class="store-grid" id="store-container"></div>
+  </section>
+
+  <!-- TAB 4: SMART CONTRACT & ARCHITECTURE -->
+  <section id="tab-tech" class="tab-section">
+    <div class="section-header">
+      <div>
+        <h2>📜 معماری اجرایی و کد قرارداد هوشمند TON (Tact) + ایجنت‌های هوش مصنوعی</h2>
+        <p>کد واقعی تقسیم خودکار ۳۰٪ سود شما و ۷۰٪ خزانه بازخرید روی شبکه TON:</p>
+      </div>
+    </div>
+    <pre class="code-block">
+// TON Smart Contract (Tact Language) — Automatic 30/70 Revenue Split & Instant Buyback Vault
+import "@stdlib/deploy";
+
+message OpenMysteryBox {
+    buyer: Address;
+}
+
+message InstantBuyback {
+    nftItemAddress: Address;
+    tierId: Int as uint8;
+}
+
+contract NexusTonEmpire with Deployable {
+    chairmanWallet: Address;   // آدرس Tonkeeper شخصی شما (رئیس هیئت‌مدیره)
+    treasuryBalance: Int as coins = 0;
+    boxPrice: Int as coins = ton("2.0"); // معادل 10 دلار
+    ownerCutPercent: Int as uint8 = 30;  // 30% سود خالص آنی شما
+
+    init(chairman: Address) {
+        self.chairmanWallet = chairman;
+    }
+
+    // ۱. وقتی مشتری جعبه شانسی می‌خرد:
+    receive(msg: OpenMysteryBox) {
+        require(context().value >= self.boxPrice, "Insufficient TON sent");
+
+        let ownerShare: Int = (context().value * self.ownerCutPercent) / 100;
+        let treasuryShare: Int = context().value - ownerShare;
+
+        // واریز آنی ۳۰٪ سود خالص به کیف‌پول شخصی شما در همان ثانیه اول:
+        send(SendParameters{
+            to: self.chairmanWallet,
+            value: ownerShare,
+            mode: SendIgnoreErrors,
+            body: "Chairman 30% Instant Profit".asComment()
+        });
+
+        // قفل شدن ۷۰٪ در خزانه هوشمند برای تضمین بازخرید کارت‌ها:
+        self.treasuryBalance = self.treasuryBalance + treasuryShare;
+    }
+
+    // ۲. وقتی مشتری دکمه «فروش آنی به خزانه» را می‌زند:
+    receive(msg: InstantBuyback) {
+        let payout: Int = self.getTierBuybackPrice(msg.tierId);
+        require(self.treasuryBalance >= payout, "Treasury reserve check");
+        self.treasuryBalance = self.treasuryBalance - payout;
+
+        send(SendParameters{
+            to: sender(),
+            value: payout,
+            mode: SendIgnoreErrors,
+            body: "Instant NFT Buyback Payout".asComment()
+        });
+    }
+
+    fun getTierBuybackPrice(tier: Int): Int {
+        if (tier == 1) { return ton("0.76"); } // Common ($3.80)
+        if (tier == 2) { return ton("1.60"); } // Rare ($8.00)
+        if (tier == 3) { return ton("3.40"); } // Epic ($17.00)
+        return ton("10.40");                   // Mythic ($52.00)
+    }
+}
+    </pre>
+  </section>
+
+</main>
+
+<div id="toast"></div>
+
+<script>
+  let appState = null;
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.innerHTML = msg;
+    t.style.display = 'block';
+    clearTimeout(window._toastTimer);
+    window._toastTimer = setTimeout(() => { t.style.display = 'none'; }, 4800);
+  }
+
+  function switchTab(tabId, btn) {
+    document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + tabId).classList.add('active');
+    if (btn) btn.classList.add('active');
+  }
+
+  function fillIdea(text) {
+    document.getElementById('chairman-idea').value = text;
+  }
+
+  async function fetchState() {
+    const res = await fetch('/api/state');
+    appState = await res.json();
+    renderAll();
+  }
+
+  function renderAll() {
+    if (!appState) return;
+    const { config, financials, nftTiers, inventory, storeProducts, agents, boardResolutions, auditLog } = appState;
+
+    // Top KPIs & Brand Header
+    if (config.brandName) {
+      document.getElementById('brand-title').textContent = config.brandName + (config.botHandle ? ' (' + config.botHandle + ')' : '');
+    }
+    if (config.tagline) {
+      document.getElementById('brand-tagline').textContent = config.tagline;
+    }
+    document.getElementById('kpi-owner').textContent = '$' + financials.ownerVaultUsd.toFixed(2);
+    document.getElementById('kpi-treasury').textContent = '$' + financials.treasuryPoolUsd.toFixed(2);
+    document.getElementById('kpi-customer').textContent = '$' + financials.customerWalletUsd.toFixed(2);
+
+    // Promo Banner & Box Labels
+    document.getElementById('promo-banner').textContent = config.activePromoBanner;
+    document.getElementById('box-price-lbl').textContent = '$' + config.boxPriceUsd;
+    document.getElementById('split-owner-lbl').textContent = config.ownerCutPercent + '% ($' + (config.boxPriceUsd * config.ownerCutPercent / 100).toFixed(2) + ')';
+    document.getElementById('split-treasury-lbl').textContent = config.treasuryCutPercent + '% ($' + (config.boxPriceUsd * config.treasuryCutPercent / 100).toFixed(2) + ')';
+
+    // Pending count
+    const pendingCount = boardResolutions.filter(r => r.status === 'pending').length;
+    document.getElementById('pending-count').textContent = pendingCount;
+
+    // Agents
+    document.getElementById('agents-container').innerHTML = agents.map(a => `
+      <div class="agent-card">
+        <div class="agent-top">
+          <div class="agent-avatar">${a.avatar}</div>
+          <div>
+            <div class="agent-role">${a.role}</div>
+            <div class="agent-name">${a.name}</div>
+          </div>
+        </div>
+        <div class="agent-status">${a.status}</div>
+        <div class="agent-report">${a.lastReport}</div>
+      </div>
+    `).join('');
+
+    // Board Resolutions
+    document.getElementById('resolutions-container').innerHTML = boardResolutions.map(r => `
+      <div class="res-card ${r.status}">
+        <div>
+          <div class="res-meta">
+            <span>${r.agentName}</span>
+            <span>${r.createdAt}</span>
+          </div>
+          <div class="res-title">${r.title}</div>
+          <div class="res-summary">${r.summary}</div>
+          <div class="res-impact">📈 اثر مالی: ${r.impact}</div>
+        </div>
+        ${r.status === 'pending' ? `
+          <div class="res-actions">
+            <button class="btn-approve" onclick="resolveBoard('${r.id}', 'approve')">✅ تایید رئیس هیئت‌مدیره و اجرای خودکار</button>
+            <button class="btn-reject" onclick="resolveBoard('${r.id}', 'reject')">❌ رد مصوبه</button>
+          </div>
+        ` : `
+          <div style="font-size:13px; font-weight:800; color:${r.status === 'approved' ? '#34d399' : '#f87171'};">
+            ${r.status === 'approved' ? '✅ تایید و در سیستم اجرا شد' : '❌ رد شده توسط رئیس هیئت‌مدیره'}
+          </div>
+        `}
+      </div>
+    `).join('');
+
+    // Audit Log
+    document.getElementById('audit-container').innerHTML = auditLog.slice(0, 8).map(l => `
+      <div style="padding:8px 0; border-bottom:1px dashed rgba(255,255,255,0.08); font-size:13px;">
+        <span style="color:#38bdf8; font-weight:700;">[${l.time}] ${l.actor}:</span>
+        <span style="color:#e2e8f0;"> ${l.text}</span>
+      </div>
+    `).join('');
+
+    // Tiers
+    document.getElementById('tiers-container').innerHTML = nftTiers.map(t => `
+      <div class="tier-card">
+        <img src="${t.image}" alt="${t.name}" />
+        <div class="tier-info">
+          <h4>${t.name}</h4>
+          <span class="chance" style="background:${t.badgeBg}; color:${t.color};">شانس: ${t.chance}% | ${t.rarityLabel}</span>
+          <div class="meta">بازخرید نقدی خزانه: <b>$${t.buybackUsd.toFixed(2)}</b></div>
+          <div class="meta">کف قیمت Getgems: <b style="color:#38bdf8;">$${t.marketFloorUsd.toFixed(2)}</b></div>
+        </div>
+      </div>
+    `).join('');
+
+    // Inventory
+    document.getElementById('inventory-container').innerHTML = inventory.map(item => `
+      <div class="nft-card" style="border-color:${item.color}55;">
+        <img src="${item.image}" alt="${item.name}" />
+        <div class="nft-body">
+          <div>
+            <span style="font-size:11px; color:${item.color}; font-weight:800;">#${item.serial} • ${item.rarityLabel}</span>
+            <div class="nft-title">${item.name}</div>
+            <div class="nft-traits">
+              🎨 پس‌زمینه: <b>${item.backdrop}</b><br/>
+              ✨ نماد: <b>${item.symbol}</b>
+            </div>
+          </div>
+          <div class="nft-btns">
+            <button class="btn-buyback" onclick="instantBuyback('${item.uid}')">
+              💵 فروش آنی به خزانه ($${item.buybackUsd.toFixed(2)} نقد)
+            </button>
+            <button class="btn-getgems" onclick="sellOnGetgems('${item.uid}')">
+              💎 فروش در Getgems ($${item.marketFloorUsd.toFixed(2)})
+            </button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+    // VIP Discount check for Store
+    const hasVip = inventory.some(i => i.tierId === 'mythic' || i.tierId === 'epic');
+    document.getElementById('vip-status-banner').innerHTML = hasVip
+      ? '🎉 تبریک! چون کارت رده‌بالا (Epic/Mythic) در کیف‌پول دارید، ۲۵٪ تخفیف VIP روی تمام محصولات زیر برایتان فعال است!'
+      : '💡 نکته: اگر از بخش جعبه شانسی یا آهنگری، کارت Epic یا Mythic به دست آورید، تمام محصولات زیر با ۲۵٪ تخفیف برایتان محاسبه می‌شوند!';
+
+    // Store Products
+    document.getElementById('store-container').innerHTML = storeProducts.map(p => {
+      const discounted = (p.priceUsd * (1 - config.vipDiscountPercent / 100)).toFixed(2);
+      return `
+        <div class="store-card">
+          <div>
+            <div class="store-icon">${p.icon}</div>
+            <div class="store-cat">${p.category} • حاشیه سود شما: ${p.profitMarginPercent}%</div>
+            <div class="store-title">${p.title}</div>
+            <div class="store-desc">${p.description}</div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; font-size:13px;">
+              <span>قیمت عادی: <b style="direction:ltr;">$${p.priceUsd.toFixed(2)}</b></span>
+              <span style="color:#34d399; font-weight:800;">قیمت VIP با NFT: $${discounted}</span>
+            </div>
+            <button class="btn-primary" style="width:100%;" onclick="buyStoreProduct('${p.id}')">
+              🛒 خرید محصول (${hasVip ? '$' + discounted + ' با تخفیف VIP' : '$' + p.priceUsd.toFixed(2)})
+            </button>
+            <div style="font-size:11px; color:var(--muted); margin-top:6px; text-align:center;">
+              تعداد فروش تاکنون: ${p.salesCount} عدد
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  async function topupWallet() {
+    const res = await fetch('/api/wallet/topup', { method: 'POST' });
+    const data = await res.json();
+    if (data.ok) {
+      appState = data.state;
+      renderAll();
+      showToast('✅ کیف‌پول تستی مشتری ۱۰۰ دلار شارژ شد.');
+    }
+  }
+
+  async function openMysteryBox() {
+    const img = document.getElementById('chest-image');
+    const resBox = document.getElementById('unbox-result');
+    img.classList.add('shaking');
+    resBox.textContent = '🎲 در حال باز کردن جعبه روی شبکه TON...';
+
+    setTimeout(async () => {
+      const res = await fetch('/api/box/open', { method: 'POST' });
+      const data = await res.json();
+      img.classList.remove('shaking');
+      if (!res.ok) {
+        resBox.textContent = '';
+        return showToast('⚠️ ' + data.error);
+      }
+      appState = data.state;
+      renderAll();
+      resBox.innerHTML = `🎉 برنده شدید: «${data.mintedNft.name} (#${data.mintedNft.serial})» | بازخرید تضمینی: $${data.mintedNft.buybackUsd}`;
+      showToast(`💰 جعبه باز شد! <b>$${data.ownerShare}</b> سود خالص مستقیم به کیف‌پول شخصی شما اضافه شد و کارت <b>${data.mintedNft.name}</b> به کیف‌پول مشتری رفت.`);
+    }, 650);
+  }
+
+  async function instantBuyback(uid) {
+    const res = await fetch('/api/nft/buyback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ uid })
+    });
+    const data = await res.json();
+    if (data.ok) {
+      appState = data.state;
+      renderAll();
+      showToast(`💵 کارت «${data.soldNft.name}» به مبلغ $${data.soldNft.buybackUsd} توسط خزانه بازخرید شد و پول نقد به کیف‌پول مشتری برگشت.`);
+    }
+  }
+
+  async function sellOnGetgems(uid) {
+    const res = await fetch('/api/nft/sell-getgems', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ uid })
+    });
+    const data = await res.json();
+    if (data.ok) {
+      appState = data.state;
+      renderAll();
+      showToast(`💎 کارت در مارکت‌پلیس Getgems به قیمت $${data.salePrice} فروخته شد و <b>$${data.creatorRoyalty} حق سازنده (Royalty)</b> به کیف‌پول شما واریز شد!`);
+    }
+  }
+
+  async function forgeNft(tierId) {
+    const res = await fetch('/api/nft/forge', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tierId })
+    });
+    const data = await res.json();
+    if (!res.ok) return showToast('⚠️ ' + data.error);
+    appState = data.state;
+    renderAll();
+    showToast(`🔥 آهنگری موفق! ۳ کارت سوزانده شد و ۱ کارت «${data.forgedNft.name}» ساخته شد. کارمزد ($${data.fee}) به کیف‌پول شما واریز شد!`);
+  }
+
+  async function buyStoreProduct(productId) {
+    const res = await fetch('/api/store/buy', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ productId })
+    });
+    const data = await res.json();
+    if (!res.ok) return showToast('⚠️ ' + data.error);
+    appState = data.state;
+    renderAll();
+    showToast(`🛍️ محصول «${data.product.title}» به مبلغ $${data.finalPrice} فروخته شد و <b>$${data.netProfit} سود خالص</b> به کیف‌پول شما اضافه شد!`);
+  }
+
+  async function resolveBoard(id, decision) {
+    const res = await fetch('/api/board/resolve', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, decision })
+    });
+    const data = await res.json();
+    if (data.ok) {
+      appState = data.state;
+      renderAll();
+      if (decision === 'approve') {
+        showToast(`✅ مصوبه توسط شما تایید شد و ایجنت هوش مصنوعی تغییرات را به صورت زنده روی فروشگاه اعمال کرد!`);
+      } else {
+        showToast(`❌ مصوبه رد شد.`);
+      }
+    }
+  }
+
+  async function submitDirective() {
+    const input = document.getElementById('chairman-idea');
+    const idea = input.value.trim();
+    if (!idea) return showToast('⚠️ لطفاً ابتدا ایده یا دستور خود را بنویسید.');
+    const res = await fetch('/api/board/directive', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ idea })
+    });
+    const data = await res.json();
+    if (data.ok) {
+      input.value = '';
+      appState = data.state;
+      renderAll();
+      showToast(`👑 دستور شما به ۵ مدیر هوش مصنوعی ابلاغ شد و ${data.newResolutions.length} مصوبه اجرایی جدید در صف تایید شما قرار گرفت!`);
+    }
+  }
+
+  fetchState();
+</script>
+</body>
+</html>

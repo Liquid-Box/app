@@ -1,0 +1,341 @@
+{
+  "config": {
+    "brandName": "LIQUID BOX (لیکوئید باکس)",
+    "boxPriceUsd": 10,
+    "tonPriceUsd": 5,
+    "ownerCutPercent": 35,
+    "treasuryCutPercent": 65,
+    "forgeFeeUsd": 1.5,
+    "vipDiscountPercent": 25,
+    "activePromoBanner": "🎁 کمپین بزرگ LIQUID BOX فعال شد! دعوت از ۵ دوست = ۱ جعبه شانسی رایگان | تبدیل کارت به گیفت‌کارت و تلگرام پرمیوم = ۱۰٪ اعتبار هدیه بیشتر!",
+    "botHandle": "@LiquidBoxTonBot",
+    "tagline": "اولین سامانه جعبه شانسی و فروشگاه با نقدشوندگی ۱۰۰٪ آنی روی شبکه TON",
+    "chairmanChatId": 7364909674
+  },
+  "financials": {
+    "ownerVaultUsd": 547,
+    "treasuryPoolUsd": 1273,
+    "totalBoxesOpened": 182,
+    "totalStoreSalesUsd": 420,
+    "secondaryRoyaltiesUsd": 68.5,
+    "customerWalletUsd": 140
+  },
+  "nftTiers": [
+    {
+      "id": "common",
+      "name": "خنجر زمردین باستانی",
+      "enName": "Emerald Relic Dagger",
+      "rarityLabel": "Common (معمولی)",
+      "chance": 64,
+      "buybackUsd": 3.8,
+      "marketFloorUsd": 5.5,
+      "image": "/assets/nft_common_dagger.png",
+      "color": "#10b981",
+      "badgeBg": "rgba(16, 185, 129, 0.18)"
+    },
+    {
+      "id": "rare",
+      "name": "انگشتر سلطنتی یاقوت",
+      "enName": "Royal Ruby Signet",
+      "rarityLabel": "Rare (کمیاب)",
+      "chance": 25,
+      "buybackUsd": 8,
+      "marketFloorUsd": 13.5,
+      "image": "/assets/nft_rare_ring.png",
+      "color": "#38bdf8",
+      "badgeBg": "rgba(56, 189, 248, 0.18)"
+    },
+    {
+      "id": "epic",
+      "name": "جام طلای مذاب و تیغه کهکشانی",
+      "enName": "Cosmic Blade & Chalice",
+      "rarityLabel": "Epic (حماسی)",
+      "chance": 9,
+      "buybackUsd": 17,
+      "marketFloorUsd": 29,
+      "image": "/assets/nft_epic_chalice.png",
+      "color": "#c084fc",
+      "badgeBg": "rgba(192, 132, 252, 0.18)"
+    },
+    {
+      "id": "mythic",
+      "name": "نگهبان الماس سایبری (VIP)",
+      "enName": "Cyber Diamond Guardian",
+      "rarityLabel": "Mythic VIP (افسانه‌ای)",
+      "chance": 2,
+      "buybackUsd": 55,
+      "marketFloorUsd": 98,
+      "image": "/assets/nft_mythic_guardian.png",
+      "color": "#fbbf24",
+      "badgeBg": "rgba(251, 191, 36, 0.22)"
+    }
+  ],
+  "inventory": [
+    {
+      "uid": "nft-1791869732107",
+      "serial": 1261,
+      "tierId": "common",
+      "name": "خنجر زمردین باستانی",
+      "rarityLabel": "Common (معمولی)",
+      "backdrop": "Liquid Gold (2% Rare)",
+      "symbol": "🪐 حلقه زحل",
+      "buybackUsd": 4.56,
+      "marketFloorUsd": 6.6,
+      "image": "/assets/nft_common_dagger.png",
+      "color": "#10b981"
+    },
+    {
+      "uid": "nft-1042",
+      "serial": 1042,
+      "tierId": "common",
+      "name": "خنجر زمردین باستانی",
+      "rarityLabel": "Common (معمولی)",
+      "backdrop": "Cyber Emerald",
+      "symbol": "⚡ صاعقه TON",
+      "buybackUsd": 3.8,
+      "marketFloorUsd": 5.5,
+      "image": "/assets/nft_common_dagger.png",
+      "color": "#10b981"
+    },
+    {
+      "uid": "nft-1048",
+      "serial": 1048,
+      "tierId": "common",
+      "name": "خنجر زمردین باستانی",
+      "rarityLabel": "Common (معمولی)",
+      "backdrop": "Deep Sapphire",
+      "symbol": "💎 الماس خزانه",
+      "buybackUsd": 3.8,
+      "marketFloorUsd": 5.5,
+      "image": "/assets/nft_common_dagger.png",
+      "color": "#10b981"
+    },
+    {
+      "uid": "nft-1051",
+      "serial": 1051,
+      "tierId": "common",
+      "name": "خنجر زمردین باستانی",
+      "rarityLabel": "Common (معمولی)",
+      "backdrop": "Royal Purple",
+      "symbol": "👑 تاج سلطنتی",
+      "buybackUsd": 3.8,
+      "marketFloorUsd": 5.5,
+      "image": "/assets/nft_common_dagger.png",
+      "color": "#10b981"
+    },
+    {
+      "uid": "nft-1077",
+      "serial": 1077,
+      "tierId": "rare",
+      "name": "انگشتر سلطنتی یاقوت",
+      "rarityLabel": "Rare (کمیاب)",
+      "backdrop": "Royal Purple",
+      "symbol": "👑 تاج سلطنتی",
+      "buybackUsd": 8,
+      "marketFloorUsd": 13.5,
+      "image": "/assets/nft_rare_ring.png",
+      "color": "#38bdf8"
+    }
+  ],
+  "storeProducts": [
+    {
+      "id": "dig-1",
+      "title": "اشتراک ۶ ماهه Telegram Premium (فعالسازی آنی روی آیدی)",
+      "category": "پکیج ۱: دیجیتال و تلگرام",
+      "priceUsd": 16,
+      "profitMarginPercent": 45,
+      "icon": "⭐",
+      "description": "تحویل ۱۰۰٪ اتوماتیک توسط ایجنت در ۳ ثانیه بدون نیاز به رمز عبور؛ قابل خرید با TON یا تعویض مستقیم با کارت‌های NFT.",
+      "salesCount": 42
+    },
+    {
+      "id": "dig-2",
+      "title": "اکانت اختصاصی هوش مصنوعی (ChatGPT Plus + Claude Pro)",
+      "category": "پکیج ۱: اشتراک هوش مصنوعی",
+      "priceUsd": 22,
+      "profitMarginPercent": 50,
+      "icon": "🤖",
+      "description": "اکانت قانونی ۱ ماهه با تحویل آنی مشخصات در ربات تلگرام بلافاصله پس از پرداخت.",
+      "salesCount": 31
+    },
+    {
+      "id": "dig-3",
+      "title": "بسته ۱,۰۰۰ عددی ستاره تلگرام (Telegram Stars)",
+      "category": "پکیج ۱: دیجیتال و تلگرام",
+      "priceUsd": 19,
+      "profitMarginPercent": 38,
+      "icon": "✨",
+      "description": "واریز آنی ستاره تلگرام به اکانت مشتری توسط ربات؛ بسیار محبوب بین کاربران تلگرام.",
+      "salesCount": 27
+    },
+    {
+      "id": "game-1",
+      "title": "گیفت‌کارت ۲۰ دلاری PlayStation / Steam (کد دیجیتال آنی)",
+      "category": "پکیج ۲: گیمینگ و گیفت‌کارت",
+      "priceUsd": 21,
+      "profitMarginPercent": 35,
+      "icon": "🎮",
+      "description": "ارسال آنی کد اورجینال در چت تلگرام؛ بهترین گزینه برای کسانی که کارت Epic ($17) برنده شده‌اند تا به جای خروج پول، گیفت‌کارت بخرند!",
+      "salesCount": 38
+    },
+    {
+      "id": "game-2",
+      "title": "گیفت‌کارت ۲۵ دلاری Apple / Google Play (تحویل ۳ ثانیه‌ای)",
+      "category": "پکیج ۲: گیمینگ و گیفت‌کارت",
+      "priceUsd": 26,
+      "profitMarginPercent": 35,
+      "icon": "🍎",
+      "description": "کد دیجیتال ریجن آمریکا با تحویل خودکار ۲۴ ساعته توسط ایجنت فروش.",
+      "salesCount": 19
+    },
+    {
+      "id": "game-3",
+      "title": "پک جم و یوسی بازی‌ها (۶۶۰ یوسی PUBG / ۸۸۰ سی‌پی Call of Duty)",
+      "category": "پکیج ۲: آیتم درون‌بازی",
+      "priceUsd": 12,
+      "profitMarginPercent": 42,
+      "icon": "🔥",
+      "description": "شارژ آنی روی آیدی بازیکن در کمتر از ۲ دقیقه؛ فوق‌العاده پرفروش بین گیمرهای تلگرام.",
+      "salesCount": 54
+    }
+  ],
+  "agents": [
+    {
+      "id": "cso",
+      "role": "مدیر فروش و فروشگاه آزاد (CSO)",
+      "name": "کیان مجد (AI Sales & Store Director)",
+      "avatar": "🛒",
+      "color": "#38bdf8",
+      "status": "کشتار وایرال فعال ✅ | ۶ محصول دیجیتال آماده",
+      "lastReport": "طبق دستور جناب رئیس، تمام کالاهای فیزیکی حذف شد و ۶ محصول پرفروش دیجیتال (تلگرام پرمیوم، اکانت AI، استارز، گیفت‌کارت پلی‌استیشن/استیم/اپل و یوسی پابجی) با تحویل ۳ ثانیه‌ای خودکار چیده شد."
+    },
+    {
+      "id": "cmo",
+      "role": "مدیر بازاریابی و رشد (CMO)",
+      "name": "سارا نیک‌فر (AI Growth Director)",
+      "avatar": "📣",
+      "color": "#f43f5e",
+      "status": "کمپین رفرال (۵ دعوت = ۱ باکس) فعال شد ✅",
+      "lastReport": "کمپین وایرال «۵ دوست را دعوت کن = ۱ جعبه شانسی رایگان باز کن» آماده اجراست تا بدون هزینه تبلیغات اولیه، اولین موج کاربران تلگرام وارد @LiquidBoxTonBot شوند."
+    },
+    {
+      "id": "cfo",
+      "role": "مدیر مالی و خزانه (CFO)",
+      "name": "آرش راد (AI Financial Director)",
+      "avatar": "📊",
+      "color": "#10b981",
+      "status": "سهم سود آنی رئیس: ۳۵٪ ✅ | پاداش فروشگاه: +۱۰٪",
+      "lastReport": "با حذف کالاهای فیزیکی، هزینه ارسال و مرجوعی صفر شد! همچنین پیشنهاد داده‌ام هر کس کارت NFT برنده شد و به جای برداشت پول نقد، از فروشگاه گیفت‌کارت/اکانت خرید، ۱۰٪ اعتبار هدیه بگیرد تا پول نقد در خزانه ما بماند."
+    },
+    {
+      "id": "cpo",
+      "role": "مدیر توسعه محصول و کمیابی (CPO)",
+      "name": "نیما فرهمند (AI Product Director)",
+      "avatar": "🎨",
+      "color": "#c084fc",
+      "status": "اتصال مستقیم کارت‌های NFT به محصولات دیجیتال",
+      "lastReport": "قیمت محصولات دیجیتال را دقیقاً هماهنگ با ارزش کارت‌های Rare ($8) و Epic ($17) تنظیم کردم تا برندگان بلافاصله ترغیب به تبدیل کارت خود به اکانت پرمیوم یا گیفت‌کارت شوند."
+    },
+    {
+      "id": "coo",
+      "role": "مدیر عملیات و بلاکچین (COO)",
+      "name": "رادمهر تهرانی (AI Ops & Blockchain Director)",
+      "avatar": "⚙️",
+      "color": "#f59e0b",
+      "status": "تحویل خودکار ۲۴ ساعته کدها (API Delivery)",
+      "lastReport": "سیستم تحویل آنی کدها فعال است: به محض پرداخت مشتری، ایجنت کد گیفت‌کارت یا اشتراک را از پنل تامین‌کننده (API) می‌گیرد و در همان ثانیه در چت تلگرام تحویل می‌دهد."
+    }
+  ],
+  "boardResolutions": [
+    {
+      "id": "launch-1",
+      "agentId": "cmo",
+      "agentName": "سارا نیک‌فر (مدیر مارکتینگ - CMO)",
+      "department": "کمپین جذب ۱,۰۰۰ مشتری اول (وایرال تلگرام)",
+      "title": "فعال‌سازی سیستم دعوت دوستان: «به ازای دعوت هر ۵ نفر که ۱ جعبه بخرند = ۱ جعبه شانسی رایگان»",
+      "summary": "چون از فروش ۵ جعبه (۵۰ دلار)، ۱۵ دلار سود خالص به جیب شما می‌رود، اهدای ۱ جعبه ۱۰ دلاری به دعوت‌کننده کاملاً از محل سود پوشش داده می‌شود و باعث انفجار ویروسی لینک ربات در گروه‌های تلگرام می‌شود.",
+      "impact": "جذب ارگانیک ۱,۰۰۰+ کاربر فعال بدون هزینه تبلیغات اولیه",
+      "actionType": "UPDATE_PRICE",
+      "payload": {
+        "boxPriceUsd": 10,
+        "banner": "🎁 کمپین وایرال LIQUID BOX فعال شد! با دعوت دوستان خود، جعبه شانسی رایگان و تلگرام پرمیوم برنده شوید!"
+      },
+      "status": "approved",
+      "createdAt": "پیشنهاد جدید برای لانچ"
+    },
+    {
+      "id": "launch-2",
+      "agentId": "cfo",
+      "agentName": "آرش راد (مدیر مالی و خزانه - CFO)",
+      "department": "قفل کردن نقدینگی داخل سیستم",
+      "title": "پاداش ۱۰٪ اعتبار بیشتر برای تبدیل کارت NFT به محصولات دیجیتال فروشگاه",
+      "summary": "اگر مشتری یک کارت Epic (با بازخرید ۱۷ دلار) برنده شود و بخواهد پول نقد بگیرد ۱۷ دلار می‌گیرد؛ اما اگر از فروشگاه گیفت‌کارت یا اکانت AI بخرد، کارتش ۱۹ دلار حساب می‌شود! نتیجه: پول نقد از خزانه خارج نمی‌شود و حاشیه سود ۴۰٪ فروشگاه هم نصیب شما می‌شود.",
+      "impact": "+۴۵٪ حفظ نقدینگی در خزانه و دو برابر شدن سود خالص شما",
+      "actionType": "BOOST_MYTHIC",
+      "payload": {
+        "mythicBuybackUsd": 55,
+        "banner": "💎 امتیاز ویژه LIQUID BOX: با تبدیل کارت‌های برنده شده به گیفت‌کارت، تلگرام پرمیوم و اکانت AI، ۱۰٪ اعتبار هدیه بیشتر بگیرید!"
+      },
+      "status": "approved",
+      "createdAt": "پیشنهاد جدید مالی"
+    },
+    {
+      "id": "res-102",
+      "agentId": "cfo",
+      "agentName": "آرش راد (مدیر مالی و خزانه - CFO)",
+      "department": "سیاست مالی و قیمت‌گذاری",
+      "title": "افزایش سهم سود مستقیم رئیس هیئت‌مدیره از ۳۰٪ به ۳۵٪ روی هر جعبه",
+      "summary": "با توجه به اینکه کل بیزینس ۱۰۰٪ دیجیتال شده و هیچ هزینه انبارداری و ارسالی نداریم، می‌توانیم سهم برداشت آنی شما از هر جعبه ۱۰ دلاری را به ۳.۵۰ دلار افزایش دهیم.",
+      "impact": "+۱۶.۶٪ افزایش سود نقدی فوری شما در هر تراکنش",
+      "actionType": "UPDATE_SPLIT",
+      "payload": {
+        "ownerCutPercent": 35,
+        "treasuryCutPercent": 65
+      },
+      "status": "approved",
+      "createdAt": "آماده تایید"
+    }
+  ],
+  "auditLog": [
+    {
+      "time": "همین الان",
+      "actor": "رئیس هیئت‌مدیره ✅",
+      "text": "مصوبه ۳ تایید و اجرا شد: سهم سود مستقیم رئیس هیئت‌مدیره از هر جعبه به ۳۵٪ ($3.50 نقد در ثانیه اول) افزایش یافت."
+    },
+    {
+      "time": "همین الان",
+      "actor": "رئیس هیئت‌مدیره ✅",
+      "text": "مصوبه ۲ تایید و اجرا شد: پاداش ۱۰٪ اعتبار هدیه برای تبدیل کارت‌های NFT به محصولات دیجیتال فروشگاه و افزایش کف بازخرید نگهبان الماس به ۵۵ دلار فعال گردید."
+    },
+    {
+      "time": "همین الان",
+      "actor": "رئیس هیئت‌مدیره ✅",
+      "text": "مصوبه ۱ تایید و اجرا شد: کمپین وایرال «دعوت از ۵ دوست = ۱ جعبه شانسی رایگان» در سیستم ربات @LiquidBoxTonBot فعال شد."
+    },
+    {
+      "time": "همین الان",
+      "actor": "رئیس هیئت‌مدیره 👑",
+      "text": "دستور صادر شد: حذف کامل کالاهای فیزیکی و تمرکز ۱۰۰٪ فروشگاه LIQUID BOX روی پکیج ۱ (تلگرام پرمیوم، استارز و اکانت‌های AI) و پکیج ۲ (گیفت‌کارت‌ها و آیتم‌های گیمینگ با تحویل آنی)."
+    },
+    {
+      "time": "همین الان",
+      "actor": "رئیس هیئت‌مدیره 👑",
+      "text": "مصوبه شماره ۴ تایید شد: نام رسمی برند به «LIQUID BOX (@LiquidBoxTonBot)» با شعار «جعبه‌ای که همیشه پول نقد است!» تغییر یافت و در کل پلتفرم اعمال شد."
+    },
+    {
+      "time": "همین الان",
+      "actor": "جلسه هیئت‌مدیره هوش مصنوعی",
+      "text": "به دستور رئیس هیئت‌مدیره، ۵ مدیر ارشد ۵ پیشنهاد نام برند و آیدی ربات تلگرام را آماده و در صف تایید قرار دادند."
+    },
+    {
+      "time": "امروز ۱۰:۱۵",
+      "actor": "سیستم خودکار خزانه",
+      "text": "سهم ۳۰٪ از فروش ۱۸۰ جعبه اول (۵۴۰ دلار) به کیف‌پول شخصی رئیس هیئت‌مدیره منظور گردید."
+    },
+    {
+      "time": "امروز ۱۱:۳۰",
+      "actor": "رادمهر تهرانی (COO)",
+      "text": "قرارداد هوشمند کالکشن ۴ سطحی روی شبکه TON همگام‌سازی شد و آماده مینت آنی است."
+    }
+  ]
+}

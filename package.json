@@ -1,0 +1,13 @@
+{
+  "name": "liquid-box-ton-empire",
+  "version": "1.0.0",
+  "description": "LIQUID BOX — AI-Managed Telegram Mini-App (NFT Gacha + Digital Store + AI Boardroom)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "bot": "node telegram_bot.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
