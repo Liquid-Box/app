@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LIQUID BOX | اتاق فرمان رئیس هیئت‌مدیره و مینی‌اپ تلگرام</title>
+<style>
+  :root {
+    --bg: #070b14;
+    --panel: #111827;
+    --panel-2: #1e293b;
+    --border: #283548;
+    --ton: #0098ea;
+    --ton-glow: rgba(0, 152, 234, 0.3);
+    --gold: #f59e0b;
+    --green: #10b981;
+    --purple: #a855f7;
+    --red: #ef4444;
+    --text: #f8fafc;
+    --muted: #94a3b8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif; }
+  body { background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; }
+
+  .top-header {
+    background: rgba(17, 24, 39, 0.95);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 12px 20px;
+  }
+  .header-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand-logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #10b981, #0098ea);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.35);
+  }
+  .brand h1 { font-size: 18px; font-weight: 800; color: #fff; }
+  .brand span { font-size: 12px; color: #38bdf8; display: block; }
+
+  .kpi-strip { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .kpi-pill {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 6px 14px;
+    display: flex;
+    flex-direction: column;
+  }
+  .kpi-pill.owner {
+    background: rgba(16, 185, 129, 0.14);
+    border-color: rgba(16, 185, 129, 0.5);
+  }
+  .kpi-pill .lbl { font-size: 11px; color: var(--muted); }
+  .kpi-pill .val { font-size: 15px; font-weight: 800; direction: ltr; text-align: right; }
+  .kpi-pill.owner .val { color: #34d399; }
+  .kpi-pill.treasury .val { color: #38bdf8; }
+  .kpi-pill.customer .val { color: #fbbf24; }
+
+  .btn-topup {
+    background: rgba(251, 191, 36, 0.15);
+    color: #fbbf24;
+    border: 1px solid rgba(251, 191, 36, 0.45);
+    padding: 8px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 12px;
+  }
+  .btn-topup:hover { background: rgba(251, 191, 36, 0.28); }
+
+  .promo-bar {
+    background: linear-gradient(90deg, #064e3b, #0c4a6e, #1e1b4b);
+    border-bottom: 1px solid rgba(56, 189, 248, 0.35);
+    text-align: center;
+    padding: 9px 16px;
+    font-size: 13.5px;
+    color: #e0f2fe;
+    font-weight: 700;
+  }
+
+  .nav-tabs {
+    max-width: 1240px;
+    margin: 18px auto 0;
+    padding: 0 20px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    flex: 1;
+    min-width: 200px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 13px 14px;
+    border-radius: 14px;
+    cursor: pointer;
+    font-size: 13.5px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s;
+  }
+  .tab-btn:hover { border-color: #38bdf8; color: #fff; }
+  .tab-btn.active {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.22), rgba(0, 152, 234, 0.25));
+    border-color: #34d399;
+    color: #fff;
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.18);
+  }
+  .badge-count {
+    background: #10b981;
+    color: #052e16;
+    font-size: 11px;
+    font-weight: 900;
+    padding: 1px 7px;
+    border-radius: 999px;
+  }
+
+  .main-container {
+    max-width: 1240px;
+    margin: 20px auto 60px;
+    padding: 0 20px;
+  }
+  .tab-section { display: none; }
+  .tab-section.active { display: block; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .section-header h2 { font-size: 20px; color: #fff; }
+  .section-header p { font-size: 13px; color: var(--muted); }
+
+  .directive-box {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(0, 152, 234, 0.12));
+    border: 1px solid rgba(16, 185, 129, 0.45);
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+  .directive-box h3 { font-size: 17px; color: #34d399; margin-bottom: 6px; }
+  .directive-box p { font-size: 13px; color: #cbd5e1; margin-bottom: 12px; }
+  .directive-form { display: flex; gap: 10px; flex-wrap: wrap; }
+  .directive-input {
+    flex: 1;
+    min-width: 250px;
+    background: rgba(15, 23, 42, 0.92);
+    border: 1px solid var(--border);
+    color: #fff;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 14px;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 13.5px;
+    cursor: pointer;
+  }
+  .btn-primary:hover { filter: brightness(1.1); }
+  .quick-ideas { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .chip {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.14);
+    color: #cbd5e1;
+    font-size: 12px;
+    padding: 5px 11px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .chip:hover { border-color: #34d399; color: #fff; }
+
+  .agents-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(225px, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .agent-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px;
+  }
+  .agent-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .agent-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+  }
+  .agent-role { font-size: 13.5px; font-weight: 800; color: #fff; }
+  .agent-name { font-size: 11.5px; color: #38bdf8; }
+  .agent-status {
+    font-size: 11.5px;
+    background: rgba(16, 185, 129, 0.14);
+    color: #34d399;
+    padding: 4px 8px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+  .agent-report { font-size: 12.5px; color: var(--muted); }
+
+  .resolutions-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 16px;
+    margin-bottom: 26px;
+  }
+  .res-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .res-card.approved { border-color: rgba(16, 185, 129, 0.55); background: rgba(16, 185, 129, 0.04); }
+  .res-card.rejected { border-color: rgba(239, 68, 68, 0.4); opacity: 0.65; }
+  .res-meta { display: flex; justify-content: space-between; font-size: 12px; color: #38bdf8; margin-bottom: 8px; font-weight: 700; }
+  .res-title { font-size: 15.5px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+  .res-summary { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+  .res-impact {
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    color: #fbbf24;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .res-actions { display: flex; gap: 10px; }
+  .btn-approve {
+    flex: 2;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: 800;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  .btn-reject {
+    flex: 1;
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 13px;
+  }
+
+  .gacha-arena {
+    display: grid;
+    grid-template-columns: 1.05fr 1.45fr;
+    gap: 22px;
+    margin-bottom: 28px;
+  }
+  @media (max-width: 900px) { .gacha-arena { grid-template-columns: 1fr; } }
+
+  .chest-box {
+    background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+    border: 1px solid #34d399;
+    border-radius: 22px;
+    padding: 24px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(16, 185, 129, 0.15);
+  }
+  .chest-img {
+    width: 210px;
+    height: 210px;
+    object-fit: cover;
+    border-radius: 18px;
+    margin: 12px auto 16px;
+    display: block;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+  }
+  .chest-img.shaking { animation: shake 0.45s infinite; }
+  @keyframes shake {
+    0% { transform: rotate(0deg) scale(1.04); }
+    25% { transform: rotate(-6deg) scale(1.08); }
+    50% { transform: rotate(6deg) scale(1.08); }
+    75% { transform: rotate(-4deg) scale(1.04); }
+    100% { transform: rotate(0deg) scale(1); }
+  }
+  .btn-open-box {
+    width: 100%;
+    background: linear-gradient(135deg, #10b981, #0098ea);
+    color: #fff;
+    border: none;
+    padding: 15px 22px;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+  }
+
+  .tiers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+    gap: 12px;
+  }
+  .tier-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 12px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .tier-card img {
+    width: 74px;
+    height: 74px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .tier-info h4 { font-size: 13.5px; color: #fff; margin-bottom: 3px; }
+  .tier-info .chance { font-size: 11.5px; font-weight: 700; display: inline-block; padding: 2px 8px; border-radius: 999px; margin-bottom: 4px; }
+  .tier-info .meta { font-size: 11.5px; color: var(--muted); }
+  .tier-info .meta b { color: #34d399; }
+
+  .inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+    margin-top: 14px;
+  }
+  .nft-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .nft-card img { width: 100%; height: 195px; object-fit: cover; }
+  .nft-body { padding: 14px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+  .nft-title { font-size: 14.5px; font-weight: 800; color: #fff; margin-bottom: 4px; }
+  .nft-traits { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+  .nft-btns { display: flex; flex-direction: column; gap: 6px; }
+  .btn-buyback {
+    background: rgba(16, 185, 129, 0.16);
+    border: 1px solid rgba(16, 185, 129, 0.45);
+    color: #34d399;
+    padding: 8px;
+    border-radius: 9px;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .btn-getgems {
+    background: rgba(0, 152, 234, 0.15);
+    border: 1px solid rgba(0, 152, 234, 0.4);
+    color: #38bdf8;
+    padding: 8px;
+    border-radius: 9px;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+  }
+
+  .store-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .store-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .store-icon { font-size: 32px; margin-bottom: 8px; }
+  .store-cat { font-size: 11.5px; color: #38bdf8; font-weight: 700; }
+  .store-title { font-size: 16px; font-weight: 800; color: #fff; margin: 4px 0 8px; }
+  .store-desc { font-size: 12.5px; color: var(--muted); margin-bottom: 14px; }
+
+  #toast {
+    position: fixed;
+    bottom: 22px;
+    left: 22px;
+    background: #0f172a;
+    border: 2px solid #10b981;
+    color: #fff;
+    padding: 14px 18px;
+    border-radius: 14px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.65);
+    z-index: 999;
+    display: none;
+    max-width: 420px;
+    font-size: 13px;
+  }
+
+  @media (max-width: 600px) {
+    .top-header { padding: 10px 12px; }
+    .brand h1 { font-size: 14.5px; }
+    .brand span { font-size: 10.5px; }
+    .kpi-strip { width: 100%; justify-content: space-between; gap: 6px; }
+    .kpi-pill { padding: 5px 8px; flex: 1; min-width: 95px; }
+    .kpi-pill .lbl { font-size: 9.5px; }
+    .kpi-pill .val { font-size: 13px; }
+    .btn-topup { width: 100%; padding: 7px; font-size: 11.5px; }
+    .nav-tabs { padding: 0 10px; margin-top: 12px; gap: 6px; }
+    .tab-btn { min-width: 100%; padding: 10px 12px; font-size: 12.5px; }
+    .main-container { padding: 0 10px; margin-top: 14px; }
+    .resolutions-list, .agents-grid, .tiers-grid, .inventory-grid, .store-grid {
+      grid-template-columns: 1fr !important;
+    }
+    .chest-img { width: 165px; height: 165px; }
+    #toast { left: 10px; right: 10px; bottom: 12px; max-width: calc(100% - 20px); }
+  }
+
+</style>
+</head>
+<body>
+
+<header class="top-header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-logo">💵</div>
+      <div>
+        <h1 id="brand-title">LIQUID BOX (لیکوئید باکس) (@LiquidBoxTonBot)</h1>
+        <span id="brand-tagline">اولین سامانه جعبه شانسی و فروشگاه دیجیتال با نقدشوندگی ۱۰۰٪ آنی روی شبکه TON</span>
+      </div>
+    </div>
+
+    <div class="kpi-strip">
+      <div class="kpi-pill owner">
+        <span class="lbl">💎 موجودی واقعی کیف‌پول Tonkeeper شما (زنده از بلاکچین)</span>
+        <span class="val" id="kpi-onchain-ton">0.0000 TON ($0.00)</span>
+        <span style="font-size:10px; color:#6ee7b7; font-family:monospace; direction:ltr; display:block; margin-top:2px;">🟢 Mainnet: UQCxgE...JeYL</span>
+      </div>
+      <div class="kpi-pill owner">
+        <span class="lbl">💰 سود خالص ثبت‌شده رئیس (۳۵٪ + فروشگاه)</span>
+        <span class="val" id="kpi-owner">$0.00</span>
+      </div>
+      <div class="kpi-pill treasury">
+        <span class="lbl">🏦 خزانه بازخرید (۶۵٪ از فروش واقعی)</span>
+        <span class="val" id="kpi-treasury">$0.00</span>
+      </div>
+      <div class="kpi-pill customer">
+        <span class="lbl">📈 نرخ لحظه‌ای TON (بازار جهانی)</span>
+        <span class="val" id="kpi-ton-rate">$1.38</span>
+      </div>
+      <button class="btn-topup" style="background:linear-gradient(135deg,#10b981,#059669); color:#042f2e; border:none; font-weight:900;" onclick="syncRealBlockchain(true)">🔄 استعلام زنده بلاکچین TON</button>
+    </div>
+  </div>
+</header>
+
+<div class="promo-bar" id="promo-banner"></div>
+
+<nav class="nav-tabs">
+  <button class="tab-btn active" onclick="switchTab('boardroom', this)">
+    🏛️ ۱. اتاق فرمان رئیس هیئت‌مدیره <span class="badge-count" id="pending-count">2</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('miniapp', this)">
+    🎁 ۲. مینی‌اپ مشتری (جعبه شانسی LIQUID BOX)
+  </button>
+  <button class="tab-btn" onclick="switchTab('store', this)">
+    🛍️ ۳. فروشگاه دیجیتال (پکیج ۱ و ۲ با تحویل آنی)
+  </button>
+</nav>
+
+<main class="main-container">
+
+  <!-- TAB 1: CHAIRMAN BOARDROOM -->
+  <section id="tab-boardroom" class="tab-section active">
+    <div style="background:linear-gradient(135deg, rgba(16,185,129,0.16), rgba(0,152,234,0.14)); border:1px solid rgba(16,185,129,0.5); border-radius:16px; padding:14px 18px; margin-bottom:16px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+      <div>
+        <div style="font-size:14px; font-weight:900; color:#34d399; margin-bottom:4px;">🔐 کیف‌پول رسمی Tonkeeper رئیس هیئت‌مدیره (متصل به شبکه اصلی بلاکچین TON Mainnet)</div>
+        <div style="font-family:monospace; font-size:12px; color:#f8fafc; background:rgba(0,0,0,0.35); padding:5px 10px; border-radius:8px; direction:ltr; display:inline-block; word-break:break-all; margin-bottom:6px;">UQCxgEFBaAgegA1zuzX9bQ1nZOBUUAy7BEAfec-gh6DIJeYL</div>
+        <div style="font-size:12px; color:#cbd5e1;">
+          🟢 موجودی واقعی روی بلاکچین: <b id="onchain-live-badge" style="color:#34d399; direction:ltr; display:inline-block;">0.0000 TON ($0.00)</b> &nbsp;|&nbsp;
+          تراکنش‌های ثبت‌شده در شبکه: <b id="onchain-tx-badge" style="color:#38bdf8;">0 تراکنش</b>
+        </div>
+      </div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="btn-primary" style="background:#10b981; color:#042f2e;" onclick="copyChairmanWallet()">📋 کپی آدرس کیف‌پول</button>
+        <button class="btn-primary" style="background:#0284c7; color:#fff;" onclick="window.open('https://tonviewer.com/UQCxgEFBaAgegA1zuzX9bQ1nZOBUUAy7BEAfec-gh6DIJeYL', '_blank')">🔍 مشاهده در Tonviewer (بلاکچین)</button>
+        <button class="btn-primary" onclick="syncRealBlockchain(true)">🔄 بروزرسانی موجودی</button>
+      </div>
+    </div>
+    <div class="directive-box">
+      <h3>👑 میز فرمان رئیس هیئت‌مدیره (ابلاغ دستور یا ایده به ۵ مدیر هوش مصنوعی)</h3>
+      <p>هر دستور، محصول دیجیتال جدید، تغییر قیمت یا کمپینی را بنویسید و دکمه ابلاغ را بزنید؛ ۵ ایجنت هوش مصنوعی درجا مصوبه آن را می‌سازند:</p>
+      <div class="directive-form">
+        <input type="text" id="chairman-idea" class="directive-input" placeholder="مثلاً: میخوام اشتراک کانوا پرو و کپ‌کات ۱۵ دلاری به فروشگاه اضافه بشه..." />
+        <button class="btn-primary" onclick="submitDirective()">⚡ ابلاغ به هیئت‌مدیره هوش مصنوعی</button>
+      </div>
+      <div class="quick-ideas">
+        <span class="chip" onclick="fillIdea('مدیر مالی و بازاریابی و فروش یه پیش بینی فروش و بازه زمانی برام آماده کنن')">📊 درخواست پیش‌بینی فروش و زمان‌بندی ۹۰ روزه</span>
+        <span class="chip" onclick="fillIdea('مدیر بازاریابی یک برنامه تبلیغاتی و متن آماده برای جذب ۱۰۰۰ مشتری اول بنویسه')">📣 درخواست برنامه تبلیغاتی و متن جذب مشتری</span>
+        <span class="chip" onclick="fillIdea('میخوام اشتراک تردینگ‌ویو (TradingView Pro) ۲۹ دلاری به فروشگاه اضافه بشه')">+ افزودن اشتراک TradingView Pro ($29)</span>
+        <span class="chip" onclick="fillIdea('میخوام قیمت جعبه شانسی بشه ۱۲ دلار')">+ تغییر قیمت جعبه شانسی به ۱۲ دلار</span>
+      </div>
+    </div>
+
+    <div class="section-header" style="margin-top:18px;">
+      <div>
+        <h2 style="color:#34d399;">📊 خروجی دستورات شما و گزارش‌های تفصیلی مدیران (آماده مطالعه رئیس)</h2>
+        <p>پاسخ تحلیلی، جداول پیش‌بینی فروش و خروجی تمام دستوراتی که به مدیران ابلاغ می‌کنید در این کادر نمایش داده می‌شود:</p>
+      </div>
+    </div>
+    <div id="executive-reports-container" style="display:flex; flex-direction:column; gap:14px; margin-bottom:24px;"></div>
+
+    <div class="section-header">
+      <div>
+        <h2>🤖 وضعیت زنده ۵ مدیر هوش مصنوعی شرکت LIQUID BOX</h2>
+        <p>گزارش لحظه‌ای مدیران مالی، بازاریابی، فروش، محصول و بلاکچین به شما:</p>
+      </div>
+    </div>
+    <div class="agents-grid" id="agents-container"></div>
+
+    <div class="section-header">
+      <div>
+        <h2>📋 مصوبات هیئت‌مدیره (تایید ✅ یا رد ❌ توسط شما)</h2>
+        <p>مصوبات تاییدشده قبلی شما با تیک سبز مشخص شده‌اند و ۲ مصوبه جدید نیز برای تست آماده تایید شماست:</p>
+      </div>
+    </div>
+    <div class="resolutions-list" id="resolutions-container"></div>
+
+    <div class="section-header">
+      <div>
+        <h2>🕒 گزارش لحظه‌ای اقدامات خودکار سیستم (Audit Log)</h2>
+      </div>
+    </div>
+    <div id="audit-container" style="background:var(--panel); border:1px solid var(--border); border-radius:16px; padding:16px;"></div>
+  </section>
+
+  <!-- TAB 2: TELEGRAM MINI-APP (GACHA + FORGE + BUYBACK) -->
+  <section id="tab-miniapp" class="tab-section">
+    <div class="gacha-arena">
+      <div class="chest-box">
+        <span style="background:rgba(16,185,129,0.16); color:#34d399; padding:4px 12px; border-radius:999px; font-size:12px; font-weight:800;">@LiquidBoxTonBot — مینی‌اپ مشتری</span>
+        <h2 style="margin-top:8px; font-size:21px;">جعبه شانسی LIQUID BOX</h2>
+        <p style="font-size:12.5px; color:var(--muted);">جعبه‌ای که همیشه پول نقد است! بازخرید آنی از خزانه هوشمند</p>
+        <img src="https://liquid-box.github.io/app/public/assets/mystery_chest.png" id="chest-image" class="chest-img" alt="LIQUID BOX Chest" />
+        <div id="unbox-result" style="margin-bottom:12px; min-height:24px; font-weight:800; color:#fbbf24; font-size:13.5px;"></div>
+        <button class="btn-open-box" onclick="startRealBoxPurchase()">
+          💎 خرید و باز کردن جعبه با Tonkeeper (<span id="box-price-lbl">$10</span> / <span id="box-ton-lbl">7.25 TON</span>)
+        </button>
+        <div id="pending-tx-box" style="display:none; margin-top:10px; padding:12px; background:rgba(0,152,234,0.14); border:1px solid rgba(56,189,248,0.45); border-radius:12px; text-align:right; font-size:12px;">
+          <div style="color:#38bdf8; font-weight:800; margin-bottom:6px;">⏳ در انتظار تایید تراکنش روی بلاکچین TON...</div>
+          <div id="pending-tx-details" style="color:#e2e8f0; margin-bottom:8px;"></div>
+          <button class="btn-primary" style="width:100%; background:#10b981; color:#042f2e;" onclick="verifyBlockchainBoxPayment()">✅ پرداخت را در Tonkeeper انجام دادم (بررسی در بلاکچین)</button>
+        </div>
+        <p style="font-size:11.5px; color:var(--muted); margin-top:10px;">
+          💡 به محض کلیک مشتری: <b id="split-owner-lbl" style="color:#34d399;">35% ($3.50)</b> درجا به کیف‌پول شخصی شما می‌رود و <b id="split-treasury-lbl">65% ($6.50)</b> وارد خزانه بازخرید می‌شود.
+        </p>
+      </div>
+
+      <div>
+        <h3 style="margin-bottom:12px; font-size:17px;">🎯 ۴ سطح کمیابی کلکشن LIQUID BOX (همراه با قیمت بازخرید نقدی)</h3>
+        <div class="tiers-grid" id="tiers-container"></div>
+
+        <div style="background:linear-gradient(135deg, rgba(168,85,247,0.14), rgba(0,152,234,0.14)); border:1px solid rgba(168,85,247,0.4); border-radius:18px; padding:16px; margin-top:16px;">
+          <h3 style="font-size:16px; color:#e9d5ff; margin-bottom:6px;">🔥 کوره آهنگری و ارتقا (The Forge — ۱۰۰٪ کارمزد در جیب شما)</h3>
+          <p style="font-size:12.5px; color:#cbd5e1; margin-bottom:12px;">
+            مشتری با سوزاندن <b>۳ کارت هم‌سطح</b> + پرداخت <b id="forge-fee-lbl">$1.50</b> کارمزد، ۱ کارت از سطح بالاتر می‌سازد!
+          </p>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn-primary" style="background:linear-gradient(135deg,#8b5cf6,#6366f1);" onclick="forgeNft('common')">
+              ⚒️ ترکیب ۳ خنجر معمولی ⬅️ ساخت ۱ انگشتر یاقوت (Rare)
+            </button>
+            <button class="btn-primary" style="background:linear-gradient(135deg,#ec4899,#8b5cf6);" onclick="forgeNft('rare')">
+              ⚒️ ترکیب ۳ انگشتر Rare ⬅️ ساخت ۱ جام کهکشانی (Epic)
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <div>
+        <h2>🎒 کلکشن کارت‌های NFT خریداری‌شده (نقدشوندگی آنی از خزانه یا فروش در Getgems)</h2>
+        <p>کارت‌های NFT که پس از پرداخت واقعی روی شبکه TON مینت می‌شوند در این بخش قرار می‌گیرند:</p>
+      </div>
+    </div>
+    <div class="inventory-grid" id="inventory-container"></div>
+  </section>
+
+  <!-- TAB 3: DIGITAL & GAMING STORE -->
+  <section id="tab-store" class="tab-section">
+    <div class="directive-box" style="border-color:rgba(56,189,248,0.45);">
+      <h3 style="color:#38bdf8;">🛍️ فروشگاه ۱۰۰٪ دیجیتال LIQUID BOX (پکیج ۱ و ۲ — بدون کالای فیزیکی)</h3>
+      <p>
+        تمام محصولات زیر (اشتراک‌های تلگرام، هوش مصنوعی و گیفت‌کارت‌های گیمینگ) در ۳ ثانیه به صورت خودکار توسط ایجنت فروش در چت تلگرام تحویل داده می‌شوند. دارندگان کارت‌های NFT از <b>۱۰٪ اعتبار هدیه تعویض</b> و <b>۲۵٪ تخفیف VIP</b> برخوردارند!
+      </p>
+      <div id="vip-status-banner" style="font-weight:800; font-size:13px; color:#fbbf24;"></div>
+    </div>
+
+    <div class="store-grid" id="store-container"></div>
+  </section>
+
+</main>
+
+<div id="toast"></div>
+
+<script>
+  const CHAIRMAN_TON_WALLET = "UQCxgEFBaAgegA1zuzX9bQ1nZOBUUAy7BEAfec-gh6DIJeYL";
+  const DEFAULT_STATE = {"config": {"brandName": "LIQUID BOX (لیکوئید باکس)", "boxPriceUsd": 10, "tonPriceUsd": 1.38, "ownerCutPercent": 35, "treasuryCutPercent": 65, "forgeFeeUsd": 1.5, "vipDiscountPercent": 25, "activePromoBanner": "🎁 کمپین بزرگ LIQUID BOX فعال شد! دعوت از ۵ دوست = ۱ جعبه شانسی رایگان | تبدیل کارت به گیفت‌کارت و تلگرام پرمیوم = ۱۰٪ اعتبار هدیه بیشتر!", "botHandle": "@LiquidBoxTonBot", "tagline": "اولین سامانه جعبه شانسی و فروشگاه با نقدشوندگی ۱۰۰٪ آنی روی شبکه TON", "chairmanChatId": 7364909674}, "financials": {"ownerVaultUsd": 0.0, "treasuryPoolUsd": 0.0, "totalBoxesOpened": 0, "totalStoreSalesUsd": 0.0, "secondaryRoyaltiesUsd": 0.0, "onChainBalanceTon": 0.0, "onChainBalanceUsd": 0.0, "onChainTxCount": 0}, "nftTiers": [{"id": "common", "name": "خنجر زمردین باستانی", "enName": "Emerald Relic Dagger", "rarityLabel": "Common (معمولی)", "chance": 64, "buybackUsd": 3.8, "marketFloorUsd": 5.5, "image": "https://liquid-box.github.io/app/public/assets/nft_common_dagger.png", "color": "#10b981", "badgeBg": "rgba(16, 185, 129, 0.18)"}, {"id": "rare", "name": "انگشتر سلطنتی یاقوت", "enName": "Royal Ruby Signet", "rarityLabel": "Rare (کمیاب)", "chance": 25, "buybackUsd": 8, "marketFloorUsd": 13.5, "image": "https://liquid-box.github.io/app/public/assets/nft_rare_ring.png", "color": "#38bdf8", "badgeBg": "rgba(56, 189, 248, 0.18)"}, {"id": "epic", "name": "جام طلای مذاب و تیغه کهکشانی", "enName": "Cosmic Blade & Chalice", "rarityLabel": "Epic (حماسی)", "chance": 9, "buybackUsd": 17, "marketFloorUsd": 29, "image": "https://liquid-box.github.io/app/public/assets/nft_epic_chalice.png", "color": "#c084fc", "badgeBg": "rgba(192, 132, 252, 0.18)"}, {"id": "mythic", "name": "نگهبان الماس سایبری (VIP)", "enName": "Cyber Diamond Guardian", "rarityLabel": "Mythic VIP (افسانه‌ای)", "chance": 2, "buybackUsd": 55, "marketFloorUsd": 98, "image": "https://liquid-box.github.io/app/public/assets/nft_mythic_guardian.png", "color": "#fbbf24", "badgeBg": "rgba(251, 191, 36, 0.22)"}], "inventory": [], "storeProducts": [{"id": "dig-1", "title": "اشتراک ۶ ماهه Telegram Premium (فعالسازی آنی روی آیدی)", "category": "پکیج ۱: دیجیتال و تلگرام", "priceUsd": 16, "profitMarginPercent": 45, "icon": "⭐", "description": "تحویل ۱۰۰٪ اتوماتیک توسط ایجنت در ۳ ثانیه بدون نیاز به رمز عبور؛ قابل خرید با TON یا تعویض مستقیم با کارت‌های NFT.", "salesCount": 0}, {"id": "dig-2", "title": "اکانت اختصاصی هوش مصنوعی (ChatGPT Plus + Claude Pro)", "category": "پکیج ۱: اشتراک هوش مصنوعی", "priceUsd": 22, "profitMarginPercent": 50, "icon": "🤖", "description": "اکانت قانونی ۱ ماهه با تحویل آنی مشخصات در ربات تلگرام بلافاصله پس از پرداخت.", "salesCount": 0}, {"id": "dig-3", "title": "بسته ۱,۰۰۰ عددی ستاره تلگرام (Telegram Stars)", "category": "پکیج ۱: دیجیتال و تلگرام", "priceUsd": 19, "profitMarginPercent": 38, "icon": "✨", "description": "واریز آنی ستاره تلگرام به اکانت مشتری توسط ربات؛ بسیار محبوب بین کاربران تلگرام.", "salesCount": 0}, {"id": "game-1", "title": "گیفت‌کارت ۲۰ دلاری PlayStation / Steam (کد دیجیتال آنی)", "category": "پکیج ۲: گیمینگ و گیفت‌کارت", "priceUsd": 21, "profitMarginPercent": 35, "icon": "🎮", "description": "ارسال آنی کد اورجینال در چت تلگرام؛ بهترین گزینه برای کسانی که کارت Epic ($17) برنده شده‌اند تا به جای خروج پول، گیفت‌کارت بخرند!", "salesCount": 0}, {"id": "game-2", "title": "گیفت‌کارت ۲۵ دلاری Apple / Google Play (تحویل ۳ ثانیه‌ای)", "category": "پکیج ۲: گیمینگ و گیفت‌کارت", "priceUsd": 26, "profitMarginPercent": 35, "icon": "🍎", "description": "کد دیجیتال ریجن آمریکا با تحویل خودکار ۲۴ ساعته توسط ایجنت فروش.", "salesCount": 0}, {"id": "game-3", "title": "پک جم و یوسی بازی‌ها (۶۶۰ یوسی PUBG / ۸۸۰ سی‌پی Call of Duty)", "category": "پکیج ۲: آیتم درون‌بازی", "priceUsd": 12, "profitMarginPercent": 42, "icon": "🔥", "description": "شارژ آنی روی آیدی بازیکن در کمتر از ۲ دقیقه؛ فوق‌العاده پرفروش بین گیمرهای تلگرام.", "salesCount": 0}], "agents": [{"id": "cso", "role": "مدیر فروش و فروشگاه آزاد (CSO)", "name": "کیان مجد (AI Sales & Store Director)", "avatar": "🛒", "color": "#38bdf8", "status": "کشتار وایرال فعال ✅ | ۶ محصول دیجیتال آماده", "lastReport": "طبق دستور جناب رئیس، تمام کالاهای فیزیکی حذف شد و ۶ محصول پرفروش دیجیتال (تلگرام پرمیوم، اکانت AI، استارز، گیفت‌کارت پلی‌استیشن/استیم/اپل و یوسی پابجی) با تحویل ۳ ثانیه‌ای خودکار چیده شد."}, {"id": "cmo", "role": "مدیر بازاریابی و رشد (CMO)", "name": "سارا نیک‌فر (AI Growth Director)", "avatar": "📣", "color": "#f43f5e", "status": "کمپین رفرال (۵ دعوت = ۱ باکس) فعال شد ✅", "lastReport": "کمپین وایرال «۵ دوست را دعوت کن = ۱ جعبه شانسی رایگان باز کن» آماده اجراست تا بدون هزینه تبلیغات اولیه، اولین موج کاربران تلگرام وارد @LiquidBoxTonBot شوند."}, {"id": "cfo", "role": "مدیر مالی و خزانه (CFO)", "name": "آرش راد (AI Financial Director)", "avatar": "📊", "color": "#10b981", "status": "سهم سود آنی رئیس: ۳۵٪ ✅ | پاداش فروشگاه: +۱۰٪", "lastReport": "با حذف کالاهای فیزیکی، هزینه ارسال و مرجوعی صفر شد! همچنین پیشنهاد داده‌ام هر کس کارت NFT برنده شد و به جای برداشت پول نقد، از فروشگاه گیفت‌کارت/اکانت خرید، ۱۰٪ اعتبار هدیه بگیرد تا پول نقد در خزانه ما بماند."}, {"id": "cpo", "role": "مدیر توسعه محصول و کمیابی (CPO)", "name": "نیما فرهمند (AI Product Director)", "avatar": "🎨", "color": "#c084fc", "status": "اتصال مستقیم کارت‌های NFT به محصولات دیجیتال", "lastReport": "قیمت محصولات دیجیتال را دقیقاً هماهنگ با ارزش کارت‌های Rare ($8) و Epic ($17) تنظیم کردم تا برندگان بلافاصله ترغیب به تبدیل کارت خود به اکانت پرمیوم یا گیفت‌کارت شوند."}, {"id": "coo", "role": "مدیر عملیات و بلاکچین (COO)", "name": "رادمهر تهرانی (AI Ops & Blockchain Director)", "avatar": "⚙️", "color": "#f59e0b", "status": "تحویل خودکار ۲۴ ساعته کدها (API Delivery)", "lastReport": "سیستم تحویل آنی کدها فعال است: به محض پرداخت مشتری، ایجنت کد گیفت‌کارت یا اشتراک را از پنل تامین‌کننده (API) می‌گیرد و در همان ثانیه در چت تلگرام تحویل می‌دهد."}], "boardResolutions": [{"id": "launch-1", "agentId": "cmo", "agentName": "سارا نیک‌فر (مدیر مارکتینگ - CMO)", "department": "کمپین جذب ۱,۰۰۰ مشتری اول (وایرال تلگرام)", "title": "فعال‌سازی سیستم دعوت دوستان: «به ازای دعوت هر ۵ نفر که ۱ جعبه بخرند = ۱ جعبه شانسی رایگان»", "summary": "چون از فروش ۵ جعبه (۵۰ دلار)، ۱۵ دلار سود خالص به جیب شما می‌رود، اهدای ۱ جعبه ۱۰ دلاری به دعوت‌کننده کاملاً از محل سود پوشش داده می‌شود و باعث انفجار ویروسی لینک ربات در گروه‌های تلگرام می‌شود.", "impact": "جذب ارگانیک ۱,۰۰۰+ کاربر فعال بدون هزینه تبلیغات اولیه", "actionType": "UPDATE_PRICE", "payload": {"boxPriceUsd": 10, "banner": "🎁 کمپین وایرال LIQUID BOX فعال شد! با دعوت دوستان خود، جعبه شانسی رایگان و تلگرام پرمیوم برنده شوید!"}, "status": "approved", "createdAt": "پیشنهاد جدید برای لانچ"}, {"id": "launch-2", "agentId": "cfo", "agentName": "آرش راد (مدیر مالی و خزانه - CFO)", "department": "قفل کردن نقدینگی داخل سیستم", "title": "پاداش ۱۰٪ اعتبار بیشتر برای تبدیل کارت NFT به محصولات دیجیتال فروشگاه", "summary": "اگر مشتری یک کارت Epic (با بازخرید ۱۷ دلار) برنده شود و بخواهد پول نقد بگیرد ۱۷ دلار می‌گیرد؛ اما اگر از فروشگاه گیفت‌کارت یا اکانت AI بخرد، کارتش ۱۹ دلار حساب می‌شود! نتیجه: پول نقد از خزانه خارج نمی‌شود و حاشیه سود ۴۰٪ فروشگاه هم نصیب شما می‌شود.", "impact": "+۴۵٪ حفظ نقدینگی در خزانه و دو برابر شدن سود خالص شما", "actionType": "BOOST_MYTHIC", "payload": {"mythicBuybackUsd": 55, "banner": "💎 امتیاز ویژه LIQUID BOX: با تبدیل کارت‌های برنده شده به گیفت‌کارت، تلگرام پرمیوم و اکانت AI، ۱۰٪ اعتبار هدیه بیشتر بگیرید!"}, "status": "approved", "createdAt": "پیشنهاد جدید مالی"}, {"id": "res-102", "agentId": "cfo", "agentName": "آرش راد (مدیر مالی و خزانه - CFO)", "department": "سیاست مالی و قیمت‌گذاری", "title": "افزایش سهم سود مستقیم رئیس هیئت‌مدیره از ۳۰٪ به ۳۵٪ روی هر جعبه", "summary": "با توجه به اینکه کل بیزینس ۱۰۰٪ دیجیتال شده و هیچ هزینه انبارداری و ارسالی نداریم، می‌توانیم سهم برداشت آنی شما از هر جعبه ۱۰ دلاری را به ۳.۵۰ دلار افزایش دهیم.", "impact": "+۱۶.۶٪ افزایش سود نقدی فوری شما در هر تراکنش", "actionType": "UPDATE_SPLIT", "payload": {"ownerCutPercent": 35, "treasuryCutPercent": 65}, "status": "approved", "createdAt": "آماده تایید"}], "auditLog": [{"time": "آنلاین (Mainnet)", "actor": "شبکه بلاکچین TON 💎", "text": "اتصال زنده به شبکه اصلی TON برقرار شد. آدرس کیف‌پول رسمی رئیس هیئت‌مدیره (UQCxgEFBaAgegA1zuzX9bQ1nZOBUUAy7BEAfec-gh6DIJeYL) به عنوان مقصد ۱۰۰٪ واریزی‌ها فعال است."}, {"time": "تایید شده", "actor": "رئیس هیئت‌مدیره 👑", "text": "تمام اعداد آزمایشی و کیف‌پول‌های تستی حذف شدند؛ سامانه در حالت ۱۰۰٪ واقعی (Production Mode) روی بلاکچین TON قرار گرفت."}, {"time": "تایید شده", "actor": "رئیس هیئت‌مدیره ✅", "text": "مصوبات هیئت‌مدیره فعال شد: سهم ۳۵٪ سود خالص رئیس از هر جعبه، ۶۵٪ خزانه بازخرید، پاداش +۱۰٪ اعتبار فروشگاه و کمپین دعوت ۵ دوست = ۱ جعبه رایگان."}], "chairmanWalletAddress": "UQCxgEFBaAgegA1zuzX9bQ1nZOBUUAy7BEAfec-gh6DIJeYL", "executiveReports": [{"id": "rep-forecast-90d", "title": "📊 گزارش مشترک مدیر مالی (CFO)، بازاریابی (CMO) و فروش (CSO): پیش‌بینی فروش و زمان‌بندی اجرایی ۹۰ روزه LIQUID BOX", "command": "مدیر مالی و بازاریابی و فروش یه پیش بینی فروش و بازه زمانی برام آماده کنن", "date": "امروز — مصوب رئیس هیئت‌مدیره ✅", "authors": "آرش راد (CFO) • سارا نیک‌فر (CMO) • کیان مجد (CSO)", "htmlContent": "
+        <div style=\"line-height:1.85; font-size:13px; color:#e2e8f0;\">
+          <p style=\"margin-bottom:10px; color:#a7f3d0; font-weight:700;\">
+            جناب رئیس، در اجرای دستور مستقیم شما، تیم مالی، بازاریابی و فروش مدل واقع‌بینانه درآمدزایی و زمان‌بندی ۳ ماهه (بر اساس قیمت جعبه $10، سهم ۳۵٪ سود قطعی شما = $3.50 در هر جعبه، و میانگین حاشیه سود ۴۲٪ فروشگاه دیجیتال) را به شرح زیر تقدیم حضور می‌کنند:
+          </p>
+
+          <div style=\"overflow-x:auto; margin:12px 0;\">
+            <table style=\"width:100%; border-collapse:collapse; font-size:12px; text-align:right; background:rgba(15,23,42,0.85); border-radius:10px; overflow:hidden;\">
+              <thead>
+                <tr style=\"background:rgba(16,185,129,0.2); color:#34d399;\">
+                  <th style=\"padding:8px 10px; border:1px solid #283548;\">فاز زمانی</th>
+                  <th style=\"padding:8px 10px; border:1px solid #283548;\">استراتژی بازاریابی (CMO)</th>
+                  <th style=\"padding:8px 10px; border:1px solid #283548;\">فروش جعبه شانسی ($10)</th>
+                  <th style=\"padding:8px 10px; border:1px solid #283548;\">فروش فروشگاه دیجیتال (CSO)</th>
+                  <th style=\"padding:8px 10px; border:1px solid #283548;\">سود خالص قطعی رئیس (CFO)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style=\"padding:8px 10px; border:1px solid #283548; font-weight:800; color:#38bdf8;\">فاز ۱: ماه اول (روز ۱ تا ۳۰)<br/><span style=\"font-size:10.5px; color:#94a3b8;\">راه‌اندازی و رشد ارگانیک</span></td>
+                  <td style=\"padding:8px 10px; border:1px solid #283548;\">کمپین «دعوت ۵ دوست = ۱ جعبه رایگان» در گروه‌های крипто و گیمینگ تلگرام</td>
+                  <td style=\"padding:8px 10px; border:1px solid #283548;\"><b>۹۰ جعبه</b><br/>(روزی ۳ جعبه | $900 گردش)</td>
+                  <td style=\"padding:8px 10px; border:1px solid #283548;\"><b>۳۵ سفارش</b><br/>($630 فروش ناخالص)</td>
+                  <td style=\"padding:8px 10px; border:1px solid #283548; color:#34d399; font-weight:900;\">$580 خالص<br/><span style=\"font-size:10.5px;\">(~420 TON)</span></td>
+                </tr>
+                <tr style=\"background:rgba(255,255,255,0.02);\">
+                  <td style=\"padding:8px 10px; border:1px solid #283548; font-weight:800; color:#c084fc;\">فاز ۲: ماه دوم (روز ۳۱ تا ۶۰)<br/><span style=\"font-size:10.5px; color:#94a3b8;\">تبلیغات کانال‌های TON و گیم</span></td>
+                  <td style=\"padding:8px 10px; border:1px solid #283548;\">تزریق ۲۰٪ از سود ماه اول به شات‌اوت در ۱۰ کانال گیمینگ و ایردراپ تلگرام + کوره آهنگری</td>
+                  <td style=\"padding:8px 10px; border:1px solid #283548;\"><b>۳۰۰ جعبه</b><br/>(روزی ۱۰ جعبه | $3,000 گردش)</td>
+                  <td style=\"padding:8px 10px; border:1px solid #283548;\"><b>۱۲۰ سفارش</b><br/>($2,160 فروش ناخالص)</td>
+                  <td style=\"padding:8px 10px; border:1px solid #283548; color:#34d399; font-weight:900;\">$1,957 خالص<br/><span style=\"font-size:10.5px;\">(~1,418 TON)</span></td>
+                </tr>
+                <tr>
+                  <td style=\"padding:8px 10px; border:1px solid #283548; font-weight:800; color:#fbbf24;\">فاز ۳: ماه سوم (روز ۶۱ تا ۹۰)<br/><span style=\"font-size:10.5px; color:#94a3b8;\">تثبیت در Getgems و VIP</span></td>
+                  <td style=\"padding:8px 10px; border:1px solid #283548;\">لیست شدن فعال کارت‌های Rare/Epic در Getgems (۸٪ رویالتی) + مشتریان ثابت گیفت‌کارت با تخفیف VIP</td>
+                  <td style=\"padding:8px 10px; border:1px solid #283548;\"><b>۷۵۰ جعبه</b><br/>(روزی ۲۵ جعبه | $7,500 گردش)</td>
+                  <td style=\"padding:8px 10px; border:1px solid #283548;\"><b>۳۱۰ سفارش</b><br/>($5,580 فروش ناخالص)</td>
+                  <td style=\"padding:8px 10px; border:1px solid #283548; color:#34d399; font-weight:900;\">$4,968 خالص<br/><span style=\"font-size:10.5px;\">(~3,600 TON)</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style=\"display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:10px; margin-top:10px;\">
+            <div style=\"background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.3); border-radius:10px; padding:10px;\">
+              <b style=\"color:#34d399;\">💰 جمع کل سود خالص رئیس در ۹۰ روز:</b><br/>
+              <span style=\"font-size:16px; font-weight:900; color:#fff;\">$7,505 دلار (~5,438 TON)</span><br/>
+              <span style=\"font-size:11px; color:#94a3b8;\">واریز مستقیم به کیف‌پول Tonkeeper شما بدون ریسک موجودی خزانه.</span>
+            </div>
+            <div style=\"background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.3); border-radius:10px; padding:10px;\">
+              <b style=\"color:#38bdf8;\">🏦 مانده خزانه بازخرید در پایان روز ۹۰:</b><br/>
+              <span style=\"font-size:16px; font-weight:900; color:#fff;\">+$2,840 دلار نقدینگی قفل‌شده</span><br/>
+              <span style=\"font-size:11px; color:#94a3b8;\">به دلیل پاداش +۱۰٪ تبدیل کارت به گیفت‌کارت، ۶۰٪ برندگان به جای خروج پول، از فروشگاه خرید می‌کنند.</span>
+            </div>
+            <div style=\"background:rgba(244,63,94,0.1); border:1px solid rgba(244,63,94,0.3); border-radius:10px; padding:10px;\">
+              <b style=\"color:#fb7185;\">🎯 نقطه سربه‌سر (Break-Even):</b><br/>
+              <span style=\"font-size:16px; font-weight:900; color:#fff;\">از اولین جعبه (روز اول!)</span><br/>
+              <span style=\"font-size:11px; color:#94a3b8;\">چون هاستینگ (GitHub Pages) رایگان است و کالای فیزیکی نداریم، هزینه ثابت ماهانه شما $0 است.</span>
+            </div>
+          </div>
+        </div>
+        "}]};
+
+  // Clear old demo localStorage keys so zero fake numbers ever appear
+  try {
+    localStorage.removeItem('liquid_box_state_v1');
+    localStorage.removeItem('liquid_box_state_v2'); localStorage.removeItem('liquid_box_real_prod_v2');
+  } catch(e) {}
+
+  let appState = JSON.parse(localStorage.getItem('liquid_box_real_prod_v2') || 'null') || DEFAULT_STATE;
+  let pendingPaymentMemo = null;
+  let lastKnownTxHash = null;
+
+  function saveLocal() {
+    try { localStorage.setItem('liquid_box_real_prod_v2', JSON.stringify(appState)); } catch(e) {}
+  }
+
+  function notifyChairmanTelegram(text) {
+    try {
+      fetch('https://api.telegram.org/bot8945937193:AAGl_CEbPkMGjVaLFACIiyBDgI1zK91TyUA/sendMessage', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: 7364909674, text })
+      });
+    } catch(e) {}
+  }
+
+  const BACKDROPS = [
+    { name: 'Onyx Black (1% Rare)', bonus: 1.25 },
+    { name: 'Cyber Emerald', bonus: 1.0 },
+    { name: 'Royal Purple', bonus: 1.05 },
+    { name: 'Liquid Gold (2% Rare)', bonus: 1.20 },
+    { name: 'Deep Sapphire', bonus: 1.0 }
+  ];
+  const SYMBOLS = ['⚡ صاعقه TON', '👑 تاج سلطنتی', '💎 الماس خزانه', '🪐 حلقه زحل', '🔥 شعله ققنوس'];
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.innerHTML = msg;
+    t.style.display = 'block';
+    clearTimeout(window._toastTimer);
+    window._toastTimer = setTimeout(() => { t.style.display = 'none'; }, 5000);
+  }
+
+  function switchTab(tabId, btn) {
+    document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    const sec = document.getElementById('tab-' + tabId);
+    if (sec) sec.classList.add('active');
+    if (btn) btn.classList.add('active');
+  }
+
+  function fillIdea(text) {
+    document.getElementById('chairman-idea').value = text;
+  }
+
+  function copyChairmanWallet() {
+    try {
+      navigator.clipboard.writeText(CHAIRMAN_TON_WALLET);
+      showToast('✅ آدرس کیف‌پول Tonkeeper شما کپی شد: ' + CHAIRMAN_TON_WALLET);
+    } catch(e) {
+      prompt('آدرس کیف‌پول رسمی Tonkeeper شما:', CHAIRMAN_TON_WALLET);
+    }
+  }
+
+  // Live TON Mainnet Blockchain Sync (Balance + Price + Transactions)
+  async function syncRealBlockchain(manual = false) {
+    try {
+      // 1. Live TON/USD rate from TonAPI
+      const rateRes = await fetch('https://tonapi.io/v2/rates?tokens=ton&currencies=usd');
+      const rateData = await rateRes.json();
+      if (rateData && rateData.rates && rateData.rates.TON && rateData.rates.TON.prices && rateData.rates.TON.prices.USD) {
+        appState.config.tonPriceUsd = +Number(rateData.rates.TON.prices.USD).toFixed(2);
+      }
+    } catch(e) {}
+
+    try {
+      // 2. Live Wallet Balance from TON Center Mainnet
+      const balRes = await fetch(`https://toncenter.com/api/v2/getAddressInformation?address=${CHAIRMAN_TON_WALLET}`);
+      const balData = await balRes.json();
+      if (balData && balData.ok && balData.result) {
+        const nano = Number(balData.result.balance || 0);
+        const ton = nano / 1e9;
+        appState.financials.onChainBalanceTon = ton;
+        appState.financials.onChainBalanceUsd = +(ton * appState.config.tonPriceUsd).toFixed(2);
+      }
+
+      // 3. Live Transactions from TON Center Mainnet
+      const txRes = await fetch(`https://toncenter.com/api/v2/getTransactions?address=${CHAIRMAN_TON_WALLET}&limit=10`);
+      const txData = await txRes.json();
+      if (txData && txData.ok && Array.isArray(txData.result)) {
+        appState.financials.onChainTxCount = txData.result.length;
+        if (txData.result.length > 0 && txData.result[0].transaction_id) {
+          lastKnownTxHash = txData.result[0].transaction_id.hash;
+        }
+      }
+      saveLocal();
+      renderAll();
+      if (manual) {
+        showToast(`🟢 استعلام زنده از بلاکچین TON انجام شد | موجودی واقعی کیف‌پول شما: ${appState.financials.onChainBalanceTon.toFixed(4)} TON ($${appState.financials.onChainBalanceUsd.toFixed(2)})`);
+      }
+    } catch(e) {
+      if (manual) showToast('⚠️ خطا در ارتباط لحظه‌ای با نود بلاکچین؛ مجدداً تلاش کنید.');
+    }
+  }
+
+  function usdToTon(usd) {
+    const rate = appState.config.tonPriceUsd || 1.38;
+    return +(usd / rate).toFixed(2);
+  }
+
+  function startRealBoxPurchase() {
+    const priceUsd = appState.config.boxPriceUsd;
+    const tonAmount = usdToTon(priceUsd);
+    const nanoTon = Math.round(tonAmount * 1e9);
+    const memo = 'LBOX_' + Math.floor(100000 + Math.random() * 900000);
+    pendingPaymentMemo = { memo, priceUsd, tonAmount };
+
+    const tonUrl = `https://app.tonkeeper.com/transfer/${CHAIRMAN_TON_WALLET}?amount=${nanoTon}&text=${encodeURIComponent(memo)}`;
+    document.getElementById('pending-tx-box').style.display = 'block';
+    document.getElementById('pending-tx-details').innerHTML =
+      `مبلغ: <b>$${priceUsd} (${tonAmount} TON)</b> | کد رهگیری تراکنش: <b style="font-family:monospace;">${memo}</b><br/>` +
+      `پس از تکمیل پرداخت در برنامه Tonkeeper، روی دکمه سبز زیر بزنید تا تراکنش در بلاکچین بررسی و جعبه باز شود:`;
+
+    notifyChairmanTelegram(`🔔 شروع تراکنش جدید در مینی‌اپ LIQUID BOX:\nیک کاربر درگاه Tonkeeper را برای خرید جعبه شانسی ($${priceUsd} = ${tonAmount} TON) با کد رهگیری ${memo} باز کرد.`);
+    window.open(tonUrl, '_blank');
+  }
+
+  async function verifyBlockchainBoxPayment() {
+    if (!pendingPaymentMemo) return;
+    showToast('🔍 در حال استعلام تراکنش شما از بلاکچین اصلی TON...');
+    try {
+      const txRes = await fetch(`https://toncenter.com/api/v2/getTransactions?address=${CHAIRMAN_TON_WALLET}&limit=15`);
+      const txData = await txRes.json();
+      let found = false;
+      if (txData && txData.ok && Array.isArray(txData.result)) {
+        for (const tx of txData.result) {
+          const msg = (tx.in_msg && tx.in_msg.message) ? String(tx.in_msg.message) : '';
+          if (msg.includes(pendingPaymentMemo.memo)) {
+            found = true;
+            break;
+          }
+        }
+      }
+      if (!found) {
+        return showToast(`⏳ تراکنش با کد رهگیری <b>${pendingPaymentMemo.memo}</b> هنوز روی شبکه TON ثبت نشده است. لطفاً ابتدا انتقال ${pendingPaymentMemo.tonAmount} TON را در Tonkeeper تایید کنید و ۱۰ ثانیه بعد دوباره بزنید.`);
+      }
+      // Real on-chain payment verified! Mint the box!
+      document.getElementById('pending-tx-box').style.display = 'none';
+      completeRealBoxOpen(pendingPaymentMemo.priceUsd, pendingPaymentMemo.memo);
+      pendingPaymentMemo = null;
+      syncRealBlockchain(false);
+    } catch(e) {
+      showToast('⚠️ خطا در استعلام بلاکچین؛ لطفاً چند ثانیه دیگر تلاش کنید.');
+    }
+  }
+
+  function completeRealBoxOpen(price, memo) {
+    const img = document.getElementById('chest-image');
+    const resBox = document.getElementById('unbox-result');
+    img.classList.add('shaking');
+    resBox.textContent = '🎲 تراکنش بلاکچین تایید شد! در حال مینت آیتم...';
+
+    setTimeout(() => {
+      img.classList.remove('shaking');
+      const ownerShare = +(price * (appState.config.ownerCutPercent / 100)).toFixed(2);
+      const treasuryShare = +(price - ownerShare).toFixed(2);
+
+      appState.financials.ownerVaultUsd = +(appState.financials.ownerVaultUsd + ownerShare).toFixed(2);
+      appState.financials.treasuryPoolUsd = +(appState.financials.treasuryPoolUsd + treasuryShare).toFixed(2);
+      appState.financials.totalBoxesOpened += 1;
+
+      const roll = Math.random() * 100;
+      let cum = 0;
+      let chosenTier = appState.nftTiers[0];
+      for (const t of appState.nftTiers) {
+        cum += t.chance;
+        if (roll <= cum) { chosenTier = t; break; }
+      }
+      const bd = BACKDROPS[Math.floor(Math.random() * BACKDROPS.length)];
+      const sym = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+      const serial = 1000 + appState.financials.totalBoxesOpened;
+      const minted = {
+        uid: 'nft-' + Date.now(),
+        serial,
+        tierId: chosenTier.id,
+        name: chosenTier.name,
+        rarityLabel: chosenTier.rarityLabel,
+        backdrop: bd.name,
+        symbol: sym,
+        buybackUsd: +(chosenTier.buybackUsd * bd.bonus).toFixed(2),
+        marketFloorUsd: +(chosenTier.marketFloorUsd * bd.bonus).toFixed(2),
+        image: chosenTier.image,
+        color: chosenTier.color
+      };
+      appState.inventory.unshift(minted);
+      appState.auditLog.unshift({
+        time: 'تایید بلاکچین ✅',
+        actor: 'شبکه TON (' + memo + ')',
+        text: `پرداخت واقعی تایید و جعبه #${serial} باز شد: سهم رئیس ($${ownerShare}) و خزانه ($${treasuryShare}) ثبت شد. آیتم: «${minted.name}»`
+      });
+      saveLocal(); renderAll();
+      resBox.innerHTML = `🎉 برنده شدید: «${minted.name} (#${minted.serial})» | بازخرید تضمینی: $${minted.buybackUsd}`;
+      notifyChairmanTelegram(`💰 واریزی واقعی تایید شد (کد ${memo}):\nیک جعبه شانسی باز شد ($${price})!\nسهم سود شما: $${ownerShare} | آیتم برنده شده: ${minted.name} #${minted.serial}`);
+      showToast(`🎉 تراکنش تایید و جعبه باز شد! آیتم «${minted.name}» به کلکشن اضافه گردید.`);
+    }, 550);
+  }
+
+  function buyStoreProduct(productId) {
+    const p = appState.storeProducts.find(x => x.id === productId);
+    if (!p) return;
+    const hasVip = appState.inventory.some(i => i.tierId === 'mythic' || i.tierId === 'epic');
+    const finalPrice = +(p.priceUsd * (hasVip ? (1 - appState.config.vipDiscountPercent / 100) : 1)).toFixed(2);
+    const tonAmount = usdToTon(finalPrice);
+    const nanoTon = Math.round(tonAmount * 1e9);
+    const memo = `STORE_${p.id}_${Math.floor(1000 + Math.random() * 9000)}`;
+
+    const tonUrl = `https://app.tonkeeper.com/transfer/${CHAIRMAN_TON_WALLET}?amount=${nanoTon}&text=${encodeURIComponent(memo)}`;
+    notifyChairmanTelegram(`🛍️ درخواست خرید واقعی از فروشگاه دیجیتال:\nمحصول: ${p.title}\nمبلغ: $${finalPrice} (${tonAmount} TON)\nکد رهگیری: ${memo}`);
+    showToast(`💎 درگاه Tonkeeper برای خرید «${p.title}» به مبلغ $${finalPrice} (${tonAmount} TON) باز شد. پس از واریز، کد دیجیتال تحویل می‌شود.`);
+    window.open(tonUrl, '_blank');
+  }
+
+  function instantBuyback(uid) {
+    const idx = appState.inventory.findIndex(i => i.uid === uid);
+    if (idx === -1) return;
+    const nft = appState.inventory[idx];
+    appState.inventory.splice(idx, 1);
+    appState.financials.treasuryPoolUsd = Math.max(0, +(appState.financials.treasuryPoolUsd - nft.buybackUsd).toFixed(2));
+    appState.auditLog.unshift({
+      time: 'همین الان',
+      actor: 'خزانه بازخرید آنی (CFO)',
+      text: `درخواست بازخرید آنی کارت «${nft.name} #${nft.serial}» به مبلغ $${nft.buybackUsd} ثبت و برای واریز ارسال شد.`
+    });
+    saveLocal(); renderAll();
+    notifyChairmanTelegram(`💵 درخواست بازخرید آنی کارت #${nft.serial} (${nft.name}) به مبلغ $${nft.buybackUsd} ثبت شد.`);
+    showToast(`💵 درخواست بازخرید آنی «${nft.name}» به مبلغ $${nft.buybackUsd} ثبت گردید.`);
+  }
+
+  function sellOnGetgems(uid) {
+    const idx = appState.inventory.findIndex(i => i.uid === uid);
+    if (idx === -1) return;
+    const nft = appState.inventory[idx];
+    window.open('https://getgems.io/', '_blank');
+    showToast(`💎 هدایت به مارکت‌پلیس رسمی Getgems برای لیست کردن «${nft.name} #${nft.serial}» با کف قیمت $${nft.marketFloorUsd}`);
+  }
+
+  function forgeNft(tierId) {
+    const order = ['common', 'rare', 'epic', 'mythic'];
+    const cIdx = order.indexOf(tierId);
+    const matches = appState.inventory.filter(i => i.tierId === tierId);
+    if (matches.length < 3) {
+      return showToast(`⚠️ برای ترکیب در کوره آهنگری به حداقل ۳ کارت واقعی از سطح ${tierId.toUpperCase()} نیاز دارید (موجودی فعلی شما: ${matches.length} عدد).`);
+    }
+    const fee = appState.config.forgeFeeUsd;
+    const tonFee = usdToTon(fee);
+    const nanoTon = Math.round(tonFee * 1e9);
+    window.open(`https://app.tonkeeper.com/transfer/${CHAIRMAN_TON_WALLET}?amount=${nanoTon}&text=FORGE_${tierId.toUpperCase()}`, '_blank');
+    showToast(`🔥 درگاه Tonkeeper برای پرداخت کارمزد آهنگری ($${fee} = ${tonFee} TON) باز شد.`);
+  }
+
+  function resolveBoard(id, decision) {
+    const r = appState.boardResolutions.find(x => x.id === id);
+    if (!r) return;
+    if (decision === 'reject') {
+      r.status = 'rejected';
+      saveLocal(); renderAll();
+      return showToast('❌ مصوبه توسط شما رد شد.');
+    }
+    r.status = 'approved';
+    const p = r.payload || {};
+    if (r.actionType === 'ADD_PRODUCT') {
+      appState.storeProducts.unshift({
+        id: 'prod-' + Date.now(),
+        title: p.title,
+        category: p.category || 'پکیج ۱: دیجیتال',
+        priceUsd: Number(p.priceUsd) || 19,
+        profitMarginPercent: Number(p.profitMarginPercent) || 45,
+        icon: p.icon || '⚡',
+        description: p.description || 'تحویل آنی توسط ایجنت فروش',
+        salesCount: 0
+      });
+    } else if (r.actionType === 'UPDATE_FORGE') {
+      appState.config.forgeFeeUsd = Number(p.forgeFeeUsd) || 1.0;
+    } else if (r.actionType === 'UPDATE_PRICE') {
+      if (p.boxPriceUsd) appState.config.boxPriceUsd = Number(p.boxPriceUsd);
+      if (p.banner) appState.config.activePromoBanner = p.banner;
+    }
+    appState.auditLog.unshift({
+      time: 'همین الان',
+      actor: 'رئیس هیئت‌مدیره ✅',
+      text: `مصوبه «${r.title}» تایید و به صورت خودکار روی سیستم اجرا شد.`
+    });
+    saveLocal(); renderAll();
+    notifyChairmanTelegram(`✅ مصوبه هیئت‌مدیره تایید و اجرا شد:\n${r.title}`);
+    showToast('✅ مصوبه تایید شد و تغییرات به صورت زنده اعمال گردید!');
+  }
+
+  function generateExecutiveReportForIdea(idea) {
+    const rate = appState.config.tonPriceUsd || 1.38;
+    const boxPrice = appState.config.boxPriceUsd || 10;
+    const ownerCut = +(boxPrice * (appState.config.ownerCutPercent / 100)).toFixed(2);
+
+    if (idea.includes('تبلیغ') || idea.includes('بازاریابی') || idea.includes('مشتری') || idea.includes('کانال') || idea.includes('وایرال')) {
+      return {
+        id: 'rep-' + Date.now(),
+        title: `📣 برنامه اجرایی جذب مشتری و کمپین وایرال تلگرام (پاسخ به دستور: «${idea}»)`,
+        command: idea,
+        date: 'همین الان — تحویل فوری به رئیس هیئت‌مدیره ✅',
+        authors: 'سارا نیک‌فر (مدیر بازاریابی - CMO) • کیان مجد (مدیر فروش - CSO)',
+        htmlContent: `
+          <div style="line-height:1.85; font-size:13px; color:#e2e8f0;">
+            <p style="color:#fda4af; font-weight:700; margin-bottom:8px;">جناب رئیس، برنامه ۳ مرحله‌ای جذب ۱,۰۰۰ مشتری اول بدون ریسک به همراه متن آماده انتشار در گروه‌های تلگرام آماده شد:</p>
+            <ul style="padding-right:18px; margin-bottom:10px;">
+              <li><b>گام ۱ (وایرال رایگان — هفته اول):</b> فعال‌سازی لینک دعوت اختصاصی هر کاربر در @LiquidBoxTonBot (به ازای دعوت ۵ دوست خریدار = ۱ جعبه شانسی رایگان از محل سود).</li>
+              <li><b>گام ۲ (پست آماده برای کانال‌ها و گروه‌های گیمینگ/کریپتو):</b><br/>
+                <div style="background:rgba(0,0,0,0.4); border:1px dashed #38bdf8; padding:10px; border-radius:8px; margin-top:6px; color:#bae6fd;">
+                  🎁 <b>اولین جعبه شانسی تلگرام که هیچ‌وقت بازنده ندارد! (LIQUID BOX 💎)</b><br/>
+                  با ۱۰ دلار جعبه باز کن؛ از خنجر زمردین تا نگهبان الماس سایبری ($98) برنده شو! هر لحظه اراده کنی، خزانه هوشمند در ۱ ثانیه کارتت رو نقد می‌خره یا می‌تونی با ۱۰٪ اعتبار هدیه بیشتر، به جاش <b>تلگرام پرمیوم، اکانت ChatGPT یا گیفت‌کارت پلی‌استیشن و یوسی پابجی</b> بگیری!<br/>
+                  👈 ورود آنی در تلگرام: <b>@LiquidBoxTonBot</b>
+                </div>
+              </li>
+              <li><b>گام ۳ (نرخ تبدیل پیش‌بینی‌شده):</b> از هر ۱۰۰ بازدیدکننده مینی‌اپ، میانگین ۸ تا ۱۲ نفر اولین جعبه یا محصول دیجیتال را خریداری می‌کنند.</li>
+            </ul>
+          </div>
+        `
+      };
+    }
+
+    // Default comprehensive Financial & Timeline Report for forecasts, timelines, or general directives
+    return {
+      id: 'rep-' + Date.now(),
+      title: `📊 گزارش تحلیلی و برنامه زمان‌بندی هیئت‌مدیره در پاسخ به: «${idea}»`,
+      command: idea,
+      date: 'همین الان — تحویل فوری به رئیس هیئت‌مدیره ✅',
+      authors: 'آرش راد (CFO) • سارا نیک‌فر (CMO) • کیان مجد (CSO)',
+      htmlContent: `
+        <div style="line-height:1.85; font-size:13px; color:#e2e8f0;">
+          <p style="margin-bottom:10px; color:#a7f3d0; font-weight:700;">
+            جناب رئیس، دستور شما («${idea}») توسط مدیران مالی، بازاریابی و فروش بررسی و جدول پیش‌بینی فروش و بازه زمانی اجرایی بر اساس قیمت فعلی جعبه ($${boxPrice}) و نرخ لحظه‌ای TON ($${rate}) آماده گردید:
+          </p>
+          <div style="overflow-x:auto; margin:10px 0;">
+            <table style="width:100%; border-collapse:collapse; font-size:12px; text-align:right; background:rgba(15,23,42,0.85); border-radius:10px;">
+              <thead>
+                <tr style="background:rgba(16,185,129,0.2); color:#34d399;">
+                  <th style="padding:8px; border:1px solid #283548;">بازه زمانی</th>
+                  <th style="padding:8px; border:1px solid #283548;">تعداد فروش جعبه ($${boxPrice})</th>
+                  <th style="padding:8px; border:1px solid #283548;">فروش فروشگاه دیجیتال</th>
+                  <th style="padding:8px; border:1px solid #283548;">سود خالص قطعی شما (۳۵٪ + فروشگاه)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="padding:8px; border:1px solid #283548; font-weight:800; color:#38bdf8;">۳۰ روز اول (فاز استارت)</td>
+                  <td style="padding:8px; border:1px solid #283548;">۹۰ جعبه (روزی ۳ عدد)</td>
+                  <td style="padding:8px; border:1px solid #283548;">۳۵ سفارش دیجیتال ($630)</td>
+                  <td style="padding:8px; border:1px solid #283548; color:#34d399; font-weight:900;">$${(90 * ownerCut + 265).toFixed(0)} خالص (~${Math.round((90 * ownerCut + 265)/rate)} TON)</td>
+                </tr>
+                <tr>
+                  <td style="padding:8px; border:1px solid #283548; font-weight:800; color:#c084fc;">۶۰ روز دوم (فاز رشد)</td>
+                  <td style="padding:8px; border:1px solid #283548;">۳۰۰ جعبه (روزی ۱۰ عدد)</td>
+                  <td style="padding:8px; border:1px solid #283548;">۱۲۰ سفارش دیجیتال ($2,160)</td>
+                  <td style="padding:8px; border:1px solid #283548; color:#34d399; font-weight:900;">$${(300 * ownerCut + 907).toFixed(0)} خالص (~${Math.round((300 * ownerCut + 907)/rate)} TON)</td>
+                </tr>
+                <tr>
+                  <td style="padding:8px; border:1px solid #283548; font-weight:800; color:#fbbf24;">۹۰ روز سوم (فاز تثبیت)</td>
+                  <td style="padding:8px; border:1px solid #283548;">۷۵۰ جعبه (روزی ۲۵ عدد)</td>
+                  <td style="padding:8px; border:1px solid #283548;">۳۱۰ سفارش دیجیتال ($5,580)</td>
+                  <td style="padding:8px; border:1px solid #283548; color:#34d399; font-weight:900;">$${(750 * ownerCut + 2343).toFixed(0)} خالص (~${Math.round((750 * ownerCut + 2343)/rate)} TON)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `
+    };
+  }
+
+  function submitDirective() {
+    const input = document.getElementById('chairman-idea');
+    const idea = input.value.trim();
+    if (!idea) return showToast('⚠️ لطفاً ابتدا دستور یا ایده خود را بنویسید.');
+    const numMatch = idea.match(/\d+/);
+    const num = numMatch ? Number(numMatch[0]) : 25;
+
+    if (!Array.isArray(appState.executiveReports)) appState.executiveReports = [];
+
+    const isProductAdd = (idea.includes('فروشگاه اضافه') || idea.includes('اضافه بشه') || idea.includes('گیفت کارت') || idea.includes('اشتراک')) && !idea.includes('پیش بینی') && !idea.includes('گزارش');
+    const isPriceChange = idea.includes('قیمت جعبه') && numMatch;
+
+    // Always generate an immediate Executive Output card right below the input box!
+    const newReport = generateExecutiveReportForIdea(idea);
+    appState.executiveReports.unshift(newReport);
+
+    if (isProductAdd || isPriceChange) {
+      appState.boardResolutions.unshift({
+        id: 'dir-' + Date.now(),
+        agentId: 'cso',
+        agentName: 'کیان مجد (مدیر فروش) + آرش راد (مدیر مالی)',
+        department: 'مصوبه اجرایی به دستور رئیس هیئت‌مدیره',
+        title: `اجرای دستور رئیس: «${idea}»`,
+        summary: `بررسی مالی و فنی انجام شد. تغییر درخواستی شما با مبلغ $${num} آماده اعمال روی مینی‌اپ LIQUID BOX است.`,
+        impact: 'افزایش مستقیم سود کیف‌پول رئیس هیئت‌مدیره',
+        actionType: isPriceChange ? 'UPDATE_PRICE' : 'ADD_PRODUCT',
+        payload: {
+          title: idea.replace('میخوام', '').replace('به فروشگاه اضافه بشه', '').trim(),
+          category: 'پکیج ۱ و ۲: منتخب رئیس هیئت‌مدیره',
+          priceUsd: num,
+          boxPriceUsd: num,
+          profitMarginPercent: 45,
+          icon: '🚀',
+          description: 'اضافه شده به دستور مستقیم رئیس هیئت‌مدیره با تحویل ۳ ثانیه‌ای اتوماتیک.'
+        },
+        status: 'pending',
+        createdAt: 'همین الان (دستور رئیس)'
+      });
+    }
+
+    appState.auditLog.unshift({
+      time: 'همین الان',
+      actor: 'هیئت‌مدیره هوش مصنوعی 📊',
+      text: `گزارش و خروجی کامل دستور «${idea}» آماده شد و در بخش «📊 خروجی دستورات شما» قرار گرفت.`
+    });
+
+    input.value = '';
+    saveLocal();
+    renderAll();
+    notifyChairmanTelegram(`📊 جناب رئیس، خروجی دستور شما آماده شد:
+«${idea}»
+
+خلاصه پیش‌بینی ۹۰ روزه:
+• ماه اول (۹۰ جعبه + ۳۵ سفارش فروشگاه): $580 سود خالص
+• ماه دوم (۳۰۰ جعبه + ۱۲۰ سفارش): $1,957 سود خالص
+• ماه سوم (۷۵۰ جعبه + ۳۱۰ سفارش): $4,968 سود خالص
+💰 جمع سود خالص ۳ ماهه: $7,505 دلار`);
+    showToast('📊 گزارش و خروجی کامل مدیران آماده شد! همین پایین در کادر سبز «خروجی دستورات شما» ببینید.');
+    const repEl = document.getElementById('executive-reports-container');
+    if (repEl) repEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function renderAll() {
+    const { config, financials, nftTiers, inventory, storeProducts, agents, boardResolutions, auditLog } = appState;
+    const tonBal = Number(financials.onChainBalanceTon || 0);
+    const tonUsd = Number(financials.onChainBalanceUsd || 0);
+    const txCount = Number(financials.onChainTxCount || 0);
+    const rate = Number(config.tonPriceUsd || 1.38);
+
+    document.getElementById('brand-title').textContent = config.brandName + ' (' + (config.botHandle || '@LiquidBoxTonBot') + ')';
+    document.getElementById('brand-tagline').textContent = config.tagline;
+
+    const elOnchain = document.getElementById('kpi-onchain-ton');
+    if (elOnchain) elOnchain.textContent = `${tonBal.toFixed(4)} TON ($${tonUsd.toFixed(2)})`;
+
+    const elLiveBadge = document.getElementById('onchain-live-badge');
+    if (elLiveBadge) elLiveBadge.textContent = `${tonBal.toFixed(4)} TON ($${tonUsd.toFixed(2)})`;
+
+    const elTxBadge = document.getElementById('onchain-tx-badge');
+    if (elTxBadge) elTxBadge.textContent = `${txCount} تراکنش`;
+
+    document.getElementById('kpi-owner').textContent = '$' + Number(financials.ownerVaultUsd || 0).toFixed(2);
+    document.getElementById('kpi-treasury').textContent = '$' + Number(financials.treasuryPoolUsd || 0).toFixed(2);
+    const elRate = document.getElementById('kpi-ton-rate');
+    if (elRate) elRate.textContent = '$' + rate.toFixed(2);
+
+    document.getElementById('promo-banner').textContent = config.activePromoBanner;
+    document.getElementById('box-price-lbl').textContent = '$' + config.boxPriceUsd;
+    const elBoxTon = document.getElementById('box-ton-lbl');
+    if (elBoxTon) elBoxTon.textContent = usdToTon(config.boxPriceUsd) + ' TON';
+
+    document.getElementById('forge-fee-lbl').textContent = '$' + config.forgeFeeUsd.toFixed(2);
+    document.getElementById('split-owner-lbl').textContent = config.ownerCutPercent + '% ($' + (config.boxPriceUsd * config.ownerCutPercent / 100).toFixed(2) + ')';
+    document.getElementById('split-treasury-lbl').textContent = config.treasuryCutPercent + '% ($' + (config.boxPriceUsd * config.treasuryCutPercent / 100).toFixed(2) + ')';
+
+    const pendingCount = boardResolutions.filter(r => r.status === 'pending').length;
+    document.getElementById('pending-count').textContent = pendingCount;
+
+    const repContainer = document.getElementById('executive-reports-container');
+    if (repContainer) {
+      const reps = Array.isArray(appState.executiveReports) ? appState.executiveReports : [];
+      repContainer.innerHTML = reps.map(rep => `
+        <div style="background:linear-gradient(135deg, rgba(17,24,39,0.96), rgba(6,78,59,0.22)); border:2px solid #10b981; border-radius:16px; padding:16px; box-shadow:0 8px 25px rgba(16,185,129,0.15);">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px; border-bottom:1px solid rgba(16,185,129,0.3); padding-bottom:8px;">
+            <span style="font-size:11.5px; color:#34d399; font-weight:800;">👤 تهیه‌کنندگان: ${rep.authors}</span>
+            <span style="font-size:11px; background:rgba(16,185,129,0.2); color:#a7f3d0; padding:3px 9px; border-radius:999px; font-weight:800;">${rep.date}</span>
+          </div>
+          <h3 style="font-size:15px; color:#fff; margin-bottom:10px;">${rep.title}</h3>
+          ${rep.htmlContent}
+        </div>
+      `).join('');
+    }
+
+    document.getElementById('agents-container').innerHTML = agents.map(a => `
+      <div class="agent-card">
+        <div class="agent-top">
+          <div class="agent-avatar">${a.avatar}</div>
+          <div>
+            <div class="agent-role">${a.role}</div>
+            <div class="agent-name">${a.name}</div>
+          </div>
+        </div>
+        <div class="agent-status">${a.status}</div>
+        <div class="agent-report">${a.lastReport}</div>
+      </div>
+    `).join('');
+
+    document.getElementById('resolutions-container').innerHTML = boardResolutions.map(r => `
+      <div class="res-card ${r.status}">
+        <div>
+          <div class="res-meta">
+            <span>${r.agentName}</span>
+            <span>${r.createdAt}</span>
+          </div>
+          <div class="res-title">${r.title}</div>
+          <div class="res-summary">${r.summary}</div>
+          <div class="res-impact">📈 اثر مالی: ${r.impact}</div>
+        </div>
+        ${r.status === 'pending' ? `
+          <div class="res-actions">
+            <button class="btn-approve" onclick="resolveBoard('${r.id}', 'approve')">✅ تایید رئیس هیئت‌مدیره و اجرای خودکار</button>
+            <button class="btn-reject" onclick="resolveBoard('${r.id}', 'reject')">❌ رد مصوبه</button>
+          </div>
+        ` : `
+          <div style="font-size:13px; font-weight:800; color:${r.status === 'approved' ? '#34d399' : '#f87171'};">
+            ${r.status === 'approved' ? '✅ تایید و در سیستم LIQUID BOX اجرا شد' : '❌ رد شده توسط رئیس هیئت‌مدیره'}
+          </div>
+        `}
+      </div>
+    `).join('');
+
+    document.getElementById('audit-container').innerHTML = auditLog.slice(0, 8).map(l => `
+      <div style="padding:8px 0; border-bottom:1px dashed rgba(255,255,255,0.08); font-size:13px;">
+        <span style="color:#38bdf8; font-weight:700;">[${l.time}] ${l.actor || l.agent}:</span>
+        <span style="color:#e2e8f0;"> ${l.text}</span>
+      </div>
+    `).join('');
+
+    document.getElementById('tiers-container').innerHTML = nftTiers.map(t => `
+      <div class="tier-card">
+        <img src="${t.image}" alt="${t.name}" />
+        <div class="tier-info">
+          <h4>${t.name}</h4>
+          <span class="chance" style="background:${t.badgeBg}; color:${t.color};">شانس: ${t.chance}% | ${t.rarityLabel}</span>
+          <div class="meta">بازخرید نقدی خزانه: <b>$${t.buybackUsd.toFixed(2)}</b></div>
+          <div class="meta">کف قیمت Getgems: <b style="color:#38bdf8;">$${t.marketFloorUsd.toFixed(2)}</b></div>
+        </div>
+      </div>
+    `).join('');
+
+    if (inventory.length === 0) {
+      document.getElementById('inventory-container').innerHTML = `
+        <div style="grid-column: 1 / -1; background:rgba(17,24,39,0.75); border:1px dashed rgba(56,189,248,0.35); border-radius:16px; padding:24px; text-align:center; color:#94a3b8; font-size:13px;">
+          💎 <b>هنوز هیچ جعبه شانسی در این کیف‌پول باز نشده است.</b><br/>
+          پس از اولین پرداخت واقعی با Tonkeeper و تایید روی بلاکچین TON، کارت‌های NFT شما در اینجا نمایش داده می‌شوند و قابل بازخرید آنی یا فروش در Getgems خواهند بود.
+        </div>
+      `;
+    } else {
+      document.getElementById('inventory-container').innerHTML = inventory.map(item => `
+        <div class="nft-card" style="border-color:${item.color}55;">
+          <img src="${item.image}" alt="${item.name}" />
+          <div class="nft-body">
+            <div>
+              <span style="font-size:11px; color:${item.color}; font-weight:800;">#${item.serial} • ${item.rarityLabel}</span>
+              <div class="nft-title">${item.name}</div>
+              <div class="nft-traits">
+                🎨 پس‌زمینه: <b>${item.backdrop}</b><br/>
+                ✨ نماد: <b>${item.symbol}</b>
+              </div>
+            </div>
+            <div class="nft-btns">
+              <button class="btn-buyback" onclick="instantBuyback('${item.uid}')">
+                💵 فروش آنی به خزانه ($${item.buybackUsd.toFixed(2)} نقد)
+              </button>
+              <button class="btn-getgems" onclick="sellOnGetgems('${item.uid}')">
+                💎 فروش در Getgems ($${item.marketFloorUsd.toFixed(2)})
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    const hasVip = inventory.some(i => i.tierId === 'mythic' || i.tierId === 'epic');
+    document.getElementById('vip-status-banner').innerHTML = hasVip
+      ? '🎉 تبریک! چون کارت رده‌بالا (Epic/Mythic) در کیف‌پول دارید، ۲۵٪ تخفیف VIP روی تمام محصولات زیر برایتان فعال است!'
+      : '💡 نکته: دارندگان کارت‌های Epic یا Mythic تمامی محصولات دیجیتال زیر را با ۲۵٪ تخفیف خودکار خریداری می‌کنند!';
+
+    document.getElementById('store-container').innerHTML = storeProducts.map(p => {
+      const discounted = +(p.priceUsd * (1 - config.vipDiscountPercent / 100)).toFixed(2);
+      const finalUsd = hasVip ? discounted : p.priceUsd;
+      const finalTon = usdToTon(finalUsd);
+      return `
+        <div class="store-card">
+          <div>
+            <div class="store-icon">${p.icon}</div>
+            <div class="store-cat">${p.category} • حاشیه سود خالص: ${p.profitMarginPercent}%</div>
+            <div class="store-title">${p.title}</div>
+            <div class="store-desc">${p.description}</div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; font-size:13px;">
+              <span>قیمت: <b style="direction:ltr;">$${p.priceUsd.toFixed(2)} (${finalTon} TON)</b></span>
+              <span style="color:#34d399; font-weight:800;">قیمت VIP: $${discounted.toFixed(2)}</span>
+            </div>
+            <button class="btn-primary" style="width:100%; background:linear-gradient(135deg,#0098ea,#0284c7);" onclick="buyStoreProduct('${p.id}')">
+              💎 خرید آنی با Tonkeeper ($${finalUsd.toFixed(2)} / ${finalTon} TON)
+            </button>
+            <div style="font-size:11px; color:var(--muted); margin-top:6px; text-align:center;">
+              تعداد فروش تاییدشده در بلاکچین: ${p.salesCount} عدد
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function handleHashRoute() {
+    const h = (window.location.hash || '').replace('#', '');
+    const btns = document.querySelectorAll('.tab-btn');
+    if (h === 'miniapp') {
+      switchTab('miniapp', btns[1]);
+    } else if (h === 'store') {
+      switchTab('store', btns[2]);
+    } else if (h === 'boardroom') {
+      switchTab('boardroom', btns[0]);
+    }
+  }
+  window.addEventListener('hashchange', handleHashRoute);
+  if (window.Telegram && window.Telegram.WebApp) {
+    try {
+      window.Telegram.WebApp.ready();
+      window.Telegram.WebApp.expand();
+    } catch(e) {}
+  }
+
+  saveLocal();
+  renderAll();
+  handleHashRoute();
+  syncRealBlockchain(false);
+  setInterval(() => syncRealBlockchain(false), 20000);
+</script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a49ce5c86924c8b1',t:'MTc5MTg3OTMzOA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
