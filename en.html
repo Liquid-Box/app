@@ -735,20 +735,32 @@
     let finalReply = '';
 
     if (apiKey.startsWith('AIza')) {
-      try {
-        showToast('🧠 Querying live Google Gemini AI...');
-        const sysPrompt = `You are the AI Board of Directors of LIQUID BOX (@LiquidBoxTonBot) on the TON Blockchain (Arash Rad CFO, Sara Nikfar CMO, Kian Majd CSO, Nima Farahmand CPO, Radmehr Tehrani COO). Box price is $10 (35% Chairman net profit, 65% Buyback Treasury). We sell 6 digital items (Telegram Premium, ChatGPT Plus, Stars, PS/Steam/Apple Gift Cards, PUBG UC) via zero-inventory dropshipping (Fragment/Bitrefill). Reply in the EXACT SAME LANGUAGE the Chairman used (Persian or English), concisely, practically, and with exact numbers. Chairman says: `;
-        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ contents: [{ parts: [{ text: sysPrompt + q }] }] })
-        });
-        const data = await res.json();
-        if (data && data.candidates && data.candidates[0] && data.candidates[0].content) {
-          finalSpeaker = '🧠 AI Board of Directors (Live Gemini 2.0 Flash)';
-          finalReply = data.candidates[0].content.parts[0].text.replace(/\n/g, '<br/>');
+      const sysPrompt = `You are the honest, realistic AI Board of Directors of LIQUID BOX (@LiquidBoxTonBot) on the TON Blockchain (Arash Rad CFO, Sara Nikfar CMO, Kian Majd CSO, Nima Farahmand CPO, Radmehr Tehrani COO). Box price is $10 (35% Chairman net profit, 65% Buyback Treasury). We sell 6 digital items (Telegram Premium, ChatGPT Plus, Stars, PS/Steam/Apple Gift Cards, PUBG UC) via zero-inventory dropshipping (Fragment/Bitrefill). Be 100% realistic and practical: remind the Chairman that a static web app cannot bring traffic by itself without external distribution (Getgems listing, Telegram group posts, referrals). Reply in the EXACT SAME LANGUAGE the Chairman used (Persian or English), directly answering their exact question. Chairman says: `;
+      const models = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-flash-latest'];
+      let lastErr = '';
+      for (const m of models) {
+        try {
+          showToast(`🧠 Querying Google Gemini (${m})...`);
+          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${apiKey}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ contents: [{ parts: [{ text: sysPrompt + q }] }] })
+          });
+          const data = await res.json();
+          if (data && data.candidates && data.candidates[0] && data.candidates[0].content) {
+            finalSpeaker = `🧠 AI Board of Directors (Live ${m})`;
+            finalReply = data.candidates[0].content.parts[0].text.replace(/\n/g, '<br/>');
+            break;
+          } else if (data && data.error) {
+            lastErr = data.error.message || JSON.stringify(data.error);
+          }
+        } catch(e) {
+          lastErr = e.message || 'Network/VPN error';
         }
-      } catch(e) {}
+      }
+      if (!finalReply && lastErr) {
+        showToast('⚠️ Gemini API Error: ' + lastErr);
+      }
     } else if (apiKey.startsWith('sk-')) {
       try {
         showToast('🧠 Querying live OpenAI...');
@@ -848,6 +860,10 @@
   function submitDirective() {
     const input = document.getElementById('chairman-idea');
     const idea = input.value.trim();
+    if (idea) {
+      document.getElementById('dialogue-input').value = idea;
+      sendDialogueMessage();
+    }
     if (!idea) return showToast('⚠️ Please type a directive first.');
     const numMatch = idea.match(/\d+/);
     const num = numMatch ? Number(numMatch[0]) : 25;
@@ -1078,5 +1094,5 @@
   syncRealBlockchain(false);
   setInterval(() => syncRealBlockchain(false), 20000);
 </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a513f87e9dd7a0c2',t:'MTc5MzEyNzkxMA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
