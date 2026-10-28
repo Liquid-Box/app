@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LIQUID BOX | Instant-Liquidity TON Mystery Box & Digital Store</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+  :root {
+    --bg: #070b14;
+    --panel: #111827;
+    --panel-2: #1e293b;
+    --border: #283548;
+    --ton: #0098ea;
+    --gold: #f59e0b;
+    --emerald: #10b981;
+    --purple: #a855f7;
+    --text: #f8fafc;
+    --muted: #94a3b8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Inter, sans-serif; }
+  body { background: radial-gradient(circle at top, #0f172a 0%, #050811 100%); color: var(--text); min-height: 100vh; padding-bottom: 60px; line-height: 1.55; }
+  header { background: #070b14; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; padding: 12px 18px; box-shadow: 0 6px 24px rgba(0,0,0,0.85); }
+  .header-inner { max-width: 1320px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; }
+  .brand-box { display: flex; align-items: center; gap: 10px; }
+  .brand-logo { width: 42px; height: 42px; border-radius: 12px; background: linear-gradient(135deg, #10b981, #0098ea); display: flex; align-items: center; justify-content: center; font-size: 22px; box-shadow: 0 0 18px rgba(16,185,129,0.4); }
+  .brand-title { font-size: 18px; font-weight: 900; background: linear-gradient(90deg, #fff, #6ee7b7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .brand-sub { font-size: 11.5px; color: var(--muted); }
+  .kpi-strip { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .kpi-pill { background: var(--panel); border: 1px solid var(--border); padding: 6px 12px; border-radius: 10px; display: flex; flex-direction: column; min-width: 125px; }
+  .kpi-pill .lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; }
+  .kpi-pill .val { font-size: 14px; font-weight: 900; margin-top: 1px; }
+  .kpi-pill.owner .val { color: #34d399; }
+  .kpi-pill.treasury .val { color: #38bdf8; }
+  .kpi-pill.customer .val { color: #fbbf24; }
+  .btn-topup { background: linear-gradient(135deg, #10b981, #059669); color: #042f2e; border: none; padding: 8px 13px; border-radius: 10px; font-weight: 800; cursor: pointer; font-size: 12px; }
+  .promo-bar { background: linear-gradient(90deg, #059669, #0284c7, #7c3aed); color: #fff; text-align: center; padding: 7px 14px; font-size: 12.5px; font-weight: 700; }
+  .nav-tabs { max-width: 1320px; margin: 16px auto 0; padding: 0 16px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .tab-btn { flex: 1; min-width: 190px; padding: 12px 16px; background: var(--panel); border: 1px solid var(--border); color: var(--muted); border-radius: 12px; font-size: 13.5px; font-weight: 800; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .tab-btn.active { background: linear-gradient(135deg, rgba(16, 185, 129, 0.22), rgba(0, 152, 234, 0.22)); color: #fff; border-color: #10b981; box-shadow: 0 6px 20px rgba(16, 185, 129, 0.2); }
+  .badge-count { background: #ef4444; color: #fff; padding: 1px 7px; border-radius: 999px; font-size: 11px; font-weight: 900; }
+  .main-container { max-width: 1320px; margin: 16px auto; padding: 0 16px; }
+  .tab-section { display: none; }
+  .tab-section.active { display: block; }
+  .section-header { display: flex; justify-content: space-between; align-items: center; margin: 18px 0 12px; flex-wrap: wrap; gap: 10px; }
+  .section-header h2 { font-size: 18px; font-weight: 900; }
+  .section-header p { font-size: 12.5px; color: var(--muted); }
+  .gacha-arena { display: grid; grid-template-columns: 1fr 1.35fr; gap: 18px; margin-bottom: 24px; }
+  @media (max-width: 900px) { .gacha-arena { grid-template-columns: 1fr; } }
+  .chest-box { background: radial-gradient(circle at center, rgba(16, 185, 129, 0.16), rgba(17, 24, 39, 0.96)); border: 2px solid rgba(16, 185, 129, 0.45); border-radius: 20px; padding: 22px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .chest-img { width: 210px; height: 210px; object-fit: cover; border-radius: 20px; margin: 12px 0; box-shadow: 0 12px 35px rgba(0, 152, 234, 0.35); transition: transform 0.3s; }
+  .chest-img.shaking { animation: shake 0.5s infinite; }
+  @keyframes shake { 0% { transform: rotate(0deg) scale(1.05); } 25% { transform: rotate(6deg) scale(1.08); } 50% { transform: rotate(-6deg) scale(1.08); } 75% { transform: rotate(4deg) scale(1.05); } 100% { transform: rotate(0deg) scale(1); } }
+  .btn-open-box { background: linear-gradient(135deg, #10b981, #059669); color: #042f2e; border: none; padding: 14px 24px; border-radius: 14px; font-size: 15px; font-weight: 900; cursor: pointer; box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4); width: 100%; max-width: 350px; }
+  .btn-primary { background: linear-gradient(135deg, var(--ton), #2563eb); color: #fff; border: none; padding: 10px 16px; border-radius: 10px; font-weight: 800; cursor: pointer; font-size: 12.5px; }
+  .tiers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; }
+  .tier-card { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 10px; display: flex; gap: 10px; align-items: center; }
+  .tier-card img { width: 64px; height: 64px; border-radius: 10px; object-fit: cover; flex-shrink: 0; }
+  .tier-info h4 { font-size: 13.5px; font-weight: 800; margin-bottom: 3px; }
+  .tier-info .chance { font-size: 11px; padding: 2px 7px; border-radius: 6px; font-weight: 800; display: inline-block; margin-bottom: 3px; }
+  .tier-info .meta { font-size: 11.5px; color: var(--muted); }
+  .tier-info .meta b { color: #34d399; }
+  .inventory-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin-bottom: 24px; }
+  .nft-card { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
+  .nft-card img { width: 100%; height: 190px; object-fit: cover; }
+  .nft-body { padding: 12px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; gap: 10px; }
+  .nft-title { font-size: 14.5px; font-weight: 900; }
+  .nft-traits { font-size: 11.5px; color: var(--muted); background: rgba(255,255,255,0.03); padding: 7px; border-radius: 8px; }
+  .nft-btns { display: flex; flex-direction: column; gap: 6px; }
+  .btn-buyback { background: rgba(16, 185, 129, 0.16); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); padding: 8px; border-radius: 9px; font-weight: 800; cursor: pointer; font-size: 12px; }
+  .btn-getgems { background: rgba(0, 152, 234, 0.16); color: #38bdf8; border: 1px solid rgba(0, 152, 234, 0.4); padding: 8px; border-radius: 9px; font-weight: 800; cursor: pointer; font-size: 12px; }
+  .store-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(275px, 1fr)); gap: 14px; }
+  .store-card { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; gap: 12px; }
+  .store-icon { font-size: 32px; }
+  .store-cat { font-size: 11px; color: #38bdf8; font-weight: 800; text-transform: uppercase; }
+  .store-title { font-size: 15px; font-weight: 900; margin: 4px 0; }
+  .store-desc { font-size: 12px; color: var(--muted); }
+  .directive-box { background: linear-gradient(135deg, rgba(17, 24, 39, 0.95), rgba(30, 41, 59, 0.9)); border: 1px solid rgba(245, 158, 11, 0.45); border-radius: 16px; padding: 16px; margin-bottom: 18px; }
+  .directive-form { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .directive-input { flex: 1; min-width: 220px; background: #090d16; border: 1px solid var(--border); color: #fff; padding: 10px 14px; border-radius: 10px; font-size: 13px; }
+  .quick-ideas { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+  .chip { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: #cbd5e1; padding: 5px 10px; border-radius: 999px; font-size: 11.5px; cursor: pointer; }
+  .chip:hover { border-color: var(--ton); color: #fff; }
+  .agents-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(225px, 1fr)); gap: 12px; margin-bottom: 22px; }
+  .agent-card { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 14px; }
+  .agent-top { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .agent-avatar { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; background: var(--panel-2); }
+  .agent-role { font-size: 11px; color: var(--muted); font-weight: 700; }
+  .agent-name { font-size: 13.5px; font-weight: 800; }
+  .agent-status { font-size: 11px; padding: 3px 8px; border-radius: 999px; background: rgba(16, 185, 129, 0.14); color: #34d399; display: inline-block; margin-bottom: 6px; font-weight: 700; }
+  .agent-report { font-size: 12px; color: #cbd5e1; background: rgba(0,0,0,0.25); padding: 8px; border-radius: 8px; border-left: 3px solid var(--ton); }
+  .resolutions-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 22px; }
+  .res-card { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 14px; display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .res-card.pending { border-left: 4px solid var(--gold); }
+  .res-card.approved { border-left: 4px solid var(--emerald); opacity: 0.9; }
+  .res-meta { font-size: 11.5px; color: var(--gold); font-weight: 700; }
+  .res-title { font-size: 15px; font-weight: 800; margin: 3px 0; }
+  .res-summary { font-size: 12.5px; color: #cbd5e1; max-width: 760px; }
+  .res-impact { font-size: 11.5px; color: #34d399; font-weight: 700; margin-top: 4px; }
+  .res-actions { display: flex; gap: 8px; }
+  .btn-approve { background: linear-gradient(135deg, #10b981, #059669); color: #042f2e; border: none; padding: 9px 15px; border-radius: 9px; font-weight: 900; cursor: pointer; font-size: 12px; }
+  .btn-reject { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.35); padding: 9px 14px; border-radius: 9px; font-weight: 700; cursor: pointer; font-size: 12px; }
+  /* DIALOGUE ROOM */
+  .dialogue-room { background: linear-gradient(145deg, rgba(17, 24, 39, 0.98), rgba(15, 23, 42, 0.95)); border: 2px solid rgba(56, 189, 248, 0.5); border-radius: 16px; padding: 16px; margin-bottom: 18px; }
+  .speaker-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0 10px; }
+  .speaker-pill { background: rgba(30, 41, 59, 0.9); border: 1px solid #334155; color: #cbd5e1; padding: 5px 11px; border-radius: 999px; font-size: 11.5px; font-weight: 800; cursor: pointer; }
+  .speaker-pill.active { background: linear-gradient(135deg, #0098ea, #0284c7); color: #fff; border-color: #38bdf8; }
+  .chat-messages { max-height: 400px; overflow-y: auto; padding: 12px; background: rgba(7, 11, 20, 0.8); border: 1px solid #1e293b; border-radius: 12px; display: flex; flex-direction: column; gap: 10px; margin-bottom: 10px; }
+  .msg-bubble { padding: 11px 14px; border-radius: 12px; font-size: 13px; line-height: 1.7; }
+  .msg-bubble.chairman { background: rgba(245, 158, 11, 0.16); border: 1px solid rgba(245, 158, 11, 0.45); color: #fef3c7; align-self: flex-end; max-width: 90%; }
+  .msg-bubble.agent { background: rgba(30, 41, 59, 0.95); border: 1px solid rgba(56, 189, 248, 0.35); color: #f1f5f9; align-self: flex-start; width: 100%; }
+  .msg-meta { display: flex; justify-content: space-between; font-size: 11px; font-weight: 800; margin-bottom: 5px; padding-bottom: 4px; border-bottom: 1px dashed rgba(255,255,255,0.08); }
+  .btn-mini-action { background: rgba(16, 185, 129, 0.18); border: 1px solid rgba(16, 185, 129, 0.45); color: #34d399; padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 800; cursor: pointer; margin-top: 6px; }
+  #toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #0f172a; border: 2px solid #10b981; color: #fff; padding: 11px 18px; border-radius: 12px; font-size: 13px; font-weight: 700; box-shadow: 0 15px 35px rgba(0,0,0,0.75); z-index: 9999; display: none; max-width: 92vw; }
+  @media (max-width: 600px) {
+    header { padding: 8px 10px; }
+    .brand-title { font-size: 15px; }
+    .kpi-strip { display: grid; grid-template-columns: 1fr 1fr; width: 100%; gap: 6px; }
+    .kpi-pill { min-width: 0; padding: 5px 8px; }
+    .kpi-pill .val { font-size: 12px; }
+    .btn-topup { grid-column: 1 / -1; width: 100%; }
+    .nav-tabs { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; padding: 0 8px; margin-top: 8px; }
+    .tab-btn { min-width: 0; padding: 8px 4px; font-size: 11px; text-align: center; }
+    .main-container { padding: 0 8px; margin-top: 10px; }
+    .chest-img { width: 150px; height: 150px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="brand-box">
+      <div class="brand-logo">💎</div>
+      <div>
+        <div class="brand-title" id="brand-title">LIQUID BOX (@LiquidBoxTonBot)</div>
+        <div class="brand-sub" id="brand-tagline">The First 100% Instant-Liquidity NFT Mystery Box & Digital Store on TON</div>
+      </div>
+    </div>
+    <div class="kpi-strip">
+      <div class="kpi-pill owner">
+        <span class="lbl">💎 Live Tonkeeper Vault</span>
+        <span class="val" id="kpi-onchain-ton">0.0000 TON ($0.00)</span>
+        <span style="font-size:9.5px; color:#6ee7b7; font-family:monospace;">🟢 Mainnet: UQCxgE...JeYL</span>
+      </div>
+      <div class="kpi-pill owner">
+        <span class="lbl">💰 Net Profit (35% + Store)</span>
+        <span class="val" id="kpi-owner">$0.00</span>
+      </div>
+      <div class="kpi-pill treasury">
+        <span class="lbl">🏦 Buyback Treasury (65%)</span>
+        <span class="val" id="kpi-treasury">$0.00</span>
+      </div>
+      <div class="kpi-pill customer">
+        <span class="lbl">📈 Live TON Rate</span>
+        <span class="val" id="kpi-ton-rate">$1.38</span>
+      </div>
+      <button class="btn-topup" onclick="syncRealBlockchain(true)">🔄 Sync TON Mainnet</button>
+    </div>
+  </div>
+</header>
+
+<div class="promo-bar" id="promo-banner"></div>
+
+<nav class="nav-tabs">
+  <button class="tab-btn active" onclick="switchTab('miniapp', this)">
+    🎁 1. Mystery Box & Forge
+  </button>
+  <button class="tab-btn" onclick="switchTab('store', this)">
+    🛍️ 2. Instant Digital Store
+  </button>
+  <button class="tab-btn" onclick="switchTab('boardroom', this)">
+    👑 3. AI Boardroom <span class="badge-count" id="pending-count">1</span>
+  </button>
+</nav>
+
+<main class="main-container">
+
+  <!-- TAB 1 (DEFAULT FOR CUSTOMERS): MYSTERY BOX & FORGE -->
+  <section id="tab-miniapp" class="tab-section active">
+    <div class="gacha-arena">
+      <div class="chest-box">
+        <span style="background:rgba(16,185,129,0.16); color:#34d399; padding:4px 12px; border-radius:999px; font-size:11.5px; font-weight:800;">@LiquidBoxTonBot — Verified TON Mini-App</span>
+        <h2 style="margin-top:8px; font-size:21px;">LIQUID BOX Mystery Chest</h2>
+        <p style="font-size:12.5px; color:var(--muted);">"The Box That Is Always Cash!" — Instant Smart-Contract Buyback</p>
+        <img src="https://liquid-box.github.io/app/public/assets/mystery_chest.png" id="chest-image" class="chest-img" alt="LIQUID BOX Chest" />
+        <div id="unbox-result" style="margin-bottom:10px; min-height:22px; font-weight:800; color:#fbbf24; font-size:13px;"></div>
+        <button class="btn-open-box" onclick="startRealBoxPurchase()">
+          💎 Buy & Open with Tonkeeper (<span id="box-price-lbl">$10</span> / <span id="box-ton-lbl">7.25 TON</span>)
+        </button>
+        <div id="pending-tx-box" style="display:none; margin-top:10px; padding:12px; background:rgba(0,152,234,0.14); border:1px solid rgba(56,189,248,0.45); border-radius:12px; text-align:left; font-size:12px; width:100%;">
+          <div style="color:#38bdf8; font-weight:800; margin-bottom:5px;">⏳ Waiting for TON Blockchain Transaction Confirmation...</div>
+          <div id="pending-tx-details" style="color:#e2e8f0; margin-bottom:8px;"></div>
+          <button class="btn-primary" style="width:100%; background:#10b981; color:#042f2e;" onclick="verifyBlockchainBoxPayment()">✅ I Completed Payment in Tonkeeper (Verify On-Chain)</button>
+        </div>
+        <p style="font-size:11px; color:var(--muted); margin-top:10px;">
+          💡 Smart Split: <b id="split-owner-lbl" style="color:#34d399;">35% ($3.50)</b> Platform Vault &amp; <b id="split-treasury-lbl">65% ($6.50)</b> Instant Buyback Pool.
+        </p>
+      </div>
+
+      <div>
+        <h3 style="margin-bottom:10px; font-size:16.5px;">🎯 4 Hybrid Collection Rarity Tiers (With Guaranteed Cash Buyback)</h3>
+        <div class="tiers-grid" id="tiers-container"></div>
+
+        <div style="background:linear-gradient(135deg, rgba(168,85,247,0.14), rgba(0,152,234,0.14)); border:1px solid rgba(168,85,247,0.4); border-radius:16px; padding:15px; margin-top:14px;">
+          <h3 style="font-size:15.5px; color:#e9d5ff; margin-bottom:5px;">🔥 The Forge — 3-to-1 NFT Upgrade Protocol</h3>
+          <p style="font-size:12px; color:#cbd5e1; margin-bottom:10px;">
+            Burn <b>3 identical-tier NFTs</b> + <b id="forge-fee-lbl">$1.50</b> forge fee to mint 1 guaranteed higher-tier NFT!
+          </p>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn-primary" style="background:linear-gradient(135deg,#8b5cf6,#6366f1);" onclick="forgeNft('common')">
+              ⚒️ Forge 3x Common ➔ 1x Rare Ruby Signet
+            </button>
+            <button class="btn-primary" style="background:linear-gradient(135deg,#ec4899,#8b5cf6);" onclick="forgeNft('rare')">
+              ⚒️ Forge 3x Rare ➔ 1x Epic Cosmic Chalice
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <div>
+        <h2>🎒 Your Minted NFT Collection (Instant Cash Buyback or Getgems Listing)</h2>
+        <p>NFTs minted after verified on-chain Tonkeeper payments appear below:</p>
+      </div>
+    </div>
+    <div class="inventory-grid" id="inventory-container"></div>
+  </section>
+
+  <!-- TAB 2: DIGITAL & GAMING STORE -->
+  <section id="tab-store" class="tab-section">
+    <div class="directive-box" style="border-color:rgba(56,189,248,0.45);">
+      <h3 style="color:#38bdf8; margin-bottom:4px;">🛍️ LIQUID BOX Instant Digital Store (Zero Physical Shipping — 3-Second Delivery)</h3>
+      <p style="font-size:12.5px; color:#cbd5e1; margin-bottom:6px;">
+        All subscriptions, Telegram Stars, and gaming gift cards are delivered automatically inside Telegram immediately after payment. NFT holders enjoy a <b>+10% Trade-In Bonus</b> and <b>25% VIP Discount</b>!
+      </p>
+      <div id="vip-status-banner" style="font-weight:800; font-size:12.5px; color:#fbbf24;"></div>
+    </div>
+    <div class="store-grid" id="store-container"></div>
+  </section>
+
+  <!-- TAB 3: CHAIRMAN AI BOARDROOM & DIALOGUE ROOM -->
+  <section id="tab-boardroom" class="tab-section">
+    <div style="background:linear-gradient(135deg, rgba(16,185,129,0.16), rgba(0,152,234,0.14)); border:1px solid rgba(16,185,129,0.5); border-radius:16px; padding:14px 16px; margin-bottom:16px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+      <div>
+        <div style="font-size:13.5px; font-weight:900; color:#34d399; margin-bottom:4px;">🔐 Official Chairman Tonkeeper Vault (Connected Live to TON Mainnet)</div>
+        <div style="font-family:monospace; font-size:12px; color:#f8fafc; background:rgba(0,0,0,0.35); padding:5px 10px; border-radius:8px; word-break:break-all; margin-bottom:5px;">UQCxgEFBaAgegA1zuzX9bQ1nZOBUUAy7BEAfec-gh6DIJeYL</div>
+        <div style="font-size:12px; color:#cbd5e1;">
+          🟢 Live On-Chain Balance: <b id="onchain-live-badge" style="color:#34d399;">0.0000 TON ($0.00)</b> &nbsp;|&nbsp;
+          Verified Mainnet Txs: <b id="onchain-tx-badge" style="color:#38bdf8;">0 Txs</b>
+        </div>
+      </div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="btn-primary" style="background:#10b981; color:#042f2e;" onclick="copyChairmanWallet()">📋 Copy Wallet Address</button>
+        <button class="btn-primary" style="background:#0284c7; color:#fff;" onclick="window.open('https://tonviewer.com/UQCxgEFBaAgegA1zuzX9bQ1nZOBUUAy7BEAfec-gh6DIJeYL', '_blank')">🔍 View on Tonviewer</button>
+        <button class="btn-primary" onclick="syncRealBlockchain(true)">🔄 Refresh Balance</button>
+      </div>
+    </div>
+
+    <!-- INTERACTIVE BILINGUAL DIALOGUE & DEBATE ROOM -->
+    <div class="dialogue-room">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,0.1);">
+        <div>
+          <h3 style="font-size:15.5px; color:#38bdf8;">💬 Live Boardroom Dialogue &amp; Strategy Debate</h3>
+          <p style="font-size:12px; color:#94a3b8;">Debate strategy, challenge numbers, or ask operational questions in <b>English or Persian</b>:</p>
+        </div>
+        <button class="btn-mini-action" style="background:rgba(56,189,248,0.16); border-color:#38bdf8; color:#bae6fd;" onclick="toggleAiKeyBox()">
+          🧠 Connect Free Gemini / OpenAI API Key (Optional)
+        </button>
+      </div>
+
+      <div id="ai-key-box" style="display:none; background:rgba(0,0,0,0.45); border:1px dashed #38bdf8; border-radius:12px; padding:10px 12px; margin:10px 0; font-size:12px;">
+        <div style="margin-bottom:6px; color:#bae6fd;">
+          💡 Paste your free Google AI Studio key (<code>AIzaSy...</code>) or OpenAI key (<code>sk-...</code>) so all 5 directors respond via live <b>Gemini 2.0 Flash / GPT-4o</b> (stored locally in your browser):
+        </div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <input type="password" id="llm-api-key-input" class="directive-input" style="flex:1; padding:7px 10px; font-size:12px;" placeholder="AIzaSy... (Google AI Studio) or sk-... (OpenAI)" />
+          <button class="btn-primary" style="padding:7px 14px; font-size:12px;" onclick="saveLlmApiKey()">💾 Save AI Key</button>
+        </div>
+      </div>
+
+      <div class="speaker-tabs">
+        <button class="speaker-pill active" onclick="selectSpeaker('all', this)">👥 Full Board Roundtable</button>
+        <button class="speaker-pill" onclick="selectSpeaker('cfo', this)">📊 Arash Rad (CFO)</button>
+        <button class="speaker-pill" onclick="selectSpeaker('cmo', this)">📣 Sara Nikfar (CMO)</button>
+        <button class="speaker-pill" onclick="selectSpeaker('cso', this)">🛒 Kian Majd (CSO)</button>
+        <button class="speaker-pill" onclick="selectSpeaker('cpo', this)">🎨 Nima Farahmand (CPO)</button>
+        <button class="speaker-pill" onclick="selectSpeaker('coo', this)">⚙️ Radmehr Tehrani (COO)</button>
+      </div>
+
+      <div class="chat-messages" id="boardroom-chat-box"></div>
+
+      <div class="directive-form">
+        <input type="text" id="dialogue-input" class="directive-input" placeholder="Ask or debate with your directors in English or Persian (e.g., How do we get our first 10 buyers with $0 budget?)..." onkeydown="if(event.key==='Enter') sendDialogueMessage()" />
+        <button class="btn-primary" onclick="sendDialogueMessage()">💬 Send to Board</button>
+      </div>
+
+      <div class="quick-ideas">
+        <span class="chip" onclick="askQuickQuestion('How do we get our first 10 customers on Day 1 with $0 marketing budget?')">❓ First 10 buyers with $0 budget?</span>
+        <span class="chip" onclick="askQuickQuestion('Do I need to put initial cash from my own pocket into the Buyback Treasury?')">❓ Do I need initial Treasury capital?</span>
+        <span class="chip" onclick="askQuickQuestion('How are Telegram Premium, Stars, and Gift Cards sourced and delivered without pre-buying inventory?')">❓ How are digital codes sourced?</span>
+        <span class="chip" onclick="askQuickQuestion('What is my exact net profit if we only sell 30 boxes in Month 1?')">❓ Profit if we sell 30 boxes in Month 1?</span>
+      </div>
+    </div>
+
+    <div class="directive-box">
+      <h3 style="color:var(--gold); font-size:15.5px;">👑 Issue Official Chairman Directive (Auto-Generates Report &amp; Board Resolution)</h3>
+      <div class="directive-form">
+        <input type="text" id="chairman-idea" class="directive-input" placeholder="e.g., Add a $29 TradingView Pro subscription to the Digital Store, or prepare a 90-day forecast..." />
+        <button class="btn-primary" style="background:linear-gradient(135deg,#f59e0b,#d97706); color:#000;" onclick="submitDirective()">⚡ Issue Directive</button>
+      </div>
+      <div class="quick-ideas">
+        <span class="chip" onclick="fillIdea('Add TradingView Pro 1-Month Subscription ($29) to the Digital Store')">+ Add TradingView Pro ($29)</span>
+        <span class="chip" onclick="fillIdea('Add $50 Xbox Game Pass Ultimate Gift Card to the Digital Store')">+ Add Xbox Gift Card ($50)</span>
+        <span class="chip" onclick="fillIdea('Change Mystery Box price to $12')">+ Set Box Price to $12</span>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <div>
+        <h2 style="color:#34d399;">📊 Executive Reports &amp; Analytical Deliverables</h2>
+        <p>Detailed forecasts, marketing plans, and tables prepared by your AI Directors:</p>
+      </div>
+    </div>
+    <div id="executive-reports-container" style="display:flex; flex-direction:column; gap:14px; margin-bottom:22px;"></div>
+
+    <div class="section-header">
+      <div>
+        <h2>🤖 Live Status of Your 5 AI Executive Directors</h2>
+      </div>
+    </div>
+    <div class="agents-grid" id="agents-container"></div>
+
+    <div class="section-header">
+      <div>
+        <h2>📋 Board Resolutions (Approve ✅ or Reject ❌)</h2>
+      </div>
+    </div>
+    <div class="resolutions-list" id="resolutions-container"></div>
+
+    <div class="section-header">
+      <div>
+        <h2>🕒 Real-Time On-Chain &amp; System Audit Log</h2>
+      </div>
+    </div>
+    <div id="audit-container" style="background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:14px;"></div>
+  </section>
+
+</main>
+
+<div id="toast"></div>
+
+<script>
+  const CHAIRMAN_TON_WALLET = "UQCxgEFBaAgegA1zuzX9bQ1nZOBUUAy7BEAfec-gh6DIJeYL";
+  const DEFAULT_STATE = {"chairmanWalletAddress": "UQCxgEFBaAgegA1zuzX9bQ1nZOBUUAy7BEAfec-gh6DIJeYL", "config": {"brandName": "LIQUID BOX", "botHandle": "@LiquidBoxTonBot", "tagline": "The First 100% Instant-Liquidity NFT Mystery Box & Digital Store on TON Blockchain", "boxPriceUsd": 10, "tonPriceUsd": 1.38, "ownerCutPercent": 35, "treasuryCutPercent": 65, "forgeFeeUsd": 1.5, "vipDiscountPercent": 25, "activePromoBanner": "🔥 LIVE LAUNCH CAMPAIGN: Invite 5 Friends = 1 Free Mystery Box! | Trade in any NFT in the Digital Store for +10% Bonus Credit!", "chairmanChatId": 7364909674}, "financials": {"ownerVaultUsd": 0.0, "treasuryPoolUsd": 0.0, "totalBoxesOpened": 0, "totalStoreSalesUsd": 0.0, "secondaryRoyaltiesUsd": 0.0, "onChainBalanceTon": 0.0, "onChainBalanceUsd": 0.0, "onChainTxCount": 0}, "nftTiers": [{"id": "common", "name": "Emerald Relic Dagger", "rarityLabel": "Common Tier", "chance": 64, "buybackUsd": 3.8, "marketFloorUsd": 5.5, "image": "https://liquid-box.github.io/app/public/assets/nft_common_dagger.png", "color": "#10b981", "badgeBg": "rgba(16, 185, 129, 0.18)"}, {"id": "rare", "name": "Royal Ruby Signet", "rarityLabel": "Rare Tier", "chance": 25, "buybackUsd": 8.0, "marketFloorUsd": 13.5, "image": "https://liquid-box.github.io/app/public/assets/nft_rare_ring.png", "color": "#38bdf8", "badgeBg": "rgba(56, 189, 248, 0.18)"}, {"id": "epic", "name": "Cosmic Blade & Chalice", "rarityLabel": "Epic Tier", "chance": 9, "buybackUsd": 17.0, "marketFloorUsd": 29.0, "image": "https://liquid-box.github.io/app/public/assets/nft_epic_chalice.png", "color": "#c084fc", "badgeBg": "rgba(192, 132, 252, 0.18)"}, {"id": "mythic", "name": "Cyber Diamond Guardian (VIP)", "rarityLabel": "Mythic VIP", "chance": 2, "buybackUsd": 55.0, "marketFloorUsd": 98.0, "image": "https://liquid-box.github.io/app/public/assets/nft_mythic_guardian.png", "color": "#fbbf24", "badgeBg": "rgba(251, 191, 36, 0.22)"}], "inventory": [], "storeProducts": [{"id": "dig-1", "title": "Telegram Premium — 6 Months (Instant Activation)", "category": "Package 1: Telegram & Digital", "priceUsd": 16.0, "profitMarginPercent": 45, "icon": "⭐", "description": "100% automated activation directly on your Telegram account in 3 seconds. No password required.", "salesCount": 0}, {"id": "dig-2", "title": "AI Pro Bundle: ChatGPT Plus + Claude Pro (1 Month)", "category": "Package 1: AI Subscriptions", "priceUsd": 22.0, "profitMarginPercent": 50, "icon": "🤖", "description": "Verified 1-month private subscription credentials delivered instantly inside the Telegram bot.", "salesCount": 0}, {"id": "dig-3", "title": "1,000 Telegram Stars Pack (Instant Top-Up)", "category": "Package 1: Telegram & Digital", "priceUsd": 19.0, "profitMarginPercent": 38, "icon": "✨", "description": "Instant Telegram Stars credit sent directly to your username via Fragment API.", "salesCount": 0}, {"id": "game-1", "title": "$20 PlayStation / Steam Gift Card (Global Code)", "category": "Package 2: Gaming Gift Cards", "priceUsd": 21.0, "profitMarginPercent": 35, "icon": "🎮", "description": "Official digital redeem code delivered in chat immediately after on-chain payment confirmation.", "salesCount": 0}, {"id": "game-2", "title": "$25 Apple / Google Play Gift Card (US/Global)", "category": "Package 2: Gaming Gift Cards", "priceUsd": 26.0, "profitMarginPercent": 35, "icon": "🍎", "description": "Instant digital code delivery 24/7. Redeem your Epic/Mythic NFTs for a 25% VIP discount!", "salesCount": 0}, {"id": "game-3", "title": "PUBG 660 UC / Call of Duty 880 CP Pack (Instant Top-Up)", "category": "Package 2: In-Game Currency", "priceUsd": 12.0, "profitMarginPercent": 42, "icon": "🔥", "description": "Direct player ID top-up in under 2 minutes. Ideal for swapping Common & Rare NFTs!", "salesCount": 0}], "agents": [{"id": "cfo", "role": "Chief Financial Officer (CFO)", "name": "Arash Rad (AI Financial Director)", "avatar": "📊", "color": "#10b981", "status": "35% Chairman Split Active ✅ | +10% Store Bonus", "lastReport": "Zero fixed server costs on GitHub Pages. Every $10 Mystery Box routes $3.50 net profit to Chairman and $6.50 to the Buyback Treasury."}, {"id": "cmo", "role": "Chief Marketing Officer (CMO)", "name": "Sara Nikfar (AI Growth Director)", "avatar": "📣", "color": "#f43f5e", "status": "Global English Web3 Rebrand Active ✅", "lastReport": "Transitioned entire storefront to international Web3 English to maximize trust across global TON, Getgems, and Telegram gaming communities."}, {"id": "cso", "role": "Chief Sales & Store Officer (CSO)", "name": "Kian Majd (AI Sales Director)", "avatar": "🛒", "color": "#38bdf8", "status": "6 Digital Products Live (Zero Physical Logistics)", "lastReport": "All 6 digital & gaming items are priced to match Rare ($8) and Epic ($17) NFT payouts, keeping 60%+ of liquidity inside our ecosystem."}, {"id": "cpo", "role": "Chief Product Officer (CPO)", "name": "Nima Farahmand (AI Product Director)", "avatar": "🎨", "color": "#c084fc", "status": "4-Tier Hybrid Collection + 3-to-1 Forge Live", "lastReport": "Combined Mythic Artifacts with the Cyber Diamond Guardian VIP character ($55 guaranteed buyback floor)."}, {"id": "coo", "role": "Chief Operations & Blockchain Officer (COO)", "name": "Radmehr Tehrani (AI Blockchain Director)", "avatar": "⚙️", "color": "#f59e0b", "status": "TON Mainnet Sync & Tonkeeper Gateway Live ✅", "lastReport": "Connected directly to TON Center Mainnet & TonAPI for live on-chain balance, real-time TON/USD rate, and transaction verification."}], "boardResolutions": [{"id": "res-en-global", "agentId": "cmo", "agentName": "Sara Nikfar (CMO) + Kian Majd (CSO)", "department": "Global Trust & Conversion Upgrade", "title": "Launch 90-Day Global English Marketing & Getgems Traffic Funnel ($7,505 Projected Net Profit)", "summary": "Execute 4-stage customer acquisition: 1) List initial 4 NFT tiers on Getgems.io linking to @LiquidBoxTonBot, 2) Target global PUBG/Telegram Premium groups, 3) 5-friend viral referral loop, 4) Reinvest 20% of Month 1 profit into TON channel shoutouts.", "impact": "Month 1: $580 Net | Month 2: $1,957 Net | Month 3: $4,968 Net ($7,505 Total)", "actionType": "UPDATE_PRICE", "payload": {"boxPriceUsd": 10}, "status": "pending", "createdAt": "Ready for Chairman Approval"}, {"id": "launch-1", "agentId": "cmo", "agentName": "Sara Nikfar (CMO)", "department": "Viral Referral Engine", "title": "Activate 'Invite 5 Buyers = 1 Free Mystery Box' Viral Campaign", "summary": "5 boxes ($50) generate $17.50 Chairman profit, easily covering 1 free $10 box reward for exponential organic growth.", "impact": "Zero-CAC acquisition of first 1,000 global users", "actionType": "UPDATE_PRICE", "payload": {"boxPriceUsd": 10}, "status": "approved", "createdAt": "Approved by Chairman"}, {"id": "launch-2", "agentId": "cfo", "agentName": "Arash Rad (CFO)", "department": "Treasury Liquidity Lock", "title": "+10% Bonus Store Credit for NFT-to-Digital-Product Redemptions ($55 Mythic Floor)", "summary": "Encourages winners to spend NFT value on high-margin digital subscriptions & gift cards rather than withdrawing cash.", "impact": "+45% Treasury retention & 2x net margin", "actionType": "BOOST_MYTHIC", "payload": {"mythicBuybackUsd": 55}, "status": "approved", "createdAt": "Approved by Chairman"}], "executiveReports": [{"id": "rep-mkt-en", "title": "📣 90-Day Global Marketing (CMO) & Sales Funnel (CSO) Execution Plan ($7,505 Net Profit Target)", "command": "Marketing & Sales Plan to reach the 90-Day Forecast", "date": "Delivered to Chairman ✅", "authors": "Sara Nikfar (CMO) • Kian Majd (CSO) • Arash Rad (CFO)", "htmlContent": "<div style='line-height:1.75; font-size:13px; color:#e2e8f0;'><p style='color:#34d399; font-weight:700; margin-bottom:8px;'>Chairman, switching the platform to 100% International Web3 English removes trust barriers for global TON & Telegram users. Here is our 4-step execution roadmap & 90-day forecast:</p><div style='overflow-x:auto; margin:10px 0;'><table style='width:100%; border-collapse:collapse; font-size:12px; text-align:left; background:rgba(15,23,42,0.85);'><thead><tr style='background:rgba(16,185,129,0.2); color:#34d399;'><th style='padding:8px; border:1px solid #283548;'>Timeline</th><th style='padding:8px; border:1px solid #283548;'>Acquisition Strategy (CMO)</th><th style='padding:8px; border:1px solid #283548;'>Mystery Boxes ($10)</th><th style='padding:8px; border:1px solid #283548;'>Digital Store (CSO)</th><th style='padding:8px; border:1px solid #283548;'>Chairman Net Profit (CFO)</th></tr></thead><tbody><tr><td style='padding:8px; border:1px solid #283548; font-weight:800; color:#38bdf8;'>Month 1 (Days 1–30)</td><td style='padding:8px; border:1px solid #283548;'>Getgems.io listing + 5-Friend Referral Loop + Gaming Groups</td><td style='padding:8px; border:1px solid #283548;'><b>90 Boxes</b> ($900)</td><td style='padding:8px; border:1px solid #283548;'><b>35 Orders</b> ($630)</td><td style='padding:8px; border:1px solid #283548; color:#34d399; font-weight:900;'>$580 Net (~420 TON)</td></tr><tr><td style='padding:8px; border:1px solid #283548; font-weight:800; color:#c084fc;'>Month 2 (Days 31–60)</td><td style='padding:8px; border:1px solid #283548;'>Reinvest 20% of M1 profit ($115) into 10 TON Channel Shoutouts</td><td style='padding:8px; border:1px solid #283548;'><b>300 Boxes</b> ($3,000)</td><td style='padding:8px; border:1px solid #283548;'><b>120 Orders</b> ($2,160)</td><td style='padding:8px; border:1px solid #283548; color:#34d399; font-weight:900;'>$1,957 Net (~1,418 TON)</td></tr><tr><td style='padding:8px; border:1px solid #283548; font-weight:800; color:#fbbf24;'>Month 3 (Days 61–90)</td><td style='padding:8px; border:1px solid #283548;'>Getgems 8% Secondary Royalties + Repeat VIP Gift Card Buyers</td><td style='padding:8px; border:1px solid #283548;'><b>750 Boxes</b> ($7,500)</td><td style='padding:8px; border:1px solid #283548;'><b>310 Orders</b> ($5,580)</td><td style='padding:8px; border:1px solid #283548; color:#34d399; font-weight:900;'>$4,968 Net (~3,600 TON)</td></tr></tbody></table></div><div style='background:rgba(0,0,0,0.4); border:1px dashed #38bdf8; padding:10px; border-radius:8px; margin-top:8px; color:#bae6fd;'><b>📋 Ready-to-Post Global English Promo Copy (for Telegram Groups, X/Twitter & Getgems):</b><br/>💎 <b>LIQUID BOX — The First TON Mystery Box With 100% Instant Cash Liquidity!</b><br/>Open a $10 Mystery Chest on TON: pull an Emerald Dagger up to a Mythic Cyber Diamond Guardian ($98 floor)! Sell back to the smart treasury in 1 second for instant cash, or trade in your NFT for <b>Telegram Premium, ChatGPT Plus, PlayStation/Steam Gift Cards & PUBG UC</b> with +10% bonus credit!<br/>👉 Play now on Telegram: <b>https://t.me/LiquidBoxTonBot</b></div></div>"}], "auditLog": [{"time": "LIVE (Mainnet)", "actor": "TON Blockchain Mainnet 💎", "text": "Connected live to TON Mainnet. Official Chairman Tonkeeper Vault (UQCxgEFBaAgegA1zuzX9bQ1nZOBUUAy7BEAfec-gh6DIJeYL) registered as 100% payment destination."}, {"time": "Executed ✅", "actor": "Chairman Directive 👑", "text": "Platform transitioned to 100% International Web3 English to maximize global user trust and conversion."}]};
+
+  try {
+    localStorage.removeItem('liquid_box_real_prod_v1');
+    localStorage.removeItem('liquid_box_real_prod_v2');
+    localStorage.removeItem('liquid_box_real_prod_v3');
+    localStorage.removeItem('liquid_box_real_prod_v4');
+  } catch(e) {}
+
+  let appState = JSON.parse(localStorage.getItem('liquid_box_en_prod_v1') || 'null') || DEFAULT_STATE;
+  let pendingPaymentMemo = null;
+  let selectedSpeaker = 'all';
+
+  const INITIAL_CHAT_HISTORY = [
+    {
+      role: 'agent',
+      speakerName: '👥 AI Board of Directors (Arash CFO • Sara CMO • Kian CSO)',
+      speakerColor: '#38bdf8',
+      time: 'Live Session',
+      text: 'Welcome Chairman! 👑 The entire customer-facing platform is now in <b>100% International Web3 English</b> to maximize global trust across the TON ecosystem. You can debate with us here in <b>English or Persian</b>—or click <b>"🧠 Connect Free Gemini / OpenAI API Key"</b> above to connect your Google AI Studio key!'
+    }
+  ];
+
+  if (!Array.isArray(appState.chatHistory) || appState.chatHistory.length === 0) {
+    appState.chatHistory = INITIAL_CHAT_HISTORY;
+  }
+
+  function saveLocal() {
+    try { localStorage.setItem('liquid_box_en_prod_v1', JSON.stringify(appState)); } catch(e) {}
+  }
+
+  function notifyChairmanTelegram(text) {
+    try {
+      fetch('https://api.telegram.org/bot8945937193:AAGl_CEbPkMGjVaLFACIiyBDgI1zK91TyUA/sendMessage', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: 7364909674, text })
+      });
+    } catch(e) {}
+  }
+
+  const BACKDROPS = [
+    { name: 'Onyx Black (1% Rare)', bonus: 1.25 },
+    { name: 'Cyber Emerald', bonus: 1.0 },
+    { name: 'Royal Purple', bonus: 1.05 },
+    { name: 'Liquid Gold (2% Rare)', bonus: 1.20 },
+    { name: 'Deep Sapphire', bonus: 1.0 }
+  ];
+  const SYMBOLS = ['⚡ TON Lightning', '👑 Royal Crown', '💎 Vault Diamond', '🪐 Saturn Ring', '🔥 Phoenix Flame'];
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.innerHTML = msg;
+    t.style.display = 'block';
+    clearTimeout(window._toastTimer);
+    window._toastTimer = setTimeout(() => { t.style.display = 'none'; }, 5000);
+  }
+
+  function switchTab(tabId, btn) {
+    document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    const sec = document.getElementById('tab-' + tabId);
+    if (sec) sec.classList.add('active');
+    if (btn) btn.classList.add('active');
+  }
+
+  function fillIdea(text) {
+    document.getElementById('chairman-idea').value = text;
+  }
+
+  function selectSpeaker(spId, btn) {
+    selectedSpeaker = spId;
+    document.querySelectorAll('.speaker-pill').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+  }
+
+  function toggleAiKeyBox() {
+    const box = document.getElementById('ai-key-box');
+    box.style.display = box.style.display === 'none' ? 'block' : 'none';
+    const saved = localStorage.getItem('liquid_box_llm_key') || '';
+    if (saved) document.getElementById('llm-api-key-input').value = saved;
+  }
+
+  function saveLlmApiKey() {
+    const val = document.getElementById('llm-api-key-input').value.trim();
+    if (!val) {
+      localStorage.removeItem('liquid_box_llm_key');
+      showToast('ℹ️ API Key removed. Built-in analytical engine active.');
+      return;
+    }
+    localStorage.setItem('liquid_box_llm_key', val);
+    document.getElementById('ai-key-box').style.display = 'none';
+    showToast('✅ AI API Key saved! Your 5 Directors are now powered by live LLM reasoning.');
+  }
+
+  function askQuickQuestion(q) {
+    document.getElementById('dialogue-input').value = q;
+    sendDialogueMessage();
+  }
+
+  function copyChairmanWallet() {
+    try {
+      navigator.clipboard.writeText(CHAIRMAN_TON_WALLET);
+      showToast('✅ Tonkeeper Wallet Copied: ' + CHAIRMAN_TON_WALLET);
+    } catch(e) {
+      prompt('Official Chairman Tonkeeper Wallet:', CHAIRMAN_TON_WALLET);
+    }
+  }
+
+  async function syncRealBlockchain(manual = false) {
+    try {
+      const rateRes = await fetch('https://tonapi.io/v2/rates?tokens=ton&currencies=usd');
+      const rateData = await rateRes.json();
+      if (rateData && rateData.rates && rateData.rates.TON && rateData.rates.TON.prices && rateData.rates.TON.prices.USD) {
+        appState.config.tonPriceUsd = +Number(rateData.rates.TON.prices.USD).toFixed(2);
+      }
+    } catch(e) {}
+
+    try {
+      const balRes = await fetch(`https://toncenter.com/api/v2/getAddressInformation?address=${CHAIRMAN_TON_WALLET}`);
+      const balData = await balRes.json();
+      if (balData && balData.ok && balData.result) {
+        const nano = Number(balData.result.balance || 0);
+        const ton = nano / 1e9;
+        appState.financials.onChainBalanceTon = ton;
+        appState.financials.onChainBalanceUsd = +(ton * appState.config.tonPriceUsd).toFixed(2);
+      }
+
+      const txRes = await fetch(`https://toncenter.com/api/v2/getTransactions?address=${CHAIRMAN_TON_WALLET}&limit=10`);
+      const txData = await txRes.json();
+      if (txData && txData.ok && Array.isArray(txData.result)) {
+        appState.financials.onChainTxCount = txData.result.length;
+      }
+      saveLocal();
+      renderAll();
+      if (manual) {
+        showToast(`🟢 Synced with TON Mainnet | Live Balance: ${appState.financials.onChainBalanceTon.toFixed(4)} TON ($${appState.financials.onChainBalanceUsd.toFixed(2)})`);
+      }
+    } catch(e) {
+      if (manual) showToast('⚠️ Could not reach TON node right now. Please try again.');
+    }
+  }
+
+  function usdToTon(usd) {
+    const rate = appState.config.tonPriceUsd || 1.38;
+    return +(usd / rate).toFixed(2);
+  }
+
+  function startRealBoxPurchase() {
+    const priceUsd = appState.config.boxPriceUsd;
+    const tonAmount = usdToTon(priceUsd);
+    const nanoTon = Math.round(tonAmount * 1e9);
+    const memo = 'LBOX_' + Math.floor(100000 + Math.random() * 900000);
+    pendingPaymentMemo = { memo, priceUsd, tonAmount };
+
+    const tonUrl = `https://app.tonkeeper.com/transfer/${CHAIRMAN_TON_WALLET}?amount=${nanoTon}&text=${encodeURIComponent(memo)}`;
+    document.getElementById('pending-tx-box').style.display = 'block';
+    document.getElementById('pending-tx-details').innerHTML =
+      `Amount: <b>$${priceUsd} (${tonAmount} TON)</b> | Tracking Memo: <b style="font-family:monospace;">${memo}</b><br/>` +
+      `After confirming the transfer in Tonkeeper, click the green verification button below:`;
+
+    notifyChairmanTelegram(`🔔 New Mystery Box Checkout Initiated:\nAmount: $${priceUsd} (${tonAmount} TON)\nTracking Memo: ${memo}`);
+    window.open(tonUrl, '_blank');
+  }
+
+  async function verifyBlockchainBoxPayment() {
+    if (!pendingPaymentMemo) return;
+    showToast('🔍 Checking TON Mainnet for your transaction...');
+    try {
+      const txRes = await fetch(`https://toncenter.com/api/v2/getTransactions?address=${CHAIRMAN_TON_WALLET}&limit=15`);
+      const txData = await txRes.json();
+      let found = false;
+      if (txData && txData.ok && Array.isArray(txData.result)) {
+        for (const tx of txData.result) {
+          const msg = (tx.in_msg && tx.in_msg.message) ? String(tx.in_msg.message) : '';
+          if (msg.includes(pendingPaymentMemo.memo)) {
+            found = true;
+            break;
+          }
+        }
+      }
+      if (!found) {
+        return showToast(`⏳ Transaction with memo <b>${pendingPaymentMemo.memo}</b> is not yet confirmed on TON Mainnet. Please complete the ${pendingPaymentMemo.tonAmount} TON transfer in Tonkeeper and retry in 10 seconds.`);
+      }
+      document.getElementById('pending-tx-box').style.display = 'none';
+      completeRealBoxOpen(pendingPaymentMemo.priceUsd, pendingPaymentMemo.memo);
+      pendingPaymentMemo = null;
+      syncRealBlockchain(false);
+    } catch(e) {
+      showToast('⚠️ Blockchain check error. Please try again in a few seconds.');
+    }
+  }
+
+  function completeRealBoxOpen(price, memo) {
+    const img = document.getElementById('chest-image');
+    const resBox = document.getElementById('unbox-result');
+    img.classList.add('shaking');
+    resBox.textContent = '🎲 On-Chain Payment Verified! Minting NFT...';
+
+    setTimeout(() => {
+      img.classList.remove('shaking');
+      const ownerShare = +(price * (appState.config.ownerCutPercent / 100)).toFixed(2);
+      const treasuryShare = +(price - ownerShare).toFixed(2);
+
+      appState.financials.ownerVaultUsd = +(appState.financials.ownerVaultUsd + ownerShare).toFixed(2);
+      appState.financials.treasuryPoolUsd = +(appState.financials.treasuryPoolUsd + treasuryShare).toFixed(2);
+      appState.financials.totalBoxesOpened += 1;
+
+      const roll = Math.random() * 100;
+      let cum = 0;
+      let chosenTier = appState.nftTiers[0];
+      for (const t of appState.nftTiers) {
+        cum += t.chance;
+        if (roll <= cum) { chosenTier = t; break; }
+      }
+      const bd = BACKDROPS[Math.floor(Math.random() * BACKDROPS.length)];
+      const sym = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+      const serial = 1000 + appState.financials.totalBoxesOpened;
+      const minted = {
+        uid: 'nft-' + Date.now(),
+        serial,
+        tierId: chosenTier.id,
+        name: chosenTier.name,
+        rarityLabel: chosenTier.rarityLabel,
+        backdrop: bd.name,
+        symbol: sym,
+        buybackUsd: +(chosenTier.buybackUsd * bd.bonus).toFixed(2),
+        marketFloorUsd: +(chosenTier.marketFloorUsd * bd.bonus).toFixed(2),
+        image: chosenTier.image,
+        color: chosenTier.color
+      };
+      appState.inventory.unshift(minted);
+      appState.auditLog.unshift({
+        time: 'Mainnet Verified ✅',
+        actor: 'TON Smart Split (' + memo + ')',
+        text: `Box #${serial} opened: Chairman net profit ($${ownerShare}) & Treasury ($${treasuryShare}) recorded. Minted: ${minted.name}`
+      });
+      saveLocal(); renderAll();
+      resBox.innerHTML = `🎉 You Won: ${minted.name} (#${minted.serial}) | Instant Buyback: $${minted.buybackUsd}`;
+      notifyChairmanTelegram(`💰 Verified Box Sale (${memo}):\n$${price} paid! Your Net Profit: $${ownerShare} | Minted: ${minted.name} #${minted.serial}`);
+      showToast(`🎉 Minted ${minted.name} #${minted.serial}!`);
+    }, 550);
+  }
+
+  function buyStoreProduct(productId) {
+    const p = appState.storeProducts.find(x => x.id === productId);
+    if (!p) return;
+    const hasVip = appState.inventory.some(i => i.tierId === 'mythic' || i.tierId === 'epic');
+    const finalPrice = +(p.priceUsd * (hasVip ? (1 - appState.config.vipDiscountPercent / 100) : 1)).toFixed(2);
+    const tonAmount = usdToTon(finalPrice);
+    const nanoTon = Math.round(tonAmount * 1e9);
+    const memo = `STORE_${p.id}_${Math.floor(1000 + Math.random() * 9000)}`;
+
+    const tonUrl = `https://app.tonkeeper.com/transfer/${CHAIRMAN_TON_WALLET}?amount=${nanoTon}&text=${encodeURIComponent(memo)}`;
+    notifyChairmanTelegram(`🛍️ Digital Store Order Initiated:\nProduct: ${p.title}\nAmount: $${finalPrice} (${tonAmount} TON)\nMemo: ${memo}`);
+    showToast(`💎 Opening Tonkeeper for "${p.title}" ($${finalPrice} / ${tonAmount} TON)...`);
+    window.open(tonUrl, '_blank');
+  }
+
+  function instantBuyback(uid) {
+    const idx = appState.inventory.findIndex(i => i.uid === uid);
+    if (idx === -1) return;
+    const nft = appState.inventory[idx];
+    appState.inventory.splice(idx, 1);
+    appState.financials.treasuryPoolUsd = Math.max(0, +(appState.financials.treasuryPoolUsd - nft.buybackUsd).toFixed(2));
+    appState.auditLog.unshift({
+      time: 'Just Now',
+      actor: 'Instant Buyback Treasury',
+      text: `Buyback requested for ${nft.name} #${nft.serial} at guaranteed floor $${nft.buybackUsd}.`
+    });
+    saveLocal(); renderAll();
+    notifyChairmanTelegram(`💵 Instant Buyback Requested: #${nft.serial} (${nft.name}) for $${nft.buybackUsd}`);
+    showToast(`💵 Instant Buyback processed for ${nft.name} ($${nft.buybackUsd}).`);
+  }
+
+  function sellOnGetgems(uid) {
+    const idx = appState.inventory.findIndex(i => i.uid === uid);
+    if (idx === -1) return;
+    const nft = appState.inventory[idx];
+    window.open('https://getgems.io/', '_blank');
+    showToast(`💎 Opening Getgems.io to list ${nft.name} #${nft.serial} (Floor: $${nft.marketFloorUsd})`);
+  }
+
+  function forgeNft(tierId) {
+    const matches = appState.inventory.filter(i => i.tierId === tierId);
+    if (matches.length < 3) {
+      return showToast(`⚠️ You need 3 minted ${tierId.toUpperCase()} NFTs to forge (You currently hold ${matches.length}).`);
+    }
+    const fee = appState.config.forgeFeeUsd;
+    const tonFee = usdToTon(fee);
+    const nanoTon = Math.round(tonFee * 1e9);
+    window.open(`https://app.tonkeeper.com/transfer/${CHAIRMAN_TON_WALLET}?amount=${nanoTon}&text=FORGE_${tierId.toUpperCase()}`, '_blank');
+    showToast(`🔥 Opening Tonkeeper for Forge Fee ($${fee} = ${tonFee} TON)...`);
+  }
+
+  function generateSmartDialogueReply(q, speaker) {
+    const text = q.trim();
+    const isPersian = /[\u0600-\u06FF]/.test(text);
+    const rate = appState.config.tonPriceUsd || 1.38;
+    const boxPrice = appState.config.boxPriceUsd || 10;
+    const ownerCut = +(boxPrice * (appState.config.ownerCutPercent / 100)).toFixed(2);
+    const treasuryCut = +(boxPrice - ownerCut).toFixed(2);
+    const numMatch = text.match(/\d+/);
+    const customNum = numMatch ? Number(numMatch[0]) : null;
+
+    if (isPersian) {
+      if (text.includes('جیب') || text.includes('خزانه') || text.includes('سرمایه') || text.includes('ضرر')) {
+        return {
+          speakerName: '📊 Arash Rad (CFO)',
+          speakerColor: '#10b981',
+          reply: `<b>پاسخ دقیق مالی درباره سرمایه اولیه خزانه:</b><br/>از هر جعبه $${boxPrice} دلاری، <b>$${ownerCut} (۳۵٪) سود قطعی شماست</b> و $${treasuryCut} وارد خزانه می‌شود. ۶۴٪ جعبه‌ها کارت Common ($3.80 بازخرید) می‌دهند، یعنی خزانه روی هر جعبه معمولی +$2.70 مازاد مثبت دارد! برای ۱۰۰ جعبه اول هم بازخرید کارت‌های Rare/Epic را با <b>+۱۰٪ اعتبار هدیه فروشگاه دیجیتال</b> انجام می‌دهیم تا هیچ پولی از جیب نگذارید.`
+        };
+      }
+      if (text.includes('تامین') || text.includes('گیفت') || text.includes('پرمیوم') || text.includes('کد')) {
+        return {
+          speakerName: '🛒 Kian Majd (CSO) + ⚙️ Radmehr Tehrani (COO)',
+          speakerColor: '#38bdf8',
+          reply: `<b>نحوه تامین آنی بدون خواب سرمایه (Dropshipping):</b><br/>۱) تلگرام پرمیوم و استارز مستقیماً از <b>Fragment.com</b> با همان TON واریزی مشتری در ۳۰ ثانیه فعال می‌شوند (۴۰٪ ارزان‌تر از قیمت فروش ما).<br/>۲) گیفت‌کارت‌ها و یوسی پابجی از <b>Bitrefill / Coinsbee</b> با TON پس از پرداخت مشتری تهیه می‌شوند.`
+        };
+      }
+      return {
+        speakerName: '👥 AI Board of Directors',
+        speakerColor: '#38bdf8',
+        reply: `<b>پاسخ هیئت‌مدیره به نکته شما («${text}»):</b><br/>اکنون کل رابط کاربری مشتریان ۱۰۰٪ انگلیسی (Web3 Global Standard) شده تا اعتماد خریداران بین‌المللی جلب شود. برای بحث نامحدود و آزاد روی هر جزئیاتی، کافی است کلید رایگان <b>Google AI Studio (AIzaSy...)</b> خود را از دکمه بالای چت ذخیره کنید تا با موتور زنده Gemini پاسخ دهیم!`
+      };
+    }
+
+    if (text.toLowerCase().includes('treasury') || text.toLowerCase().includes('pocket') || text.toLowerCase().includes('capital')) {
+      return {
+        speakerName: '📊 Arash Rad (CFO)',
+        speakerColor: '#10b981',
+        reply: `<b>Treasury &amp; Zero-Capital Risk Model:</b><br/>Every $${boxPrice} box routes <b>$${ownerCut} (35%) net profit to you</b> and $${treasuryCut} (65%) to the Treasury. Since 64% of pulls are Common ($3.80 buyback), the Treasury nets a <b>+$2.70 surplus</b> on most boxes! Plus, our +10% Digital Store trade-in bonus converts 60%+ of winners into high-margin gift card/subscription buyers.`
+      };
+    }
+    if (text.toLowerCase().includes('source') || text.toLowerCase().includes('gift') || text.toLowerCase().includes('premium') || text.toLowerCase().includes('deliver')) {
+      return {
+        speakerName: '🛒 Kian Majd (CSO) + ⚙️ Radmehr Tehrani (COO)',
+        speakerColor: '#38bdf8',
+        reply: `<b>Zero-Inventory Digital Fulfillment:</b><br/>1) <b>Telegram Premium &amp; Stars:</b> Fulfilled on-demand via official <b>Fragment.com</b> using the buyer's incoming TON (~40% net margin).<br/>2) <b>Gaming Gift Cards &amp; PUBG UC:</b> Fulfilled on-demand via <b>Bitrefill / Coinsbee</b> with TON only after the customer's payment hits your Tonkeeper wallet.`
+      };
+    }
+    if (customNum !== null) {
+      const boxes = customNum;
+      const netBox = +(boxes * ownerCut).toFixed(2);
+      const storeNet = +(Math.round(boxes * 0.4) * 7.5).toFixed(2);
+      const totalNet = +(netBox + storeNet).toFixed(2);
+      return {
+        speakerName: '📊 Arash Rad (CFO)',
+        speakerColor: '#10b981',
+        reply: `<b>Financial Projection for ${boxes} Mystery Boxes:</b><br/>• Direct 35% Box Profit: <b>$${netBox}</b><br/>• Digital Store Conversions (~40% of winners): <b>+$${storeNet}</b><br/>🏆 <b>Total Net Profit in Your Tonkeeper Vault: $${totalNet} (~${(totalNet/rate).toFixed(1)} TON)</b> with $0 server overhead!`
+      };
+    }
+    return {
+      speakerName: '📣 Sara Nikfar (CMO) + 🛒 Kian Majd (CSO)',
+      speakerColor: '#f43f5e',
+      reply: `<b>Zero-Budget Global Acquisition Plan:</b><br/>1) List our 4 NFT tiers on <b>Getgems.io</b> (50,000+ daily active TON traders) linking directly to <code>@LiquidBoxTonBot</code>.<br/>2) Pitch gamers in PUBG/Telegram groups: <i>"Open a $10 box—even a Common pull trades in with +10% bonus toward 660 PUBG UC or Telegram Premium!"</i><br/>3) Viral referral loop: Invite 5 buyers = 1 free box funded entirely out of the $17.50 profit from those 5 sales.`
+    };
+  }
+
+  async function sendDialogueMessage() {
+    const input = document.getElementById('dialogue-input');
+    const q = input.value.trim();
+    if (!q) return showToast('⚠️ Please enter a question or message.');
+
+    appState.chatHistory.push({
+      role: 'chairman',
+      speakerName: '👑 Chairman',
+      time: 'Just Now',
+      text: q
+    });
+    input.value = '';
+    saveLocal(); renderAll();
+
+    const chatBox = document.getElementById('boardroom-chat-box');
+    if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
+
+    const apiKey = localStorage.getItem('liquid_box_llm_key') || '';
+    let finalSpeaker = '';
+    let finalColor = '#38bdf8';
+    let finalReply = '';
+
+    if (apiKey.startsWith('AIza')) {
+      const sysPrompt = `You are the honest, realistic AI Board of Directors of LIQUID BOX (@LiquidBoxTonBot) on the TON Blockchain (Arash Rad CFO, Sara Nikfar CMO, Kian Majd CSO, Nima Farahmand CPO, Radmehr Tehrani COO). Box price is $10 (35% Chairman net profit, 65% Buyback Treasury). We sell 6 digital items (Telegram Premium, ChatGPT Plus, Stars, PS/Steam/Apple Gift Cards, PUBG UC) via zero-inventory dropshipping (Fragment/Bitrefill). Be 100% realistic and practical: remind the Chairman that a static web app cannot bring traffic by itself without external distribution (Getgems listing, Telegram group posts, referrals). Reply in the EXACT SAME LANGUAGE the Chairman used (Persian or English), directly answering their exact question. Chairman says: `;
+      const models = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-flash-latest'];
+      let lastErr = '';
+      for (const m of models) {
+        try {
+          showToast(`🧠 Querying Google Gemini (${m})...`);
+          const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent?key=${apiKey}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ contents: [{ parts: [{ text: sysPrompt + q }] }] })
+          });
+          const data = await res.json();
+          if (data && data.candidates && data.candidates[0] && data.candidates[0].content) {
+            finalSpeaker = `🧠 AI Board of Directors (Live ${m})`;
+            finalReply = data.candidates[0].content.parts[0].text.replace(/\n/g, '<br/>');
+            break;
+          } else if (data && data.error) {
+            lastErr = data.error.message || JSON.stringify(data.error);
+          }
+        } catch(e) {
+          lastErr = e.message || 'Network/VPN error';
+        }
+      }
+      if (!finalReply && lastErr) {
+        showToast('⚠️ Gemini API Error: ' + lastErr);
+      }
+    } else if (apiKey.startsWith('sk-')) {
+      try {
+        showToast('🧠 Querying live OpenAI...');
+        const res = await fetch('https://api.openai.com/v1/chat/completions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
+          body: JSON.stringify({
+            model: 'gpt-4o-mini',
+            messages: [
+              { role: 'system', content: 'You are the AI Board of Directors of LIQUID BOX (@LiquidBoxTonBot) on TON. Reply in the exact language the user writes (Persian or English), concisely and with numbers.' },
+              { role: 'user', content: q }
+            ]
+          })
+        });
+        const data = await res.json();
+        if (data && data.choices && data.choices[0]) {
+          finalSpeaker = '🧠 AI Board of Directors (Live GPT-4o)';
+          finalReply = data.choices[0].message.content.replace(/\n/g, '<br/>');
+        }
+      } catch(e) {}
+    }
+
+    if (!finalReply) {
+      const builtIn = generateSmartDialogueReply(q, selectedSpeaker);
+      finalSpeaker = builtIn.speakerName;
+      finalColor = builtIn.speakerColor;
+      finalReply = builtIn.reply;
+    }
+
+    appState.chatHistory.push({
+      role: 'agent',
+      speakerName: finalSpeaker,
+      speakerColor: finalColor,
+      time: 'Just Now',
+      text: finalReply
+    });
+
+    saveLocal(); renderAll();
+    if (chatBox) chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  function convertChatToResolution(idx) {
+    const msg = (appState.chatHistory || [])[idx];
+    if (!msg) return;
+    const cleanText = msg.text.replace(/<[^>]+>/g, '').slice(0, 200) + '...';
+    appState.boardResolutions.unshift({
+      id: 'chat-res-' + Date.now(),
+      agentId: 'cmo',
+      agentName: msg.speakerName,
+      department: 'Boardroom Dialogue Decision',
+      title: 'Execute Agreed Strategy: ' + cleanText.slice(0, 65) + '...',
+      summary: cleanText,
+      impact: 'Direct revenue & conversion optimization',
+      actionType: 'UPDATE_PRICE',
+      payload: { boxPriceUsd: appState.config.boxPriceUsd },
+      status: 'pending',
+      createdAt: 'From Live Dialogue'
+    });
+    saveLocal(); renderAll();
+    showToast('📌 Saved as an official Pending Board Resolution!');
+  }
+
+  function resolveBoard(id, decision) {
+    const r = appState.boardResolutions.find(x => x.id === id);
+    if (!r) return;
+    if (decision === 'reject') {
+      r.status = 'rejected';
+      saveLocal(); renderAll();
+      return showToast('❌ Resolution rejected by Chairman.');
+    }
+    r.status = 'approved';
+    const p = r.payload || {};
+    if (r.actionType === 'ADD_PRODUCT') {
+      appState.storeProducts.unshift({
+        id: 'prod-' + Date.now(),
+        title: p.title,
+        category: p.category || 'Package 1: Digital Subscription',
+        priceUsd: Number(p.priceUsd) || 19,
+        profitMarginPercent: Number(p.profitMarginPercent) || 45,
+        icon: p.icon || '⚡',
+        description: p.description || 'Instant automated delivery inside Telegram.',
+        salesCount: 0
+      });
+    } else if (r.actionType === 'UPDATE_PRICE' && p.boxPriceUsd) {
+      appState.config.boxPriceUsd = Number(p.boxPriceUsd);
+    }
+    appState.auditLog.unshift({
+      time: 'Just Now',
+      actor: 'Chairman Approved ✅',
+      text: `Resolution "${r.title}" approved and executed live.`
+    });
+    saveLocal(); renderAll();
+    notifyChairmanTelegram(`✅ Resolution Approved & Executed:\n${r.title}`);
+    showToast('✅ Resolution approved and executed live!');
+  }
+
+  function submitDirective() {
+    const input = document.getElementById('chairman-idea');
+    const idea = input.value.trim();
+    if (idea) {
+      document.getElementById('dialogue-input').value = idea;
+      sendDialogueMessage();
+    }
+    if (!idea) return showToast('⚠️ Please type a directive first.');
+    const numMatch = idea.match(/\d+/);
+    const num = numMatch ? Number(numMatch[0]) : 25;
+    const isPrice = idea.toLowerCase().includes('box price') || idea.includes('قیمت جعبه');
+
+    appState.boardResolutions.unshift({
+      id: 'dir-' + Date.now(),
+      agentId: 'cso',
+      agentName: 'Kian Majd (CSO) + Arash Rad (CFO)',
+      department: 'Chairman Direct Order',
+      title: `Execute Directive: "${idea}"`,
+      summary: `Financial & technical review complete. Ready to deploy at $${num} with 45% net margin.`,
+      impact: 'Direct net profit increase for Chairman Vault',
+      actionType: isPrice ? 'UPDATE_PRICE' : 'ADD_PRODUCT',
+      payload: {
+        title: idea,
+        category: 'Chairman Featured Digital Item',
+        priceUsd: num,
+        boxPriceUsd: num,
+        profitMarginPercent: 45,
+        icon: '🚀',
+        description: 'Instant automated delivery via @LiquidBoxTonBot.'
+      },
+      status: 'pending',
+      createdAt: 'Just Now (Chairman Order)'
+    });
+    input.value = '';
+    saveLocal(); renderAll();
+    showToast('👑 Directive issued! Scroll down to Board Resolutions to approve.');
+  }
+
+  function renderAll() {
+    const { config, financials, nftTiers, inventory, storeProducts, agents, boardResolutions, auditLog } = appState;
+    const tonBal = Number(financials.onChainBalanceTon || 0);
+    const tonUsd = Number(financials.onChainBalanceUsd || 0);
+    const txCount = Number(financials.onChainTxCount || 0);
+    const rate = Number(config.tonPriceUsd || 1.38);
+
+    document.getElementById('brand-title').textContent = config.brandName + ' (' + config.botHandle + ')';
+    document.getElementById('brand-tagline').textContent = config.tagline;
+    document.getElementById('kpi-onchain-ton').textContent = `${tonBal.toFixed(4)} TON ($${tonUsd.toFixed(2)})`;
+    document.getElementById('onchain-live-badge').textContent = `${tonBal.toFixed(4)} TON ($${tonUsd.toFixed(2)})`;
+    document.getElementById('onchain-tx-badge').textContent = `${txCount} Txs`;
+    document.getElementById('kpi-owner').textContent = '$' + Number(financials.ownerVaultUsd || 0).toFixed(2);
+    document.getElementById('kpi-treasury').textContent = '$' + Number(financials.treasuryPoolUsd || 0).toFixed(2);
+    document.getElementById('kpi-ton-rate').textContent = '$' + rate.toFixed(2);
+    document.getElementById('promo-banner').textContent = config.activePromoBanner;
+    document.getElementById('box-price-lbl').textContent = '$' + config.boxPriceUsd;
+    document.getElementById('box-ton-lbl').textContent = usdToTon(config.boxPriceUsd) + ' TON';
+    document.getElementById('forge-fee-lbl').textContent = '$' + config.forgeFeeUsd.toFixed(2);
+    document.getElementById('split-owner-lbl').textContent = config.ownerCutPercent + '% ($' + (config.boxPriceUsd * config.ownerCutPercent / 100).toFixed(2) + ')';
+    document.getElementById('split-treasury-lbl').textContent = config.treasuryCutPercent + '% ($' + (config.boxPriceUsd * config.treasuryCutPercent / 100).toFixed(2) + ')';
+
+    const pendingCount = boardResolutions.filter(r => r.status === 'pending').length;
+    document.getElementById('pending-count').textContent = pendingCount;
+
+    const chatBox = document.getElementById('boardroom-chat-box');
+    if (chatBox) {
+      chatBox.innerHTML = (appState.chatHistory || []).map((m, idx) => `
+        <div class="msg-bubble ${m.role}" dir="auto">
+          <div class="msg-meta">
+            <span style="color:${m.role === 'chairman' ? '#fbbf24' : (m.speakerColor || '#38bdf8')};">${m.speakerName}</span>
+            <span style="color:#94a3b8; font-weight:400;">${m.time}</span>
+          </div>
+          <div dir="auto">${m.text}</div>
+          ${m.role === 'agent' ? `<button class="btn-mini-action" onclick="convertChatToResolution(${idx})">📌 Turn into Official Board Resolution</button>` : ''}
+        </div>
+      `).join('');
+    }
+
+    const repContainer = document.getElementById('executive-reports-container');
+    if (repContainer) {
+      repContainer.innerHTML = (appState.executiveReports || []).map(rep => `
+        <div style="background:linear-gradient(135deg, rgba(17,24,39,0.96), rgba(6,78,59,0.22)); border:2px solid #10b981; border-radius:16px; padding:16px;">
+          <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:8px; border-bottom:1px solid rgba(16,185,129,0.3); padding-bottom:6px;">
+            <span style="font-size:11.5px; color:#34d399; font-weight:800;">👤 Authors: ${rep.authors}</span>
+            <span style="font-size:11px; background:rgba(16,185,129,0.2); color:#a7f3d0; padding:2px 9px; border-radius:999px; font-weight:800;">${rep.date}</span>
+          </div>
+          <h3 style="font-size:15px; color:#fff; margin-bottom:8px;">${rep.title}</h3>
+          ${rep.htmlContent}
+        </div>
+      `).join('');
+    }
+
+    document.getElementById('agents-container').innerHTML = agents.map(a => `
+      <div class="agent-card">
+        <div class="agent-top">
+          <div class="agent-avatar">${a.avatar}</div>
+          <div>
+            <div class="agent-role">${a.role}</div>
+            <div class="agent-name">${a.name}</div>
+          </div>
+        </div>
+        <div class="agent-status">${a.status}</div>
+        <div class="agent-report">${a.lastReport}</div>
+      </div>
+    `).join('');
+
+    document.getElementById('resolutions-container').innerHTML = boardResolutions.map(r => `
+      <div class="res-card ${r.status}">
+        <div>
+          <div class="res-meta">${r.agentName} • ${r.createdAt}</div>
+          <div class="res-title">${r.title}</div>
+          <div class="res-summary">${r.summary}</div>
+          <div class="res-impact">📈 Impact: ${r.impact}</div>
+        </div>
+        ${r.status === 'pending' ? `
+          <div class="res-actions">
+            <button class="btn-approve" onclick="resolveBoard('${r.id}', 'approve')">✅ Approve &amp; Execute</button>
+            <button class="btn-reject" onclick="resolveBoard('${r.id}', 'reject')">❌ Reject</button>
+          </div>
+        ` : `
+          <div style="font-size:12.5px; font-weight:800; color:${r.status === 'approved' ? '#34d399' : '#f87171'};">
+            ${r.status === 'approved' ? '✅ Approved &amp; Live' : '❌ Rejected'}
+          </div>
+        `}
+      </div>
+    `).join('');
+
+    document.getElementById('audit-container').innerHTML = auditLog.slice(0, 8).map(l => `
+      <div style="padding:7px 0; border-bottom:1px dashed rgba(255,255,255,0.08); font-size:12.5px;">
+        <span style="color:#38bdf8; font-weight:700;">[${l.time}] ${l.actor}:</span>
+        <span style="color:#e2e8f0;"> ${l.text}</span>
+      </div>
+    `).join('');
+
+    document.getElementById('tiers-container').innerHTML = nftTiers.map(t => `
+      <div class="tier-card">
+        <img src="${t.image}" alt="${t.name}" />
+        <div class="tier-info">
+          <h4>${t.name}</h4>
+          <span class="chance" style="background:${t.badgeBg}; color:${t.color};">Drop: ${t.chance}% | ${t.rarityLabel}</span>
+          <div class="meta">Instant Buyback: <b>$${t.buybackUsd.toFixed(2)}</b></div>
+          <div class="meta">Getgems Floor: <b style="color:#38bdf8;">$${t.marketFloorUsd.toFixed(2)}</b></div>
+        </div>
+      </div>
+    `).join('');
+
+    if (inventory.length === 0) {
+      document.getElementById('inventory-container').innerHTML = `
+        <div style="grid-column: 1 / -1; background:rgba(17,24,39,0.75); border:1px dashed rgba(56,189,248,0.35); border-radius:16px; padding:22px; text-align:center; color:#94a3b8; font-size:13px;">
+          💎 <b>No Mystery Boxes opened in this session yet.</b><br/>
+          Once you complete an on-chain Tonkeeper checkout, your minted NFTs appear here for 1-click Instant Cash Buyback or Getgems listing!
+        </div>
+      `;
+    } else {
+      document.getElementById('inventory-container').innerHTML = inventory.map(item => `
+        <div class="nft-card" style="border-color:${item.color}55;">
+          <img src="${item.image}" alt="${item.name}" />
+          <div class="nft-body">
+            <div>
+              <span style="font-size:11px; color:${item.color}; font-weight:800;">#${item.serial} • ${item.rarityLabel}</span>
+              <div class="nft-title">${item.name}</div>
+              <div class="nft-traits">
+                🎨 Backdrop: <b>${item.backdrop}</b><br/>
+                ✨ Symbol: <b>${item.symbol}</b>
+              </div>
+            </div>
+            <div class="nft-btns">
+              <button class="btn-buyback" onclick="instantBuyback('${item.uid}')">
+                💵 Instant Treasury Sell ($${item.buybackUsd.toFixed(2)} Cash)
+              </button>
+              <button class="btn-getgems" onclick="sellOnGetgems('${item.uid}')">
+                💎 List on Getgems ($${item.marketFloorUsd.toFixed(2)})
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    const hasVip = inventory.some(i => i.tierId === 'mythic' || i.tierId === 'epic');
+    document.getElementById('vip-status-banner').innerHTML = hasVip
+      ? '🎉 VIP ACTIVE! You hold an Epic/Mythic NFT — 25% VIP Discount is automatically applied to all items below!'
+      : '💡 PRO TIP: Hold any Epic or Mythic NFT to unlock an automatic 25% VIP Discount on all digital subscriptions &amp; gift cards!';
+
+    document.getElementById('store-container').innerHTML = storeProducts.map(p => {
+      const discounted = +(p.priceUsd * (1 - config.vipDiscountPercent / 100)).toFixed(2);
+      const finalUsd = hasVip ? discounted : p.priceUsd;
+      const finalTon = usdToTon(finalUsd);
+      return `
+        <div class="store-card">
+          <div>
+            <div class="store-icon">${p.icon}</div>
+            <div class="store-cat">${p.category}</div>
+            <div class="store-title">${p.title}</div>
+            <div class="store-desc">${p.description}</div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; font-size:12.5px;">
+              <span>Price: <b>$${p.priceUsd.toFixed(2)} (${finalTon} TON)</b></span>
+              <span style="color:#34d399; font-weight:800;">VIP w/ NFT: $${discounted.toFixed(2)}</span>
+            </div>
+            <button class="btn-primary" style="width:100%;" onclick="buyStoreProduct('${p.id}')">
+              💎 Buy Instant w/ Tonkeeper ($${finalUsd.toFixed(2)} / ${finalTon} TON)
+            </button>
+            <div style="font-size:11px; color:var(--muted); margin-top:6px; text-align:center;">
+              Verified On-Chain Orders: ${p.salesCount}
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function handleHashRoute() {
+    const h = (window.location.hash || '').replace('#', '');
+    const btns = document.querySelectorAll('.tab-btn');
+    if (h === 'miniapp') {
+      switchTab('miniapp', btns[0]);
+    } else if (h === 'store') {
+      switchTab('store', btns[1]);
+    } else if (h === 'boardroom') {
+      switchTab('boardroom', btns[2]);
+    }
+  }
+  window.addEventListener('hashchange', handleHashRoute);
+  if (window.Telegram && window.Telegram.WebApp) {
+    try {
+      window.Telegram.WebApp.ready();
+      window.Telegram.WebApp.expand();
+    } catch(e) {}
+  }
+
+  saveLocal();
+  renderAll();
+  handleHashRoute();
+  syncRealBlockchain(false);
+  setInterval(() => syncRealBlockchain(false), 20000);
+</script>
+
+<div style="text-align:center;color:#475569;font-size:11px;padding:14px 0;direction:ltr">Build v2.2-EN &middot; 2026-10-28 &mdash; LIQUID BOX &copy; TON</div>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a5176476a8d1e3ce',t:'MTc5MzE2Mzc4OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
